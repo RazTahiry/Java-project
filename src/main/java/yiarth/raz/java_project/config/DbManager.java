@@ -22,7 +22,7 @@ public class DbManager {
      */
     private void connect() {
         Properties properties = new Properties();
-        final String DB_PROPERTIES = "db.properties"; // Database properties name
+        final String DB_PROPERTIES = "database_config/db.properties"; // Database properties in resources
 
         try (InputStream input = MainApplication.class.getResourceAsStream(DB_PROPERTIES)) {
             if (input != null) {
@@ -33,6 +33,9 @@ public class DbManager {
 
                 db_con = DriverManager.getConnection(url, user, password);
                 // System.out.println("Connection Established.");
+                if (db_con == null) {
+                    throw new SQLException("Not able to get connection from DriverManager!");
+                }
             } else {
                 throw new IOException("Database configuration file not found!");
             }

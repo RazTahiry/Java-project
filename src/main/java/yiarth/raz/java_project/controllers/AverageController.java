@@ -8,9 +8,30 @@ import java.util.List;
 public class AverageController {
 
     private int _coef_total;
+    private final double _average_deliberation;
 
+    /**
+     * Constructor
+     */
     public AverageController() {
         coefTotal();
+        _average_deliberation = 9.75;
+    }
+
+    /**
+     * Get the average deliberation value
+     * @return double (average deliberation)
+     */
+    public double get_average_deliberation() {
+        return _average_deliberation;
+    }
+
+    /**
+     * Get the total coefficient value
+     * @return int (coefficient total)
+     */
+    public int get_coef_total() {
+        return _coef_total;
     }
 
     /**
@@ -37,11 +58,11 @@ public class AverageController {
         double scoreAverageValue;
 
         if (student.isExists()) {
-            scoreAverageValue = (double) student.getTotalScore() / _coef_total;
+            scoreAverageValue = (float) student.getTotalScore() / _coef_total;
 
             return scoreAverageValue;
         } else {
-            return 0.00;
+            return 0;
         }
     }
 
@@ -58,7 +79,7 @@ public class AverageController {
         for (String[] studentArray : studentsList) {
             Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3]);
             if (candidate.isExists()) {
-                if ((average = ((double) candidate.getTotalScore() / _coef_total)) >= 9.50) {
+                if ((average = ((double) candidate.getTotalScore() / _coef_total)) >= _average_deliberation) {
                     String numEleve = candidate.get_num_eleve();
                     String nom = candidate.get_nom();
                     String prenom = candidate.get_prenom();
@@ -106,7 +127,7 @@ public class AverageController {
         for (String[] studentArray : studentsList) {
             Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3]);
             if (candidate.isExists()) {
-                if ((average = ((double) candidate.getTotalScore() / _coef_total)) < 9.50) {
+                if ((average = ((double) candidate.getTotalScore() / _coef_total)) < _average_deliberation) {
                     String numEleve = candidate.get_num_eleve();
                     String nom = candidate.get_nom();
                     String prenom = candidate.get_prenom();

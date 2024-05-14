@@ -119,7 +119,7 @@ public class Note {
                     }
                 }
             } else {
-                System.out.println("Database connection error.");
+                throw new SQLException("Database connection error.");
             }
         } catch (SQLException e) {
             System.out.println(STR."Error fetching records: \{e.getMessage()}");
@@ -168,8 +168,8 @@ public class Note {
                     }
                 }
             } else {
-                System.out.println("Database connection error.");
                 isCreated = false;
+                throw new SQLException("Database connection error.");
             }
         } catch (SQLException e) {
             System.out.println(STR."Error inserting data: \{e.getMessage()}");
@@ -218,13 +218,13 @@ public class Note {
                         String numMat = rs.getString("numMat");
                         int note = rs.getInt("note");
 
-                        System.out.println(anneScolaire + "\t\t" + numEleve + "\t\t" + numMat + "\t\t" + note);
+                        System.out.println(STR."\{anneScolaire}\t\t\{numEleve}\t\t\{numMat}\t\t\{note}");
 
                         records.add(new String[]{anneScolaire, numEleve, numMat, String.valueOf(note)});
                     }
                 }
             } else {
-                System.out.println("Database connection error.");
+                throw new SQLException("Database connection error.");
             }
         } catch (SQLException e) {
             System.out.println(STR."Error fetching records: \{e.getMessage()}");
@@ -273,8 +273,8 @@ public class Note {
                     }
                 }
             } else {
-                System.out.println("Database connection error.");
                 isUpdated = false;
+                throw new SQLException("Database connection error.");
             }
         } catch (SQLException e) {
             System.out.println(STR."Error updating record: \{e.getMessage()}");
@@ -322,8 +322,8 @@ public class Note {
                     }
                 }
             } else {
-                System.out.println("Database connection error.");
                 isDeleted = false;
+                throw new SQLException("Database connection error.");
             }
         } catch (SQLException e) {
             System.out.println(STR."Error deleting record: \{e.getMessage()}");

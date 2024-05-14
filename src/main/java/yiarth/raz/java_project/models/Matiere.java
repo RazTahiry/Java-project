@@ -107,7 +107,7 @@ public class Matiere {
                     }
                 }
             } else {
-                System.out.println("Database connection error.");
+                throw new SQLException("Database connection error.");
             }
         } catch (SQLException e) {
             System.out.println(STR."Error fetching records: \{e.getMessage()}");
@@ -155,8 +155,8 @@ public class Matiere {
                     }
                 }
             } else {
-                System.out.println("Database connection error.");
                 isCreated = false;
+                throw new SQLException("Database connection error.");
             }
         } catch (SQLException e) {
             System.out.println(STR."Error inserting data: \{e.getMessage()}");
@@ -210,7 +210,7 @@ public class Matiere {
                     }
                 }
             } else {
-                System.out.println("Database connection error.");
+                throw new SQLException("Database connection error.");
             }
         } catch (SQLException e) {
             System.out.println(STR."Error fetching records: \{e.getMessage()}");
@@ -258,8 +258,8 @@ public class Matiere {
                     }
                 }
             } else {
-                System.out.println("Database connection error.");
                 isUpdated = false;
+                throw new SQLException("Database connection error.");
             }
         } catch (SQLException e) {
             System.out.println(STR."Error updating record: \{e.getMessage()}");
@@ -307,8 +307,8 @@ public class Matiere {
                     }
                 }
             } else {
-                System.out.println("Database connection error.");
                 isDeleted = false;
+                throw new SQLException("Database connection error.");
             }
         } catch (SQLException e) {
             System.out.println(STR."Error deleting record: \{e.getMessage()}");
