@@ -1,5 +1,7 @@
 package yiarth.raz.java_project.config;
 
+import yiarth.raz.java_project.MainApplication;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -12,25 +14,28 @@ public class DbManager {
     private Connection db_con;
 
     public DbManager() {
-        connect(); // Method call at each instantiation of DbManager
+        connect();
     }
 
     /**
      * Method for connecting to database
      */
     private void connect() {
-        String properties_location = "src/main/java/yiarth/raz/java_project/config/db.properties"; // database properties location
         Properties properties = new Properties();
+        final String DB_PROPERTIES = "db.properties"; // Database properties name
 
-        // Get db.properties file from properties_location then load it to properties
-        try (InputStream input = getClass().getClassLoader().getResourceAsStream(properties_location)) {
-            properties.load(input);
-            String url = properties.getProperty("DB_URL");
-            String user = properties.getProperty("DB_USER");
-            String password = properties.getProperty("DB_PASSWORD");
+        try (InputStream input = MainApplication.class.getResourceAsStream(DB_PROPERTIES)) {
+            if (input != null) {
+                properties.load(input);
+                String url = properties.getProperty("DB_URL");
+                String user = properties.getProperty("DB_USER");
+                String password = properties.getProperty("DB_PASSWORD");
 
-            db_con = DriverManager.getConnection(url, user, password);
-            // System.out.println("Connection Established.");
+                db_con = DriverManager.getConnection(url, user, password);
+                // System.out.println("Connection Established.");
+            } else {
+                throw new IOException("Database configuration file not found!");
+            }
         } catch (IOException | SQLException e) {
             System.out.println(STR."Error establishing connection: \{e.getMessage()}");
         }
