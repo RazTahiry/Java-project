@@ -1,17 +1,17 @@
-package yiarth.raz.java_project;
+package com.yiarth.java_project;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import yiarth.raz.java_project.controllers.*;
+import com.yiarth.java_project.controllers.*;
 
 import java.io.IOException;
 
 public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("fxml/main-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         stage.setTitle("CEPE");
         stage.setScene(scene);
@@ -20,8 +20,8 @@ public class MainApplication extends Application {
 
     public static void main(String[] args) {
         System.out.println("Work in progress...");
-        AverageController average = new AverageController();
-        System.out.println(average.get_average_deliberation());
+        StudentController school = new StudentController();
+        school.getAllStudents();
         launch();
     }
 }

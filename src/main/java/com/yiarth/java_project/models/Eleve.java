@@ -1,6 +1,6 @@
-package yiarth.raz.java_project.models;
+package com.yiarth.java_project.models;
 
-import yiarth.raz.java_project.config.DbManager;
+import com.yiarth.java_project.config.DbManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -197,7 +197,7 @@ public class Eleve {
     }
 
     /**
-     * Fetch all records from database
+     * Fetch all records from database order alphabetical by name
      * @return List of records
      */
     public List<String[]> getAllRecords() {
@@ -209,7 +209,7 @@ public class Eleve {
         try {
             if (db.isConnected()) {
                 db_con = db.getConnection();
-                String sql_select = "SELECT * FROM eleve";
+                String sql_select = "SELECT * FROM eleve ORDER BY nom ASC";
                 try (PreparedStatement p_stmt = db_con.prepareStatement(sql_select)) {
                     rs = p_stmt.executeQuery();
 
@@ -231,6 +231,65 @@ public class Eleve {
             }
         } catch (SQLException e) {
                 System.out.println(STR."Error fetching records: \{e.getMessage()}");
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    System.out.println(STR."Error closing result set: \{e.getMessage()}");
+                }
+            }
+            if (db_con != null) {
+                try {
+                    db_con.close();
+                } catch (SQLException e) {
+                    System.out.println(STR."Error closing connection: \{e.getMessage()}");
+                }
+            }
+        }
+        return records;
+    }
+
+    /**
+     * Fetch all records from database order alphabetical by name
+     * @return List of records
+     */
+    public List<String[]> getAllRecordsOrderByMerit() {
+        List<String[]> records = new ArrayList<>();
+
+        DbManager db = new DbManager();
+        Connection db_con = null;
+        ResultSet rs = null;
+        try {
+            if (db.isConnected()) {
+                db_con = db.getConnection();
+                String sql_select = "SELECT eleve.*, SUM(matiere.coef * note.note) AS totalScore FROM eleve " +
+                                    "JOIN note ON eleve.numEleve = note.numEleve " +
+                                    "JOIN matiere ON note.numMat = matiere.numMat " +
+                                    "GROUP BY eleve.numEleve, eleve.nom, eleve.prenom" +
+                                    "ORDER BY totalScore DESC";
+
+                try (PreparedStatement p_stmt = db_con.prepareStatement(sql_select)) {
+                    rs = p_stmt.executeQuery();
+
+                    System.out.println("numEleve\t\tnumEcole\t\tnom\t\tprenom");
+
+                    while (rs.next()) {
+                        String numEleve = rs.getString("numEleve");
+                        String numEcole = rs.getString("numEcole");
+                        String nom = rs.getString("nom");
+                        String prenom = rs.getString("prenom");
+
+                        System.out.println(STR."\{numEleve}\t\t\{numEcole}\t\t\{nom}\t\t\{prenom}");
+
+                        records.add(new String[]{numEleve, numEcole, nom, prenom});
+                    }
+                }
+            } else {
+                throw new SQLException("Database connection error.");
+            }
+        } catch (SQLException e) {
+            System.out.println(STR."Error fetching records: \{e.getMessage()}");
         } finally {
             if (rs != null) {
                 try {
@@ -448,5 +507,57 @@ public class Eleve {
             }
         }
         return TotalScore;
+    }
+
+    public List<String[]> getFilteredStudent(String filterValue) {
+        List<String[]> records = new ArrayList<>();
+
+        DbManager db = new DbManager();
+        Connection db_con = null;
+        ResultSet rs = null;
+        try {
+            if (db.isConnected()) {
+                db_con = db.getConnection();
+                String sql_select = "SELECT * FROM eleve WHERE nom like '%?%' OR prenom like '%?%'";
+                try (PreparedStatement p_stmt = db_con.prepareStatement(sql_select)) {
+                    p_stmt.setString(1, filterValue);
+                    p_stmt.setString(2, filterValue);
+                    rs = p_stmt.executeQuery();
+
+                    System.out.println("numEleve\t\tnumEcole\t\tnom\t\tprenom");
+
+                    while (rs.next()) {
+                        String numEleve = rs.getString("numEleve");
+                        String numEcole = rs.getString("numEcole");
+                        String nom = rs.getString("nom");
+                        String prenom = rs.getString("prenom");
+
+                        System.out.println(STR."\{numEleve}\t\t\{numEcole}\t\t\{nom}\t\t\{prenom}");
+
+                        records.add(new String[]{numEleve, numEcole, nom, prenom});
+                    }
+                }
+            } else {
+                throw new SQLException("Database connection error.");
+            }
+        } catch (SQLException e) {
+            System.out.println(STR."Error fetching records: \{e.getMessage()}");
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    System.out.println(STR."Error closing result set: \{e.getMessage()}");
+                }
+            }
+            if (db_con != null) {
+                try {
+                    db_con.close();
+                } catch (SQLException e) {
+                    System.out.println(STR."Error closing connection: \{e.getMessage()}");
+                }
+            }
+        }
+        return records;
     }
 }

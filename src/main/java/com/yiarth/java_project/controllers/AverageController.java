@@ -1,6 +1,8 @@
-package yiarth.raz.java_project.controllers;
+package com.yiarth.java_project.controllers;
 
-import yiarth.raz.java_project.models.*;
+import com.yiarth.java_project.models.Eleve;
+import com.yiarth.java_project.models.Matiere;
+import com.yiarth.java_project.models.*;
 
 import java.util.ArrayList;
 import java.util.List;

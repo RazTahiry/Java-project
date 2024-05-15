@@ -1,6 +1,6 @@
-package yiarth.raz.java_project.controllers;
+package com.yiarth.java_project.controllers;
 
-import yiarth.raz.java_project.models.Eleve;
+import com.yiarth.java_project.models.Eleve;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,5 +92,18 @@ public class StudentController {
         } else {
             return "Aucun élève correspondant n'a été trouvé dans la base de données.";
         }
+    }
+
+    /**
+     * Search a students
+     * @return List of filtered students
+     */
+    public List<String[]> searchSudent(String filterValue) {
+        Eleve student = new Eleve();
+
+        List<String[]> students_list = new ArrayList<>();
+        students_list = student.getFilteredStudent(filterValue);
+
+        return students_list;
     }
 }

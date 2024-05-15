@@ -1,6 +1,6 @@
-package yiarth.raz.java_project.config;
+package com.yiarth.java_project.config;
 
-import yiarth.raz.java_project.MainApplication;
+import com.yiarth.java_project.MainApplication;
 
 import java.io.IOException;
 import java.io.InputStream;

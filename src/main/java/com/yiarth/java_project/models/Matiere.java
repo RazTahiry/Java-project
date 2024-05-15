@@ -1,6 +1,6 @@
-package yiarth.raz.java_project.models;
+package com.yiarth.java_project.models;
 
-import yiarth.raz.java_project.config.DbManager;
+import com.yiarth.java_project.config.DbManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

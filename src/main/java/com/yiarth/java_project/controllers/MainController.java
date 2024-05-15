@@ -1,4 +1,4 @@
-package yiarth.raz.java_project;
+package com.yiarth.java_project.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

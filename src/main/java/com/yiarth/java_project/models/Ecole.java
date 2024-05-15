@@ -1,6 +1,6 @@
-package yiarth.raz.java_project.models;
+package com.yiarth.java_project.models;
 
-import yiarth.raz.java_project.config.DbManager;
+import com.yiarth.java_project.config.DbManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,12 +9,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Note {
+public class Ecole {
 
-    private String _annee_scolaire;
-    private String _num_eleve;
-    private String _num_mat;
-    private int _note;
+    private String _num_ecole;
+    private String _design;
+    private String _adresse;
 
     private boolean isCreated;
     private boolean isUpdated;
@@ -23,49 +22,41 @@ public class Note {
     /**
      * Constructors
      */
-    public Note() {}
-    public Note(String anneeScolaire, String numEleve, String numMat, int note) {
-        _annee_scolaire = anneeScolaire;
-        _num_eleve = numEleve;
-        _num_mat = numMat;
-        _note = note;
+    public Ecole() {}
+    public Ecole(String numEcole, String design, String adresse) {
+        _num_ecole = numEcole;
+        _design = design;
+        _adresse = adresse;
     }
-    public Note(String numEleve, String numMat) {
-        _num_eleve = numEleve;
-        _num_mat = numMat;
+    public Ecole(String numEcole) {
+        _num_ecole = numEcole;
     }
 
     /**
      * Getters
-     * @return String/int (private attributes value)
+     * @return String (private attributes value)
      */
-    public String get_annee_scolaire() {
-        return _annee_scolaire;
+    public String get_num_ecole() {
+        return _num_ecole;
     }
-    public String get_num_eleve() {
-        return _num_eleve;
+    public String get_design() {
+        return _design;
     }
-    public String get_num_mat() {
-        return _num_mat;
-    }
-    public int get_note() {
-        return _note;
+    public  String get_adresse() {
+        return _adresse;
     }
 
     /**
      * Setters
      */
-    public void set_annee_scolaire(String anneeScolaire) {
-        _annee_scolaire = anneeScolaire;
+    public void set_num_ecole(String numEcole) {
+        _num_ecole = numEcole;
     }
-    public void set_num_eleve(String numEleve) {
-        _num_eleve = numEleve;
+    public void set_design(String design) {
+        _design = design;
     }
-    public void set_num_mat(String numMat) {
-        _num_mat = numMat;
-    }
-    public void set_note(int note) {
-        _note = note;
+    public void set_adresse(String adresse) {
+        _adresse = adresse;
     }
 
     /**
@@ -73,20 +64,16 @@ public class Note {
      * @return true/false
      */
     public boolean isValidated() {
-        if (_annee_scolaire == null || _annee_scolaire.isEmpty()) {
-            System.out.println("VALIDATOR ERROR: School year should not be empty or null.");
+        if (_num_ecole == null || _num_ecole.isEmpty()) {
+            System.out.println("VALIDATOR ERROR: School number should not be empty or null.");
             return false;
         }
-        if (_num_eleve == null || _num_eleve.isEmpty()) {
-            System.out.println("VALIDATOR ERROR: Student's number should not be empty or null.");
+        if (_design == null || _design.isEmpty()) {
+            System.out.println("VALIDATOR ERROR: School name should not be empty or null.");
             return false;
         }
-        if (_num_mat == null || _num_mat.isEmpty()) {
-            System.out.println("VALIDATOR ERROR: Subject's number should not be empty or null.");
-            return false;
-        }
-        if (_note < 0 || _note > 20) {
-            System.out.println("VALIDATOR ERROR: Score should be between 0 and 20.");
+        if (_adresse == null || _adresse.isEmpty()) {
+            System.out.println("VALIDATOR ERROR: School address should not not be empty or null.");
             return false;
         }
         return true;
@@ -103,10 +90,9 @@ public class Note {
         try {
             if (db.isConnected()) {
                 db_con = db.getConnection();
-                String sql_select = "SELECT COUNT(*) FROM note WHERE numEleve=? AND numMat=?";
+                String sql_select = "SELECT COUNT(*) FROM ecole WHERE numEcole=?";
                 try (PreparedStatement p_stmt = db_con.prepareStatement(sql_select)) {
-                    p_stmt.setString(1, _num_eleve);
-                    p_stmt.setString(2, _num_mat);
+                    p_stmt.setString(1, _num_ecole);
 
                     try {
                         rs = p_stmt.executeQuery();
@@ -151,12 +137,11 @@ public class Note {
         try {
             if (db.isConnected()) {
                 db_con = db.getConnection();
-                String sql_insert = "INSERT INTO note VALUES (?, ?, ?, ?)";
+                String sql_insert = "INSERT INTO ecole VALUES (?, ?, ?)";
                 try (PreparedStatement p_stmt = db_con.prepareStatement(sql_insert)) {
-                    p_stmt.setString(1, _annee_scolaire);
-                    p_stmt.setString(2, _num_eleve);
-                    p_stmt.setString(3, _num_mat);
-                    p_stmt.setInt(4, _note);
+                    p_stmt.setString(1, _num_ecole);
+                    p_stmt.setString(2, _design);
+                    p_stmt.setString(3, _adresse);
 
                     int rowsAffected = p_stmt.executeUpdate();
                     if (rowsAffected > 0) {
@@ -206,21 +191,20 @@ public class Note {
         try {
             if (db.isConnected()) {
                 db_con = db.getConnection();
-                String sql_select = "SELECT * FROM note";
+                String sql_select = "SELECT * FROM ecole";
                 try (PreparedStatement p_stmt = db_con.prepareStatement(sql_select)) {
                     rs = p_stmt.executeQuery();
 
-                    System.out.println("anneScolaire\t\tnumEleve\t\tnumMat\t\tnote");
+                    System.out.println("numEcole\t\tdesign\t\tadresse");
 
                     while (rs.next()) {
-                        String anneScolaire = rs.getString("anneeScolaire");
-                        String numEleve = rs.getString("numEleve");
-                        String numMat = rs.getString("numMat");
-                        int note = rs.getInt("note");
+                        String numEcole = rs.getString("numEcole");
+                        String design = rs.getString("design");
+                        String adresse = rs.getString("adresse");
 
-                        System.out.println(STR."\{anneScolaire}\t\t\{numEleve}\t\t\{numMat}\t\t\{note}");
+                        System.out.println(STR."\{numEcole}\t\t\{design}\t\t\{adresse}");
 
-                        records.add(new String[]{anneScolaire, numEleve, numMat, String.valueOf(note)});
+                        records.add(new String[]{numEcole, design, adresse});
                     }
                 }
             } else {
@@ -256,12 +240,11 @@ public class Note {
         try {
             if (db.isConnected()) {
                 db_con = db.getConnection();
-                String sql_update = "UPDATE note SET anneeScolaire=?, note=? WHERE numEleve=? AND numMat=?";
+                String sql_update = "UPDATE ecole SET design=?, adresse=? WHERE numEcole=?";
                 try (PreparedStatement p_stmt = db_con.prepareStatement(sql_update)) {
-                    p_stmt.setString(1, _annee_scolaire);
-                    p_stmt.setInt(2, _note);
-                    p_stmt.setString(3, _num_eleve);
-                    p_stmt.setString(4, _num_mat);
+                    p_stmt.setString(1, _design);
+                    p_stmt.setString(2, _adresse);
+                    p_stmt.setString(3, _num_ecole);
 
                     int rowsAffected = p_stmt.executeUpdate();
                     if (rowsAffected > 0) {
@@ -307,10 +290,9 @@ public class Note {
         try {
             if (db.isConnected()) {
                 db_con = db.getConnection();
-                String sql_delete = "DELETE FROM note WHERE numEleve=? AND numMat=?";
+                String sql_delete = "DELETE FROM ecole WHERE numEcole=?";
                 try (PreparedStatement p_stmt = db_con.prepareStatement(sql_delete)) {
-                    p_stmt.setString(1, _num_eleve);
-                    p_stmt.setString(2, _num_mat);
+                    p_stmt.setString(1, _num_ecole);
 
                     int rowsAffected = p_stmt.executeUpdate();
                     if (rowsAffected > 0) {
