@@ -69,6 +69,28 @@ public class AverageController {
     }
 
     /**
+     * Get all students with their average note value
+     * @return List of students
+     */
+    public List<String[]> getAllStudents() {
+        Eleve student = new Eleve();
+        List<String[]> studentList = new ArrayList<>();
+        double average;
+        List<String[]> studentsList = student.getAllRecords();
+        for (String[] studentArray : studentsList) {
+            Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3]);
+            if (candidate.isExists()) {
+                average = ((double) candidate.getTotalScore() / _coef_total);
+                String numEleve = candidate.get_num_eleve();
+                String nom = candidate.get_nom();
+                String prenom = candidate.get_prenom();
+                studentList.add(new String[]{numEleve, nom, prenom, String.valueOf(average)});
+            }
+        }
+        return studentList;
+    }
+
+    /**
      * Get the students who admitted their CEPE
      * @return List of student admitted
      */

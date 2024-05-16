@@ -10,6 +10,7 @@ module yiarth.raz.java_project {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires java.sql;
+    requires itextpdf;
 
     opens com.yiarth.java_project to javafx.fxml;
     exports com.yiarth.java_project;

@@ -1,0 +1,108 @@
+.body {
+    -fx-background-color: white;
+    -fx-font-family: "System";
+}
+
+.icons {
+    -fx-translate-y: -1;
+}
+
+.bar {
+    -fx-background-color: rgb(66, 125, 157, .8);
+}
+
+.bar_title {
+    -fx-text-fill: rgb(221, 242, 253);
+    -fx-font-size: 20px;
+    -fx-font-weight: bolder;
+}
+
+.bar_label_combobox {
+    -fx-text-fill: rgb(221, 242, 253);
+    -fx-font-size: 16px;
+    -fx-font-weight: bolder;
+}
+
+.bar_combobox {
+    -fx-background-color: none;
+    -fx-text-fill: rgb(221, 242, 253);
+    -fx-cursor: hand;
+    -fx-border-size: 2px;
+    -fx-border-style: solid;
+    -fx-border-color: rgb(221, 242, 253);
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.sidebar {
+    -fx-background-color: rgb(22, 72, 99);
+    -fx-padding: 0;
+}
+
+.logo_name {
+    -fx-background-color: rgb(66, 125, 157, .5);
+    -fx-text-fill: rgb(221, 242, 253);
+    -fx-alignment: center;
+    -fx-font-size: 25px;
+    -fx-font-weight: bolder;
+    -fx-min-height: 67px;
+}
+
+.sidebar_button {
+    -fx-background-color: none;
+    -fx-text-fill: rgb(221, 242, 253);
+    -fx-alignment: center-left;
+    -fx-border-radius: 0;
+    -fx-font-size: 16px;
+    -fx-font-weight: bolder;
+    -fx-padding: 12px 0 12px 20px;
+    -fx-cursor: hand;
+}
+
+.sidebar_button:hover {
+    -fx-background-color: rgb(66, 125, 157, .5);
+    /* -fx-background-color: rgb(155, 190, 200, .5); */
+}
+
+.form_container {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, .2), 10, 0.2, 0, 0);
+}
+
+.form_vbox {
+    -fx-padding: 20px;
+    -fx-background-radius: 10px;
+    -fx-background-color: white;
+}
+
+.input, .combobox {
+    -fx-border: none;
+    -fx-background-color: transparent;
+    -fx-text-fill: rgb(0, 0, 0, .8);
+    -fx-font-size: 15px;
+}
+
+.label_input {
+    -fx-background-color: none;
+    -fx-text-fill: rgb(221, 242, 253);
+    -fx-border-style: solid;
+    -fx-border-color: rgb(22, 72, 99);
+    -fx-border-radius: 5px;
+}
+
+.label_for_input {
+    -fx-text-fill: rgb(22, 72, 99);
+    -fx-font-size: 13px;
+}
+
+.form_button {
+    -fx-border: none;
+    -fx-background-color: rgb(22, 72, 99);
+    -fx-text-fill: rgb(221, 242, 253);
+    -fx-font-size: 15px;
+    -fx-padding: 5px;
+}
+
+.form_button:hover {
+     -fx-background-color: rgb(12, 62, 79);
+     -fx-cursor: hand;
+ }
