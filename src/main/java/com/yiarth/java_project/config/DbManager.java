@@ -22,7 +22,7 @@ public class DbManager {
      */
     private void connect() {
         Properties properties = new Properties();
-        final String DB_PROPERTIES = "database_config/db.properties"; // Database properties in resources
+        final String DB_PROPERTIES = "properties/db.properties"; // Database properties in resources
 
         try (InputStream input = MainApplication.class.getResourceAsStream(DB_PROPERTIES)) {
             if (input != null) {

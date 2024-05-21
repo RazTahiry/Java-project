@@ -22,10 +22,10 @@ public class SubjectController {
                 if (subject.isCreated()) {
                     return "La matière est ajoutée avec succès.";
                 } else {
-                    return "On n'a pas pu ajouter la matière, veuillez réessayer s'il vous plait.";
+                    return "On n'a pas pu ajouter la matière, veuillez réessayer.";
                 }
             } else {
-                return "Veuillez remplir tous les champs requis s'il vous plait.";
+                return "Veuillez remplir tous les champs requis.";
             }
         } else {
             return "La matière existe déjà dans la base de données.";
@@ -61,13 +61,13 @@ public class SubjectController {
                 if (subject.isUpdated()) {
                     return "La matière a été mise à jour avec succès.";
                 } else {
-                    return "On n'a pas pu mettre à jours la matière, veuillez réessayer s'il vous plait.";
+                    return "On n'a pas pu mettre à jours la matière, veuillez réessayer.";
                 }
             } else {
-                return "Veuillez remplir tous les champs requis s'il vous plait.";
+                return "Veuillez remplir tous les champs requis.";
             }
         } else {
-            return "Aucune matière correspondant n'a été trouvé dans la base de données.";
+            return "Aucune matière correspondant n'a été trouvé.";
         }
     }
 
@@ -84,10 +84,10 @@ public class SubjectController {
             if (subject.isDeleted()) {
                 return "La matière a été supprimée avec succès.";
             } else {
-                return "On n'a pas pu supprimer la matière, veuillez réessayer s'il vous plait.";
+                return "On n'a pas pu supprimer la matière, veuillez réessayer.";
             }
         } else {
-            return "Aucune matière correspondant n'a été trouvé dans la base de données.";
+            return "Aucune matière correspondant n'a été trouvé.";
         }
     }
 }

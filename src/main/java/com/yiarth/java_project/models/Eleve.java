@@ -2,10 +2,7 @@ package com.yiarth.java_project.models;
 
 import com.yiarth.java_project.config.DbManager;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +12,7 @@ public class Eleve {
     private String _num_ecole;
     private String _nom;
     private String _prenom;
+    private Date _date_nais;
 
     private boolean isCreated;
     private boolean isUpdated;
@@ -24,11 +22,12 @@ public class Eleve {
      * Constructors
      */
     public Eleve() {}
-    public Eleve(String numEleve, String numEcole, String nom, String prenom) {
+    public Eleve(String numEleve, String numEcole, String nom, String prenom, Date dateNais) {
         _num_eleve = numEleve;
         _num_ecole = numEcole;
         _nom = nom;
         _prenom = prenom;
+        _date_nais = dateNais;
     }
     public Eleve(String numEleve, String numEcole) {
         _num_eleve = numEleve;
@@ -54,6 +53,9 @@ public class Eleve {
     public String get_prenom() {
         return _prenom;
     }
+    public Date get_date_nais() {
+        return _date_nais;
+    }
 
     /**
      * Setters
@@ -69,6 +71,9 @@ public class Eleve {
     }
     public void set_prenom(String prenom) {
         _prenom = prenom;
+    }
+    public void set_date_nais(Date dateNais) {
+        _date_nais = dateNais;
     }
 
     /**
@@ -90,6 +95,10 @@ public class Eleve {
         }
         if (_prenom == null || _prenom.isEmpty()) {
             System.out.println("VALIDATOR ERROR: Student's lastname should not be empty or null.");
+            return false;
+        }
+        if (_date_nais == null) {
+            System.out.println("VALIDATOR ERROR: Student's date of birth should not be null.");
             return false;
         }
         return true;
@@ -154,12 +163,13 @@ public class Eleve {
         try {
             if (db.isConnected()) {
                 db_con = db.getConnection();
-                String sql_insert = "INSERT INTO eleve(numEleve, numEcole, nom, prenom) VALUES (?, ?, ?, ?)";
+                String sql_insert = "INSERT INTO eleve(numEleve, numEcole, nom, prenom, dateNais) VALUES (?, ?, ?, ?, ?)";
                 try (PreparedStatement p_stmt = db_con.prepareStatement(sql_insert)) {
                     p_stmt.setString(1, _num_eleve);
                     p_stmt.setString(2, _num_ecole);
                     p_stmt.setString(3, _nom);
                     p_stmt.setString(4, _prenom);
+                    p_stmt.setDate(5, _date_nais);
 
                     int rowsAffected = p_stmt.executeUpdate();
                     if (rowsAffected > 0) {
@@ -213,17 +223,14 @@ public class Eleve {
                 try (PreparedStatement p_stmt = db_con.prepareStatement(sql_select)) {
                     rs = p_stmt.executeQuery();
 
-                    System.out.println("numEleve\t\tnumEcole\t\tnom\t\tprenom");
-
                     while (rs.next()) {
                         String numEleve = rs.getString("numEleve");
                         String numEcole = rs.getString("numEcole");
                         String nom = rs.getString("nom");
                         String prenom = rs.getString("prenom");
+                        Date dateNais = rs.getDate("dateNais");
 
-                        System.out.println(STR."\{numEleve}\t\t\{numEcole}\t\t\{nom}\t\t\{prenom}");
-
-                        records.add(new String[]{numEleve, numEcole, nom, prenom});
+                        records.add(new String[]{numEleve, numEcole, nom, prenom, String.valueOf(dateNais)});
                     }
                 }
             } else {
@@ -279,10 +286,9 @@ public class Eleve {
                         String numEcole = rs.getString("numEcole");
                         String nom = rs.getString("nom");
                         String prenom = rs.getString("prenom");
+                        Date dateNais = rs.getDate("dateNais");
 
-                        System.out.println(STR."\{numEleve}\t\t\{numEcole}\t\t\{nom}\t\t\{prenom}");
-
-                        records.add(new String[]{numEleve, numEcole, nom, prenom});
+                        records.add(new String[]{numEleve, numEcole, nom, prenom, String.valueOf(dateNais)});
                     }
                 }
             } else {
@@ -318,12 +324,13 @@ public class Eleve {
         try {
             if (db.isConnected()) {
                 db_con = db.getConnection();
-                String sql_update = "UPDATE eleve SET nom=?, prenom=? WHERE numEleve=? AND numEcole=?";
+                String sql_update = "UPDATE eleve SET nom=?, prenom=?, dateNais=? WHERE numEleve=? AND numEcole=?";
                 try (PreparedStatement p_stmt = db_con.prepareStatement(sql_update)) {
                     p_stmt.setString(1, _nom);
                     p_stmt.setString(2, _prenom);
-                    p_stmt.setString(3, _num_eleve);
-                    p_stmt.setString(4, _num_ecole);
+                    p_stmt.setDate(3, _date_nais);
+                    p_stmt.setString(4, _num_eleve);
+                    p_stmt.setString(5, _num_ecole);
 
                     int rowsAffected = p_stmt.executeUpdate();
                     if (rowsAffected > 0) {
@@ -432,8 +439,9 @@ public class Eleve {
                         String numEcole = rs.getString("numEcole");
                         String nom = rs.getString("nom");
                         String prenom = rs.getString("prenom");
+                        Date dateNais = rs.getDate("dateNais");
 
-                        studentsRecords.add(new String[]{numEleve, numEcole, nom, prenom});
+                        studentsRecords.add(new String[]{numEleve, numEcole, nom, prenom, String.valueOf(dateNais)});
                     }
                 }
             } else {
@@ -531,10 +539,9 @@ public class Eleve {
                         String numEcole = rs.getString("numEcole");
                         String nom = rs.getString("nom");
                         String prenom = rs.getString("prenom");
+                        Date dateNais = rs.getDate("dateNais");
 
-                        System.out.println(STR."\{numEleve}\t\t\{numEcole}\t\t\{nom}\t\t\{prenom}");
-
-                        records.add(new String[]{numEleve, numEcole, nom, prenom});
+                        records.add(new String[]{numEleve, numEcole, nom, prenom, String.valueOf(dateNais)});
                     }
                 }
             } else {

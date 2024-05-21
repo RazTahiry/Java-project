@@ -197,14 +197,10 @@ public class Matiere {
                 try (PreparedStatement p_stmt = db_con.prepareStatement(sql_select)) {
                     rs = p_stmt.executeQuery();
 
-                    System.out.println("numMat\t\tdesignMat\t\tcoef");
-
                     while (rs.next()) {
                         String numMat = rs.getString("numMat");
                         String designMat = rs.getString("designMat");
                         int coef = rs.getInt("coef");
-
-                        System.out.println(STR."\{numMat}\t\t\{designMat}\t\t\{coef}");
 
                         records.add(new String[]{numMat, designMat, String.valueOf(coef)});
                     }

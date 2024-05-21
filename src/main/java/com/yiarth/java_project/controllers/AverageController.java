@@ -4,6 +4,7 @@ import com.yiarth.java_project.models.Eleve;
 import com.yiarth.java_project.models.Matiere;
 import com.yiarth.java_project.models.*;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +79,7 @@ public class AverageController {
         double average;
         List<String[]> studentsList = student.getAllRecords();
         for (String[] studentArray : studentsList) {
-            Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3]);
+            Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3], Date.valueOf(studentArray[4]));
             if (candidate.isExists()) {
                 average = ((double) candidate.getTotalScore() / _coef_total);
                 String numEleve = candidate.get_num_eleve();
@@ -101,7 +102,7 @@ public class AverageController {
 
         List<String[]> studentsList = student.getAllRecords();
         for (String[] studentArray : studentsList) {
-            Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3]);
+            Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3], Date.valueOf(studentArray[4]));
             if (candidate.isExists()) {
                 if ((average = ((double) candidate.getTotalScore() / _coef_total)) >= _average_deliberation) {
                     String numEleve = candidate.get_num_eleve();
@@ -125,7 +126,7 @@ public class AverageController {
 
         List<String[]> studentsList = student.getAllRecords();
         for (String[] studentArray : studentsList) {
-            Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3]);
+            Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3], Date.valueOf(studentArray[4]));
             if (candidate.isExists()) {
                 if ((average = ((double) candidate.getTotalScore() / _coef_total)) >= 12.00) {
                     String numEleve = candidate.get_num_eleve();
@@ -149,7 +150,7 @@ public class AverageController {
 
         List<String[]> studentsList = student.getAllRecords();
         for (String[] studentArray : studentsList) {
-            Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3]);
+            Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3], Date.valueOf(studentArray[4]));
             if (candidate.isExists()) {
                 if ((average = ((double) candidate.getTotalScore() / _coef_total)) < _average_deliberation) {
                     String numEleve = candidate.get_num_eleve();

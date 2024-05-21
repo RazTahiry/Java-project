@@ -1,20 +1,32 @@
 .body {
     -fx-background-color: white;
-    -fx-font-family: "System";
+    -fx-font-family: "Poppins", "System";
 }
 
 .icons {
-    -fx-translate-y: -1;
+    -fx-translate-y: -1.5;
 }
 
+
+/* ============================= Top Bar Styles ============================= */
 .bar {
     -fx-background-color: rgb(66, 125, 157, .8);
 }
 
+.logo_name {
+    -fx-background-color: rgb(66, 125, 157, .5);
+    -fx-text-fill: rgb(221, 242, 253);
+    -fx-alignment: center;
+    -fx-font-size: 25px;
+    -fx-font-weight: bolder;
+    -fx-min-height: 67px;
+}
+
 .bar_title {
     -fx-text-fill: rgb(221, 242, 253);
-    -fx-font-size: 20px;
+    -fx-font-size: 22px;
     -fx-font-weight: bolder;
+    -fx-font-family: "Consolas" !important;
 }
 
 .bar_label_combobox {
@@ -27,43 +39,46 @@
     -fx-background-color: none;
     -fx-text-fill: rgb(221, 242, 253);
     -fx-cursor: hand;
-    -fx-border-size: 2px;
+    -fx-border-width: 1.5px;
     -fx-border-style: solid;
     -fx-border-color: rgb(221, 242, 253);
     -fx-border-radius: 5px;
     -fx-padding: 5px;
 }
+/* ======================================================================= */
 
+
+/* =========================== Sidebar Styles ============================ */
 .sidebar {
     -fx-background-color: rgb(22, 72, 99);
     -fx-padding: 0;
-}
-
-.logo_name {
-    -fx-background-color: rgb(66, 125, 157, .5);
-    -fx-text-fill: rgb(221, 242, 253);
-    -fx-alignment: center;
-    -fx-font-size: 25px;
-    -fx-font-weight: bolder;
-    -fx-min-height: 67px;
 }
 
 .sidebar_button {
     -fx-background-color: none;
     -fx-text-fill: rgb(221, 242, 253);
     -fx-alignment: center-left;
-    -fx-border-radius: 0;
+    -fx-border-radius: none;
     -fx-font-size: 16px;
     -fx-font-weight: bolder;
-    -fx-padding: 12px 0 12px 20px;
+    -fx-padding: 12px 0 12px 25px;
     -fx-cursor: hand;
+}
+
+.sidebar_button_active {
+    -fx-border-width: 0 0 0 4px;
+    -fx-border-color: rgb(221, 242, 253);
+    -fx-background-color: rgb(46, 105, 137, .5);
 }
 
 .sidebar_button:hover {
     -fx-background-color: rgb(66, 125, 157, .5);
     /* -fx-background-color: rgb(155, 190, 200, .5); */
 }
+/* ======================================================================== */
 
+
+/* =========================== Form Styles ================================ */
 .form_container {
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, .2), 10, 0.2, 0, 0);
 }
@@ -74,16 +89,22 @@
     -fx-background-color: white;
 }
 
-.input, .combobox {
+.input, .combobox, .input_search, .date_input {
     -fx-border: none;
     -fx-background-color: transparent;
     -fx-text-fill: rgb(0, 0, 0, .8);
     -fx-font-size: 15px;
 }
 
+.date_input {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
 .label_input {
     -fx-background-color: none;
     -fx-text-fill: rgb(221, 242, 253);
+    -fx-border-width: 1.5px;
     -fx-border-style: solid;
     -fx-border-color: rgb(22, 72, 99);
     -fx-border-radius: 5px;
@@ -106,3 +127,126 @@
      -fx-background-color: rgb(12, 62, 79);
      -fx-cursor: hand;
  }
+
+.result_message {
+   -fx-text-fill: rgba(0, 0, 0, .8);
+   -fx-font-size: 13px;
+}
+/* ======================================================================== */
+
+
+/* ============================ Search Styles ============================= */
+.search_pane {
+   -fx-border-color: transparent transparent rgb(22, 72, 99) transparent;
+   -fx-border-width: 0 0 2px 0;
+}
+
+.search_button {
+   -fx-background-color: none;
+   -fx-cursor: hand;
+   -fx-translate-y: 1;
+}
+/* ========================================================================= */
+
+
+/* =========================== TableView Styles ============================ */
+.table-view {
+    -fx-background-color: none;
+    -fx-border-width: 1px;
+    -fx-border-color: #dcdce0;
+    /*-fx-border-radius: 10px;
+    -fx-padding: 5px;*/
+}
+
+.table-view .column-header {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #6c757d;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.table-view .table-row-cell:filled:even {
+    -fx-background-color: #f9f9fc;
+}
+
+.table-view .table-row-cell:filled:odd {
+    -fx-background-color: #ffffff;
+}
+
+.table-view .table-cell {
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+    -fx-border-width: 0;
+}
+
+.table-view .table-cell:selected {
+    -fx-background-color: #cce7ff;
+    -fx-text-fill: black;
+}
+
+.table-view .table-row-cell:filled:selected .table-cell {
+    -fx-background-color: #cce7ff;
+    -fx-text-fill: black;
+}
+/* ==================================================================== */
+
+
+/* ========================== Home Stats Styles ======================= */
+.stats_container {
+   -fx-alignment: center;
+   -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, .1), 10, 0.1, 0, 0);
+}
+
+.stat {
+    -fx-background-radius: 20px;
+    -fx-background-color: white;
+}
+/* ==================================================================== */
+
+
+/* ========================== TabPane Styles ========================== */
+.tab-pane {
+    -fx-tab-max-width: 200px;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.tab-pane .tab-header-area {
+     -fx-font-size: 14px;
+     -fx-background-color: #2a2a2a;
+     -fx-cursor: hand;
+     -fx-padding: 0;
+}
+
+.tab-pane .tab {
+    -fx-background-color: transparent;
+    -fx-text-base-color: rgb(22, 72, 99);
+    -fx-padding: 5px;
+    -fx-border-radius: none;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: rgb(66, 125, 157, .3);
+    -fx-border-color: rgb(22, 72, 99);
+    -fx-border-width: 0 0 3px 0;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.tab-pane .tab-content-area {
+    -fx-padding: 0 5px 5px 5px;
+    -fx-background-color: #ffffff;
+    -fx-border-color: rgb(22, 72, 99);
+    -fx-border-width: 1px;
+}
+/* ============================================================= */

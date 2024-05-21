@@ -16,4 +16,5 @@ module yiarth.raz.java_project {
     exports com.yiarth.java_project;
     exports com.yiarth.java_project.controllers;
     opens com.yiarth.java_project.controllers to javafx.fxml;
+    opens com.yiarth.java_project.tableview_models to javafx.base;
 }

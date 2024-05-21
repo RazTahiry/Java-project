@@ -22,10 +22,10 @@ public class SchoolController {
                 if (school.isCreated()) {
                     return "L'école est ajoutée avec succès.";
                 } else {
-                    return "On n'a pas pu ajouter l'école, veuillez réessayer s'il vous plait.";
+                    return "On n'a pas pu ajouter l'école, veuillez réessayer.";
                 }
             } else {
-                return "Veuillez remplir tous les champs requis s'il vous plait.";
+                return "Veuillez remplir tous les champs requis.";
             }
         } else {
             return "Cette école existe déjà dans la base de données.";
@@ -62,13 +62,13 @@ public class SchoolController {
                 if (school.isUpdated()) {
                     return "L'école a été mise à jour avec succès.";
                 } else {
-                    return "On n'a pas pu mettre à jours l'école, veuillez réessayer s'il vous plait.";
+                    return "On n'a pas pu mettre à jours l'école, veuillez réessayer.";
                 }
             } else {
-                return "Veuillez remplir tous les champs requis s'il vous plait.";
+                return "Veuillez remplir tous les champs requis.";
             }
         } else {
-            return "Aucune école correspondant n'a été trouvé dans la base de données.";
+            return "Aucune école correspondant n'a été trouvé.";
         }
     }
 
@@ -84,10 +84,10 @@ public class SchoolController {
             if (school.isDeleted()) {
                 return "L'école a été supprimée avec succès.";
             } else {
-                return "On n'a pas pu supprimer l'école, veuillez réessayer s'il vous plait.";
+                return "On n'a pas pu supprimer l'école, veuillez réessayer.";
             }
         } else {
-            return "Aucune école correspondant n'a été trouvé dans la base de données.";
+            return "Aucune école correspondant n'a été trouvé.";
         }
     }
 }

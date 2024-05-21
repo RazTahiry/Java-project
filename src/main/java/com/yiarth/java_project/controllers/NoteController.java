@@ -23,10 +23,10 @@ public class NoteController {
                 if (note.isCreated()) {
                     return "La note est ajoutée avec succès.";
                 } else {
-                    return "On n'a pas pu ajouter la note, veuillez réessayer s'il vous plait.";
+                    return "On n'a pas pu ajouter la note, veuillez réessayer.";
                 }
             } else {
-                return "Veuillez remplir tous les champs requis s'il vous plait.";
+                return "Veuillez remplir tous les champs requis.";
             }
         } else {
             return "La note existe déjà dans la base de données.";
@@ -64,13 +64,13 @@ public class NoteController {
                 if (note.isUpdated()) {
                     return "La note a été mise à jour avec succès.";
                 } else {
-                    return "On n'a pas pu mettre à jours la note, veuillez réessayer s'il vous plait.";
+                    return "On n'a pas pu mettre à jours la note, veuillez réessayer.";
                 }
             } else {
-                return "Veuillez remplir tous les champs requis s'il vous plait.";
+                return "Veuillez remplir tous les champs requis.";
             }
         } else {
-            return "Aucune note correspondant n'a été trouvé dans la base de données.";
+            return "Aucune note correspondant n'a été trouvé.";
         }
     }
 
@@ -87,10 +87,10 @@ public class NoteController {
             if (note.isDeleted()) {
                 return "La note a été supprimée avec succès.";
             } else {
-                return "On n'a pas pu supprimer la note, veuillez réessayer s'il vous plait.";
+                return "On n'a pas pu supprimer la note, veuillez réessayer.";
             }
         } else {
-            return "Aucune note correspondant n'a été trouvé dans la base de données.";
+            return "Aucune note correspondant n'a été trouvé.";
         }
     }
 }

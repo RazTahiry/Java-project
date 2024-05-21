@@ -210,15 +210,11 @@ public class Note {
                 try (PreparedStatement p_stmt = db_con.prepareStatement(sql_select)) {
                     rs = p_stmt.executeQuery();
 
-                    System.out.println("anneScolaire\t\tnumEleve\t\tnumMat\t\tnote");
-
                     while (rs.next()) {
                         String anneScolaire = rs.getString("anneeScolaire");
                         String numEleve = rs.getString("numEleve");
                         String numMat = rs.getString("numMat");
                         int note = rs.getInt("note");
-
-                        System.out.println(STR."\{anneScolaire}\t\t\{numEleve}\t\t\{numMat}\t\t\{note}");
 
                         records.add(new String[]{anneScolaire, numEleve, numMat, String.valueOf(note)});
                     }

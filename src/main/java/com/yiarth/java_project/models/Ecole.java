@@ -195,14 +195,10 @@ public class Ecole {
                 try (PreparedStatement p_stmt = db_con.prepareStatement(sql_select)) {
                     rs = p_stmt.executeQuery();
 
-                    System.out.println("numEcole\t\tdesign\t\tadresse");
-
                     while (rs.next()) {
                         String numEcole = rs.getString("numEcole");
                         String design = rs.getString("design");
                         String adresse = rs.getString("adresse");
-
-                        System.out.println(STR."\{numEcole}\t\t\{design}\t\t\{adresse}");
 
                         records.add(new String[]{numEcole, design, adresse});
                     }
