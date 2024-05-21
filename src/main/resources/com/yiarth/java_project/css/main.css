@@ -1,6 +1,6 @@
 .body {
     -fx-background-color: white;
-    -fx-font-family: "Poppins", "System";
+    -fx-font-family: "Poppins", "Arial", "System";
 }
 
 .icons {
