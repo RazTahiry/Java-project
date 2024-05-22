@@ -526,13 +526,12 @@ public class Eleve {
         try {
             if (db.isConnected()) {
                 db_con = db.getConnection();
-                String sql_select = "SELECT * FROM eleve WHERE nom like '%?%' OR prenom like '%?%'";
+                String sql_select = "SELECT * FROM eleve WHERE nom like '%?%' OR prenom like '%?%' AND numEcole=?";
                 try (PreparedStatement p_stmt = db_con.prepareStatement(sql_select)) {
                     p_stmt.setString(1, filterValue);
                     p_stmt.setString(2, filterValue);
+                    p_stmt.setString(3, _num_ecole);
                     rs = p_stmt.executeQuery();
-
-                    System.out.println("numEleve\t\tnumEcole\t\tnom\t\tprenom");
 
                     while (rs.next()) {
                         String numEleve = rs.getString("numEleve");

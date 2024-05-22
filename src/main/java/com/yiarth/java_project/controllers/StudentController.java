@@ -100,8 +100,8 @@ public class StudentController {
      * Search a students
      * @return List of filtered students
      */
-    public List<String[]> searchSudent(String filterValue) {
-        Eleve student = new Eleve();
+    public List<String[]> searchSudent(String filterValue, String numEcole) {
+        Eleve student = new Eleve(numEcole);
 
         List<String[]> students_list = new ArrayList<>();
         students_list = student.getFilteredStudent(filterValue);

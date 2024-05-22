@@ -519,8 +519,8 @@
                            <children>
                               <Pane prefHeight="57.0" prefWidth="270.0" styleClass="label_input">
                                  <children>
-                                    <Label layoutX="8.0" layoutY="6.0" prefHeight="19.0" prefWidth="114.0" styleClass="label_for_input" text="Code matière" />
-                                    <TextField fx:id="c_matiere_input" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" styleClass="input">
+                                    <Label layoutX="8.0" layoutY="6.0" prefHeight="19.0" prefWidth="114.0" styleClass="label_for_input" text="Code" />
+                                    <TextField fx:id="c_matiere_input" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" promptText="Code matière..." styleClass="input">
                                        <cursor>
                                           <Cursor fx:constant="TEXT" />
                                        </cursor>
@@ -597,8 +597,8 @@
                            <children>
                               <Pane prefHeight="57.0" prefWidth="270.0" styleClass="label_input">
                                  <children>
-                                    <Label layoutX="8.0" layoutY="6.0" prefHeight="19.0" prefWidth="114.0" styleClass="label_for_input" text="Numéro école" />
-                                    <TextField fx:id="num_ecole_input" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" styleClass="input">
+                                    <Label layoutX="8.0" layoutY="6.0" prefHeight="19.0" prefWidth="114.0" styleClass="label_for_input" text="Numéro" />
+                                    <TextField fx:id="num_ecole_input" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" promptText="Numéro de l'école..." styleClass="input">
                                        <cursor>
                                           <Cursor fx:constant="TEXT" />
                                        </cursor>

@@ -61,7 +61,7 @@ public class AverageController {
         double scoreAverageValue;
 
         if (student.isExists()) {
-            scoreAverageValue = (float) student.getTotalScore() / _coef_total;
+            scoreAverageValue = (double) student.getTotalScore() / _coef_total;
 
             return scoreAverageValue;
         } else {
@@ -73,11 +73,11 @@ public class AverageController {
      * Get all students with their average note value
      * @return List of students
      */
-    public List<String[]> getAllStudents() {
-        Eleve student = new Eleve();
+    public List<String[]> getAllStudents(String numEcole) {
+        Eleve student = new Eleve(numEcole);
         List<String[]> studentList = new ArrayList<>();
         double average;
-        List<String[]> studentsList = student.getAllRecords();
+        List<String[]> studentsList = student.getStudentsInSchool();
         for (String[] studentArray : studentsList) {
             Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3], Date.valueOf(studentArray[4]));
             if (candidate.isExists()) {
@@ -95,12 +95,12 @@ public class AverageController {
      * Get the students who admitted their CEPE
      * @return List of student admitted
      */
-    public List<String[]> getStudentsCepeAdmitted() {
-        Eleve student = new Eleve();
+    public List<String[]> getStudentsCepeAdmitted(String numEcole) {
+        Eleve student = new Eleve(numEcole);
         List<String[]> studentCepeAdmitted = new ArrayList<>();
         double average;
 
-        List<String[]> studentsList = student.getAllRecords();
+        List<String[]> studentsList = student.getStudentsInSchool();
         for (String[] studentArray : studentsList) {
             Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3], Date.valueOf(studentArray[4]));
             if (candidate.isExists()) {
@@ -119,12 +119,12 @@ public class AverageController {
      * Get the students who are admitted in Sixth class
      * @return List of students admitted
      */
-    public List<String[]> getStudentsSixthAdmitted() {
-        Eleve student = new Eleve();
+    public List<String[]> getStudentsSixthAdmitted(String numEcole) {
+        Eleve student = new Eleve(numEcole);
         List<String[]> studentSixthAdmitted = new ArrayList<>();
         double average;
 
-        List<String[]> studentsList = student.getAllRecords();
+        List<String[]> studentsList = student.getStudentsInSchool();
         for (String[] studentArray : studentsList) {
             Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3], Date.valueOf(studentArray[4]));
             if (candidate.isExists()) {
@@ -143,12 +143,12 @@ public class AverageController {
      * Get the students who failed their CEPE
      * @return List of students who failed
      */
-    public List<String[]> getFailedStudents() {
-        Eleve student = new Eleve();
+    public List<String[]> getFailedStudents(String numEcole) {
+        Eleve student = new Eleve(numEcole);
         List<String[]> failedStudents = new ArrayList<>();
         double average;
 
-        List<String[]> studentsList = student.getAllRecords();
+        List<String[]> studentsList = student.getStudentsInSchool();
         for (String[] studentArray : studentsList) {
             Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3], Date.valueOf(studentArray[4]));
             if (candidate.isExists()) {

@@ -221,6 +221,7 @@ public class MainController implements Initializable {
         String resultMessage = school.addSchool(numEcole,designEcole,adresseEcole);
         if(resultMessage.contains("ajoutée")) {
             cancel_school();
+            studentFormCombobox();
         }
         school_result_message.setText(resultMessage);
         timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> school_result_message.setText("")));
@@ -236,6 +237,7 @@ public class MainController implements Initializable {
         String resultMessage = school.updateSchool(numEcole,designEcole,adresseEcole);
         if (resultMessage.contains("mise à jour")) {
             cancel_school();
+            studentFormCombobox();
         }
         school_result_message.setText(resultMessage);
         timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> school_result_message.setText("")));
@@ -248,6 +250,7 @@ public class MainController implements Initializable {
         String resultMessage = school.deleteSchool(numEcole);
         if (resultMessage.contains("supprimée")) {
             cancel_school();
+            studentFormCombobox();
         }
         school_result_message.setText(resultMessage);
         timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> school_result_message.setText("")));
@@ -259,6 +262,8 @@ public class MainController implements Initializable {
         num_ecole_input.clear();
         design_ecole_input.clear();
         adresse_ecole_input.clear();
+
+        num_ecole_input.setDisable(false);
 
         add_school_btn.setDisable(false);
         update_school_btn.setDisable(true);
@@ -354,6 +359,9 @@ public class MainController implements Initializable {
         student_firstname_input.clear();
         student_lastname_input.clear();
         student_datenais_input.setValue(null);
+
+        student_school_combobox.setDisable(false);
+        student_num_input.setDisable(false);
 
         add_student_btn.setDisable(false);
         update_student_btn.setDisable(true);
@@ -459,6 +467,9 @@ public class MainController implements Initializable {
         design_matiere_input.clear();
         coef_input.clear();
 
+        c_matiere_input.setDisable(false);
+        design_matiere_input.setDisable(false);
+
         add_subject_btn.setDisable(false);
         update_subject_btn.setDisable(true);
         delete_subject_btn.setDisable(true);
@@ -537,6 +548,8 @@ public class MainController implements Initializable {
                 design_ecole_input.setText(newSelection.getDesign());
                 adresse_ecole_input.setText(newSelection.getAdresse());
 
+                num_ecole_input.setDisable(true);
+
                 add_school_btn.setDisable(true);
                 update_school_btn.setDisable(false);
                 delete_school_btn.setDisable(false);
@@ -579,6 +592,9 @@ public class MainController implements Initializable {
                 c_matiere_input.setText(newSelection.getNumMat());
                 design_matiere_input.setText(newSelection.getDesign());
                 coef_input.setText(String.valueOf(newSelection.getCoef()));
+
+                c_matiere_input.setDisable(true);
+                design_matiere_input.setDisable(true);
 
                 add_subject_btn.setDisable(true);
                 update_subject_btn.setDisable(false);
@@ -628,6 +644,9 @@ public class MainController implements Initializable {
                 student_firstname_input.setText(newSelection.getNom());
                 student_lastname_input.setText(newSelection.getPrenom());
                 student_datenais_input.setValue(Date.valueOf(newSelection.getDateNais()).toLocalDate());
+
+                student_school_combobox.setDisable(true);
+                student_num_input.setDisable(true);
 
                 add_student_btn.setDisable(true);
                 update_student_btn.setDisable(false);
