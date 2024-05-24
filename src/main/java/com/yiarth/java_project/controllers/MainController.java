@@ -91,6 +91,7 @@ public class MainController implements Initializable {
         dataToStudentTb();
 
         studentFormCombobox();
+        schoolCombobox();
 
         selectTableStudent();
         selectTableSubject();
@@ -328,15 +329,22 @@ public class MainController implements Initializable {
         String numEleve = student_num_input.getText();
         String nom = student_firstname_input.getText();
         String prenom = student_lastname_input.getText();
-        Date dateNais = Date.valueOf(student_datenais_input.getValue());
 
-        String resultMessage = student.updateStudent(numEleve,numEcole,nom,prenom,dateNais);
-        if (resultMessage.contains("mis à jour")) {
-            cancel_student();
+        if (student_datenais_input.getValue() != null) {
+            Date dateNais = Date.valueOf(student_datenais_input.getValue());
+
+            String resultMessage = student.updateStudent(numEleve,numEcole,nom,prenom,dateNais);
+            if (resultMessage.contains("mis à jour")) {
+                cancel_student();
+            }
+            student_result_message.setText(resultMessage);
+            timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> student_result_message.setText("")));
+            timing.play();
+        } else {
+            student_result_message.setText("Veuillez remplir tous les champs récquis.");
+            timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> student_result_message.setText("")));
+            timing.play();
         }
-        student_result_message.setText(resultMessage);
-        timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> student_result_message.setText("")));
-        timing.play();
     }
     @FXML
     private void delete_student(String numEcole, String numEleve) {
@@ -424,8 +432,6 @@ public class MainController implements Initializable {
             timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> subject_result_message.setText("")));
             timing.play();
         }
-
-
     }
     @FXML
     public void update_subject() {
@@ -510,6 +516,23 @@ public class MainController implements Initializable {
         }
         student_school_combobox.setPromptText("Selectionner une école");
         student_school_combobox.setItems(options);
+    }
+
+    @FXML
+    private ComboBox school_combobox;
+    private void schoolCombobox() {
+        SchoolController school = new SchoolController();
+        List<String[]> schoolList = school.getAllSchools();
+        ObservableList<String> options = FXCollections.observableArrayList();
+
+        for (String[] schoolArray : schoolList) {
+            options.add(schoolArray[0]);
+        }
+        school_combobox.setItems(options);
+
+        if (!school_combobox.getItems().isEmpty()) {
+            school_combobox.getSelectionModel().select(0); // Set the first item as selected
+        }
     }
 
     /**

@@ -41,10 +41,17 @@ public class StudentController {
     public List<String[]> getAllStudents() {
         Eleve student = new Eleve();
 
-        List<String[]> students_list = new ArrayList<>();
-        students_list = student.getAllRecords();
+        return student.getAllRecords();
+    }
 
-        return students_list;
+    /**
+     * Get all students in a specific school
+     * @return List of all students
+     */
+    public List<String[]> getAllStudentsInSchool(String numEcole) {
+        Eleve student = new Eleve(numEcole);
+
+        return student.getStudentsInSchool();
     }
 
     /**
@@ -103,9 +110,6 @@ public class StudentController {
     public List<String[]> searchSudent(String filterValue, String numEcole) {
         Eleve student = new Eleve(numEcole);
 
-        List<String[]> students_list = new ArrayList<>();
-        students_list = student.getFilteredStudent(filterValue);
-
-        return students_list;
+        return student.getFilteredStudent(filterValue);
     }
 }
