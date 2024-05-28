@@ -14,7 +14,6 @@ import javafx.util.Duration;
 
 import java.net.URL;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -37,8 +36,6 @@ public class MainController implements Initializable {
     @FXML
     private AnchorPane school_anchor_pane;
 
-    @FXML
-    private AnchorPane bar_school_container;
     @FXML
     private Label bar_title;
 
@@ -82,6 +79,20 @@ public class MainController implements Initializable {
     @FXML
     private Label subject_result_message;
 
+    /**
+     * Score TextFields
+     */
+    @FXML
+    private TextField school_year_input;
+    @FXML
+    private ComboBox<String> score_student_input;
+    @FXML
+    private ComboBox<String> score_subject_input;
+    @FXML
+    private TextField score_input;
+    @FXML
+    private Label score_result_message;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         handleSideBarButtonClick(1);
@@ -89,15 +100,19 @@ public class MainController implements Initializable {
         dataToSchoolTb();
         dataToSubjectTb();
         dataToStudentTb();
+        dataToScoreTb();
 
         studentFormCombobox();
-        schoolCombobox();
+        scoreStudentCombobox();
+        scoreSubjectCombobox();
 
         selectTableStudent();
         selectTableSubject();
         selectTableSchool();
+        selectTableScore();
 
         disabledButton();
+        disabledInput();
     }
 
     /**
@@ -134,37 +149,31 @@ public class MainController implements Initializable {
             case 1:
                 home_anchor_pane.setVisible(true);
                 bar_title.setText("Accueil");
-                bar_school_container.setVisible(true);
                 home_button_sidebar.getStyleClass().add("sidebar_button_active");
                 break;
             case 2:
                 result_anchor_pane.setVisible(true);
                 bar_title.setText("Résultat");
-                bar_school_container.setVisible(true);
                 result_button_sidebar.getStyleClass().add("sidebar_button_active");
                 break;
             case 3:
                 score_anchor_pane.setVisible(true);
                 bar_title.setText("Note");
-                bar_school_container.setVisible(true);
                 score_button_sidebar.getStyleClass().add("sidebar_button_active");
                 break;
             case 4:
                 student_anchor_pane.setVisible(true);
                 bar_title.setText("Elève");
-                bar_school_container.setVisible(true);
                 student_button_sidebar.getStyleClass().add("sidebar_button_active");
                 break;
             case 5:
                 subject_anchor_pane.setVisible(true);
                 bar_title.setText("Matière");
-                bar_school_container.setVisible(false);
                 subject_button_sidebar.getStyleClass().add("sidebar_button_active");
                 break;
             case 6:
                 school_anchor_pane.setVisible(true);
                 bar_title.setText("Ecole");
-                bar_school_container.setVisible(false);
                 school_button_sidebar.getStyleClass().add("sidebar_button_active");
                 break;
             default:
@@ -200,10 +209,17 @@ public class MainController implements Initializable {
         update_school_btn.setDisable(true);
         update_student_btn.setDisable(true);
         update_subject_btn.setDisable(true);
+        update_score_btn.setDisable(true);
 
         delete_school_btn.setDisable(true);
         delete_student_btn.setDisable(true);
         delete_subject_btn.setDisable(true);
+        delete_score_btn.setDisable(true);
+    }
+
+    private void disabledInput() {
+        school_year_input.setText("2022-2023");
+        school_year_input.setDisable(true);
     }
 
     /**
@@ -314,13 +330,11 @@ public class MainController implements Initializable {
                 cancel_student();
             }
             student_result_message.setText(resultMessage);
-            timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> student_result_message.setText("")));
-            timing.play();
         } else {
             student_result_message.setText("Veuillez remplir tous les champs récquis.");
-            timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> student_result_message.setText("")));
-            timing.play();
         }
+        timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> student_result_message.setText("")));
+        timing.play();
     }
     @FXML
     public void update_student() {
@@ -338,13 +352,11 @@ public class MainController implements Initializable {
                 cancel_student();
             }
             student_result_message.setText(resultMessage);
-            timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> student_result_message.setText("")));
-            timing.play();
         } else {
             student_result_message.setText("Veuillez remplir tous les champs récquis.");
-            timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> student_result_message.setText("")));
-            timing.play();
         }
+        timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> student_result_message.setText("")));
+        timing.play();
     }
     @FXML
     private void delete_student(String numEcole, String numEleve) {
@@ -504,6 +516,112 @@ public class MainController implements Initializable {
     }
 
     /**
+     * Score button methods
+     */
+    @FXML private Button add_score_btn;
+    @FXML private Button update_score_btn;
+    @FXML private Button delete_score_btn;
+    @FXML
+    public void add_score() {
+        NoteController score = new NoteController();
+        String schoolYear = school_year_input.getText();
+        String student = score_student_input.getValue();
+        String subject = score_subject_input.getValue();
+        String scoreValue = score_input.getText();
+
+        if (!schoolYear.isEmpty() && student != null && subject != null && !scoreValue.isEmpty()) {
+            try {
+                String resultMessage = score.addNote(schoolYear, student, subject, Double.parseDouble(scoreValue));
+                if (resultMessage.contains("ajoutée")) {
+                    cancel_score();
+                }
+                score_result_message.setText(resultMessage);
+                timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> score_result_message.setText("")));
+                timing.play();
+            } catch (NumberFormatException e) {
+                score_result_message.setText("Note Invalide.");
+                timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> score_result_message.setText("")));
+                timing.play();
+            }
+        } else {
+            score_result_message.setText("Veuillez remplir tous les champs requis.");
+            timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> score_result_message.setText("")));
+            timing.play();
+        }
+    }
+    @FXML
+    public void update_score() {
+        NoteController score = new NoteController();
+        String schoolYear = school_year_input.getText();
+        String student = score_student_input.getValue();
+        String subject = score_subject_input.getValue();
+        String scoreValue = score_input.getText();
+
+        try {
+            String resultMessage = score.updateNote(schoolYear, student, subject, Double.parseDouble(scoreValue));
+            if (resultMessage.contains("mise à jour")) {
+                cancel_score();
+            }
+            score_result_message.setText(resultMessage);
+            timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> score_result_message.setText("")));
+            timing.play();
+        } catch (NumberFormatException e) {
+            score_result_message.setText("Note Invalide.");
+            timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> score_result_message.setText("")));
+            timing.play();
+        }
+    }
+    @FXML
+    private void delete_score(String numEleve, String numMat) {
+        NoteController score = new NoteController();
+
+        String resultMessage = score.deleteNote(numEleve, numMat);
+        if (resultMessage.contains("supprimée")) {
+            cancel_score();
+        }
+        score_result_message.setText(resultMessage);
+        timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> score_result_message.setText("")));
+        timing.play();
+    }
+    @FXML
+    public void cancel_score() {
+        dataToScoreTb();
+        score_student_input.getSelectionModel().clearSelection();
+        score_student_input.setValue(null);
+        score_subject_input.getSelectionModel().clearSelection();
+        score_subject_input.setValue(null);
+        score_input.clear();
+
+        score_student_input.setDisable(false);
+
+        add_score_btn.setDisable(false);
+        update_score_btn.setDisable(true);
+        delete_score_btn.setDisable(true);
+    }
+    @FXML
+    public void handleScoreDelete() {
+        String numEleve = score_student_input.getValue();
+        String numMat = score_subject_input.getValue();
+
+        if (numEleve != null && numMat != null) {
+            // Show a confirmation dialog
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation de suppression");
+            alert.setHeaderText("Etes-vous sûr de vouloir supprimer la note?");
+
+            // Capture the user's response
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                delete_score(numEleve, numMat);
+            }
+        } else {
+            score_result_message.setText("Aucune note sélectionnée.");
+            timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> score_result_message.setText("")));
+            timing.play();
+        }
+    }
+
+    /**
      * School combobox in student form
      */
     private void studentFormCombobox() {
@@ -518,21 +636,32 @@ public class MainController implements Initializable {
         student_school_combobox.setItems(options);
     }
 
-    @FXML
-    private ComboBox school_combobox;
-    private void schoolCombobox() {
-        SchoolController school = new SchoolController();
-        List<String[]> schoolList = school.getAllSchools();
+    /**
+     * Student combobox in score form
+     */
+    private void scoreStudentCombobox() {
+        StudentController student = new StudentController();
+        List<String[]> studentList = student.getAllStudents();
         ObservableList<String> options = FXCollections.observableArrayList();
 
-        for (String[] schoolArray : schoolList) {
-            options.add(schoolArray[0]);
+        for (String[] studentArray : studentList) {
+            options.add(studentArray[0]);
         }
-        school_combobox.setItems(options);
+        score_student_input.setItems(options);
+    }
 
-        if (!school_combobox.getItems().isEmpty()) {
-            school_combobox.getSelectionModel().select(0); // Set the first item as selected
+    /**
+     * School combobox in student form
+     */
+    private void scoreSubjectCombobox() {
+        SubjectController subject = new SubjectController();
+        List<String[]> subjectList = subject.getAllSubjects();
+        ObservableList<String> options = FXCollections.observableArrayList();
+
+        for (String[] subjectArray : subjectList) {
+            options.add(subjectArray[0]);
         }
+        score_subject_input.setItems(options);
     }
 
     /**
@@ -674,6 +803,54 @@ public class MainController implements Initializable {
                 add_student_btn.setDisable(true);
                 update_student_btn.setDisable(false);
                 delete_student_btn.setDisable(false);
+            }
+        });
+    }
+
+    /**
+     * Score TableView manipulation
+     */
+    @FXML
+    private TableView<Score> score_tableview;
+    @FXML
+    private TableColumn<Score, String> scoreNumEleveCol;
+    @FXML
+    private TableColumn<Score, String> scoreNomCol;
+    @FXML
+    private TableColumn<Score, String> scorePrenomCol;
+    @FXML
+    private TableColumn<Score, Double> scoreTotalCol;
+
+    ObservableList<Score> studentsScoreList = FXCollections.observableArrayList();
+
+    private void dataToScoreTb() {
+        StudentController student = new StudentController();
+        List<String[]> listStudents = student.getAllStudents();
+
+        scoreNumEleveCol.setCellValueFactory(new PropertyValueFactory<>("numEleve"));
+        scoreNomCol.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        scorePrenomCol.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+        scoreTotalCol.setCellValueFactory(new PropertyValueFactory<>("noteTotale"));
+
+        score_tableview.getItems().clear();
+
+        for (String[] studenArray : listStudents) {
+            AverageController a = new AverageController();
+            double totalScore = a.getTotalScore(studenArray[0], studenArray[1]);
+            studentsScoreList.add(new Score(studenArray[0], studenArray[2], studenArray[3], totalScore));
+            score_tableview.setItems(studentsScoreList);
+        }
+    }
+    private void selectTableScore() {
+        score_tableview.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                score_student_input.setValue(newSelection.getNumEleve());
+
+                score_student_input.setDisable(true);
+
+                add_score_btn.setDisable(true);
+                update_score_btn.setDisable(false);
+                delete_score_btn.setDisable(false);
             }
         });
     }

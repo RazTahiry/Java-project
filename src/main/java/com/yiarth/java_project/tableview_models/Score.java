@@ -1,37 +1,23 @@
 package com.yiarth.java_project.tableview_models;
 
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Score {
 
-    private final SimpleStringProperty anneeScolaire;
-    private final SimpleStringProperty numMat;
     private final SimpleStringProperty numEleve;
-    private final SimpleIntegerProperty note;
+    private final SimpleStringProperty nom;
+    private final SimpleStringProperty prenom;
+    private final SimpleDoubleProperty noteTotale;
 
-    public Score(String anneeScolaire, String numMat, String numEleve, int note) {
-        this.anneeScolaire = new SimpleStringProperty(anneeScolaire);
-        this.numMat = new SimpleStringProperty(numMat);
-        this.numEleve = new SimpleStringProperty(numEleve);
-        this.note = new SimpleIntegerProperty(note);
+    public Score(String numMat, String nom, String prenom, double noteTotale) {
+        this.numEleve = new SimpleStringProperty(numMat);
+        this.nom = new SimpleStringProperty(nom);
+        this.prenom = new SimpleStringProperty(prenom);
+        this.noteTotale = new SimpleDoubleProperty(noteTotale);
     }
 
-    public String getAnneeScolaire() {
-        return anneeScolaire.get();
-    }
-
-    public SimpleStringProperty setAnneeScolaire() {
-        return anneeScolaire;
-    }
-
-    public String getNumMat() {
-        return numMat.get();
-    }
-
-    public SimpleStringProperty setNumMat() {
-        return numMat;
-    }
 
     public String getNumEleve() {
         return numEleve.get();
@@ -41,11 +27,27 @@ public class Score {
         return numEleve;
     }
 
-    public int getNote() {
-        return note.get();
+    public String getNom() {
+        return nom.get();
     }
 
-    public SimpleIntegerProperty setNote() {
-        return note;
+    public SimpleStringProperty setNom() {
+        return nom;
+    }
+
+    public String getPrenom() {
+        return prenom.get();
+    }
+
+    public SimpleStringProperty setPrenom() {
+        return prenom;
+    }
+
+    public double getNoteTotale() {
+        return noteTotale.get();
+    }
+
+    public SimpleDoubleProperty setNoteTotale() {
+        return noteTotale;
     }
 }

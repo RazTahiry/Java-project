@@ -14,7 +14,7 @@ public class Note {
     private String _annee_scolaire;
     private String _num_eleve;
     private String _num_mat;
-    private int _note;
+    private double _note;
 
     private boolean isCreated;
     private boolean isUpdated;
@@ -24,7 +24,7 @@ public class Note {
      * Constructors
      */
     public Note() {}
-    public Note(String anneeScolaire, String numEleve, String numMat, int note) {
+    public Note(String anneeScolaire, String numEleve, String numMat, double note) {
         _annee_scolaire = anneeScolaire;
         _num_eleve = numEleve;
         _num_mat = numMat;
@@ -48,7 +48,7 @@ public class Note {
     public String get_num_mat() {
         return _num_mat;
     }
-    public int get_note() {
+    public double get_note() {
         return _note;
     }
 
@@ -64,7 +64,7 @@ public class Note {
     public void set_num_mat(String numMat) {
         _num_mat = numMat;
     }
-    public void set_note(int note) {
+    public void set_note(double note) {
         _note = note;
     }
 
@@ -156,7 +156,7 @@ public class Note {
                     p_stmt.setString(1, _annee_scolaire);
                     p_stmt.setString(2, _num_eleve);
                     p_stmt.setString(3, _num_mat);
-                    p_stmt.setInt(4, _note);
+                    p_stmt.setDouble(4, _note);
 
                     int rowsAffected = p_stmt.executeUpdate();
                     if (rowsAffected > 0) {
@@ -255,7 +255,7 @@ public class Note {
                 String sql_update = "UPDATE note SET anneeScolaire=?, note=? WHERE numEleve=? AND numMat=?";
                 try (PreparedStatement p_stmt = db_con.prepareStatement(sql_update)) {
                     p_stmt.setString(1, _annee_scolaire);
-                    p_stmt.setInt(2, _note);
+                    p_stmt.setDouble(2, _note);
                     p_stmt.setString(3, _num_eleve);
                     p_stmt.setString(4, _num_mat);
 

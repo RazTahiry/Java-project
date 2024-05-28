@@ -30,7 +30,7 @@ public class StudentController {
                 return "Veuillez remplir tous les champs requis.";
             }
         } else {
-            return "L'élève existe déjà dans la base de données.";
+            return "Le numéro matricule existe déjà dans la base de données.";
         }
     }
 

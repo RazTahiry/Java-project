@@ -15,7 +15,7 @@ public class NoteController {
      * @param score Weighted rating
      * @return String (Result message)
      */
-    public String addNote(String anneeScolaire, String numEleve, String numMat, int score) {
+    public String addNote(String anneeScolaire, String numEleve, String numMat, double score) {
         Note note = new Note(anneeScolaire, numEleve, numMat, score);
         if (!note.isExists()) {
             if (note.isValidated()) {
@@ -54,7 +54,7 @@ public class NoteController {
      * @param score Weighted rating
      * @return String (Result message)
      */
-    public String updateNote(String anneeScolaire, String numEleve, String numMat, int score) {
+    public String updateNote(String anneeScolaire, String numEleve, String numMat, double score) {
         Note note = new Note(numEleve, numMat);
         if (note.isExists()) {
             note.set_annee_scolaire(anneeScolaire);

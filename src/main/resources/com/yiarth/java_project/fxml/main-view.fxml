@@ -28,7 +28,7 @@
    <children>
       <VBox minWidth="162.0" prefHeight="500.0" prefWidth="162.0" styleClass="sidebar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="67.0">
          <children>
-            <Button fx:id="home_button_sidebar" minWidth="162.0" mnemonicParsing="false" onMouseClicked="#home_button_sidebar" prefHeight="39.0" prefWidth="162.0" styleClass="sidebar_button" text="Accueil" textFill="WHITE">
+            <Button fx:id="home_button_sidebar" minWidth="162.0" mnemonicParsing="false" onAction="#home_button_sidebar" prefHeight="39.0" prefWidth="162.0" styleClass="sidebar_button" text="Accueil" textFill="WHITE">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -43,7 +43,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="result_button_sidebar" mnemonicParsing="false" onMouseClicked="#result_button_sidebar" prefHeight="39.0" prefWidth="166.0" styleClass="sidebar_button" text="Résultats" textFill="WHITE">
+            <Button fx:id="result_button_sidebar" mnemonicParsing="false" onAction="#result_button_sidebar" prefHeight="39.0" prefWidth="166.0" styleClass="sidebar_button" text="Résultats" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="icons">
                      <image>
@@ -51,7 +51,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="score_button_sidebar" mnemonicParsing="false" onMouseClicked="#score_button_sidebar" prefHeight="47.0" prefWidth="190.0" styleClass="sidebar_button" text="Notes">
+            <Button fx:id="score_button_sidebar" mnemonicParsing="false" onAction="#score_button_sidebar" prefHeight="47.0" prefWidth="190.0" styleClass="sidebar_button" text="Notes">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="icons">
                      <image>
@@ -59,7 +59,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="student_button_sidebar" mnemonicParsing="false" onMouseClicked="#student_button_sidebar" prefHeight="39.0" prefWidth="166.0" styleClass="sidebar_button" text="Elèves" textFill="WHITE">
+            <Button fx:id="student_button_sidebar" mnemonicParsing="false" onAction="#student_button_sidebar" prefHeight="39.0" prefWidth="166.0" styleClass="sidebar_button" text="Elèves" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="icons">
                      <image>
@@ -67,7 +67,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="subject_button_sidebar" mnemonicParsing="false" onMouseClicked="#subject_button_sidebar" prefHeight="39.0" prefWidth="174.0" styleClass="sidebar_button" text="Matieres" textFill="WHITE">
+            <Button fx:id="subject_button_sidebar" mnemonicParsing="false" onAction="#subject_button_sidebar" prefHeight="39.0" prefWidth="174.0" styleClass="sidebar_button" text="Matières" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="icons">
                      <image>
@@ -75,7 +75,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="school_button_sidebar" mnemonicParsing="false" onMouseClicked="#school_button_sidebar" prefHeight="39.0" prefWidth="173.0" styleClass="sidebar_button" text="Ecole" textFill="WHITE">
+            <Button fx:id="school_button_sidebar" mnemonicParsing="false" onAction="#school_button_sidebar" prefHeight="39.0" prefWidth="173.0" styleClass="sidebar_button" text="Ecole" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="icons">
                      <image>
@@ -134,10 +134,11 @@
                                        <children>
                                           <TableView fx:id="student_tableview21" layoutY="42.0" maxWidth="650.0" minWidth="600.0" prefHeight="483.0" prefWidth="600.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="42.0">
                                              <columns>
-                                                <TableColumn fx:id="numEleveCol21" maxWidth="200.0" minWidth="100.0" prefWidth="150.0" text="N° Matricule" />
-                                                <TableColumn fx:id="nomCol11" maxWidth="400.0" minWidth="250.0" prefWidth="300.0" text="Nom" />
-                                                <TableColumn fx:id="prenomCol11" maxWidth="400.0" minWidth="250.0" prefWidth="350.0" text="Prenom" />
-                                                <TableColumn fx:id="prenomCol111" maxWidth="400.0" minWidth="250.0" prefWidth="350.0" text="Moyenne" />
+                                                <TableColumn fx:id="numEleveCol21" maxWidth="200.0" minWidth="100.0" prefWidth="200.0" text="N° Matricule" />
+                                                <TableColumn fx:id="nomCol11" maxWidth="400.0" minWidth="250.0" prefWidth="250.0" text="Nom" />
+                                                <TableColumn fx:id="prenomCol11" maxWidth="400.0" minWidth="250.0" prefWidth="300.0" text="Prenom" />
+                                                <TableColumn fx:id="prenomCol111" maxWidth="400.0" minWidth="100.0" prefWidth="150.0" text="Moyenne" />
+                                                <TableColumn fx:id="prenomCol1111" maxWidth="400.0" minWidth="250.0" prefWidth="280.0" text="Ecole" />
                                              </columns>
                                           </TableView>
                                           <AnchorPane layoutX="5.0" prefHeight="43.0" prefWidth="284.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -179,10 +180,11 @@
                                        <children>
                                           <TableView fx:id="student_tableview2" layoutY="42.0" maxWidth="650.0" minWidth="600.0" prefHeight="483.0" prefWidth="600.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="42.0">
                                              <columns>
-                                                <TableColumn fx:id="numEleveCol2" maxWidth="200.0" minWidth="100.0" prefWidth="150.0" text="N° Matricule" />
-                                                <TableColumn fx:id="nomCol1" maxWidth="400.0" minWidth="250.0" prefWidth="300.0" text="Nom" />
-                                                <TableColumn fx:id="prenomCol1" maxWidth="400.0" minWidth="250.0" prefWidth="350.0" text="Prenom" />
-                                                <TableColumn fx:id="prenomCol13" maxWidth="400.0" minWidth="250.0" prefWidth="350.0" text="Moyenne" />
+                                                <TableColumn fx:id="numEleveCol2" maxWidth="200.0" minWidth="100.0" prefWidth="200.0" text="N° Matricule" />
+                                                <TableColumn fx:id="nomCol1" maxWidth="400.0" minWidth="250.0" prefWidth="250.0" text="Nom" />
+                                                <TableColumn fx:id="prenomCol1" maxWidth="400.0" minWidth="250.0" prefWidth="300.0" text="Prenom" />
+                                                <TableColumn fx:id="prenomCol13" maxWidth="400.0" minWidth="100.0" prefWidth="150.0" text="Moyenne" />
+                                                <TableColumn fx:id="prenomCol131" maxWidth="400.0" minWidth="250.0" prefWidth="280.0" text="Ecole" />
                                              </columns>
                                           </TableView>
                                           <AnchorPane layoutX="5.0" prefHeight="43.0" prefWidth="284.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -224,10 +226,11 @@
                                        <children>
                                           <TableView fx:id="student_tableview22" layoutY="42.0" maxWidth="650.0" minWidth="600.0" prefHeight="483.0" prefWidth="600.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="42.0">
                                              <columns>
-                                                <TableColumn fx:id="numEleveCol22" maxWidth="200.0" minWidth="100.0" prefWidth="150.0" text="N° Matricule" />
-                                                <TableColumn fx:id="nomCol12" maxWidth="400.0" minWidth="250.0" prefWidth="300.0" text="Nom" />
-                                                <TableColumn fx:id="prenomCol12" maxWidth="400.0" minWidth="250.0" prefWidth="350.0" text="Prenom" />
-                                                <TableColumn fx:id="prenomCol121" maxWidth="400.0" minWidth="250.0" prefWidth="350.0" text="Moyenne" />
+                                                <TableColumn fx:id="numEleveCol22" maxWidth="200.0" minWidth="100.0" prefWidth="200.0" text="N° Matricule" />
+                                                <TableColumn fx:id="nomCol12" maxWidth="400.0" minWidth="250.0" prefWidth="250.0" text="Nom" />
+                                                <TableColumn fx:id="prenomCol12" maxWidth="400.0" minWidth="250.0" prefWidth="300.0" text="Prenom" />
+                                                <TableColumn fx:id="prenomCol121" maxWidth="400.0" minWidth="100.0" prefWidth="150.0" text="Moyenne" />
+                                                <TableColumn fx:id="prenomCol1211" maxWidth="400.0" minWidth="250.0" prefWidth="280.0" text="Ecole" />
                                              </columns>
                                           </TableView>
                                           <AnchorPane layoutX="5.0" prefHeight="43.0" prefWidth="284.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -265,7 +268,7 @@
                   </TabPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="score_anchor_pane" prefHeight="200.0" prefWidth="200.0" visible="false">
+            <AnchorPane fx:id="score_anchor_pane" prefHeight="200.0" prefWidth="200.0">
                <children>
                   <AnchorPane minWidth="400.0" prefHeight="422.0" prefWidth="400.0" styleClass="form_container" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <children>
@@ -274,7 +277,7 @@
                               <Pane prefHeight="57.0" prefWidth="360.0" styleClass="label_input">
                                  <children>
                                     <Label layoutX="8.0" layoutY="6.0" prefHeight="19.0" prefWidth="137.0" styleClass="label_for_input" text="Année Scolaire" />
-                                    <TextField fx:id="student_num_input1" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" styleClass="input">
+                                    <TextField fx:id="school_year_input" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" styleClass="input">
                                        <cursor>
                                           <Cursor fx:constant="TEXT" />
                                        </cursor>
@@ -287,7 +290,7 @@
                               <Pane prefHeight="56.0" prefWidth="360.0" styleClass="label_input">
                                  <children>
                                     <Label layoutX="8.0" layoutY="5.0" prefHeight="17.0" prefWidth="59.0" styleClass="label_for_input" text="Eleve" />
-                                    <ComboBox fx:id="student_school_combobox1" layoutY="22.0" prefHeight="31.0" prefWidth="360.0" styleClass="combobox">
+                                    <ComboBox fx:id="score_student_input" layoutY="22.0" prefHeight="31.0" prefWidth="360.0" styleClass="combobox">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
@@ -300,7 +303,7 @@
                               <Pane layoutX="30.0" layoutY="97.0" prefHeight="56.0" prefWidth="360.0" styleClass="label_input">
                                  <children>
                                     <Label layoutX="8.0" layoutY="5.0" prefHeight="17.0" prefWidth="59.0" styleClass="label_for_input" text="Matière" />
-                                    <ComboBox fx:id="student_school_combobox11" layoutY="22.0" prefHeight="31.0" prefWidth="360.0" styleClass="combobox">
+                                    <ComboBox fx:id="score_subject_input" layoutY="22.0" prefHeight="31.0" prefWidth="360.0" styleClass="combobox">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
@@ -310,14 +313,14 @@
                               <Pane layoutX="30.0" layoutY="30.0" prefHeight="57.0" prefWidth="360.0" styleClass="label_input">
                                  <children>
                                     <Label layoutX="8.0" layoutY="6.0" prefHeight="19.0" prefWidth="137.0" styleClass="label_for_input" text="Note" />
-                                    <TextField fx:id="student_num_input11" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" styleClass="input">
+                                    <TextField fx:id="score_input" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" styleClass="input">
                                        <cursor>
                                           <Cursor fx:constant="TEXT" />
                                        </cursor>
                                     </TextField>
                                  </children>
                               </Pane>
-                              <Label fx:id="student_result_message1" prefHeight="20.0" prefWidth="360.0" styleClass="result_message" />
+                              <Label fx:id="score_result_message" prefHeight="20.0" prefWidth="360.0" styleClass="result_message" />
                               <GridPane hgap="4.0" prefHeight="72.0" prefWidth="300.0" vgap="2.0">
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -328,10 +331,10 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <Button fx:id="add_student_btn1" mnemonicParsing="false" onMouseClicked="#add_student" prefHeight="25.0" prefWidth="346.0" styleClass="form_button" text="Ajouter" />
-                                    <Button fx:id="update_student_btn1" mnemonicParsing="false" onMouseClicked="#update_student" prefHeight="25.0" prefWidth="348.0" styleClass="form_button" text="Modifier" GridPane.columnIndex="1" />
-                                    <Button fx:id="delete_student_btn1" mnemonicParsing="false" onMouseClicked="#handleStudentDelete" prefHeight="25.0" prefWidth="395.0" styleClass="form_button" text="Supprimer" GridPane.rowIndex="1" />
-                                    <Button fx:id="cancel_student_btn1" mnemonicParsing="false" onMouseClicked="#cancel_student" prefHeight="25.0" prefWidth="395.0" styleClass="form_button" text="Annuler" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Button fx:id="add_score_btn" mnemonicParsing="false" onAction="#add_score" prefHeight="25.0" prefWidth="346.0" styleClass="form_button" text="Ajouter" />
+                                    <Button fx:id="update_score_btn" mnemonicParsing="false" onAction="#update_score" prefHeight="25.0" prefWidth="348.0" styleClass="form_button" text="Modifier" GridPane.columnIndex="1" />
+                                    <Button fx:id="delete_score_btn" mnemonicParsing="false" onAction="#handleScoreDelete" prefHeight="25.0" prefWidth="395.0" styleClass="form_button" text="Supprimer" GridPane.rowIndex="1" />
+                                    <Button fx:id="cancel_score_btn" mnemonicParsing="false" onAction="#cancel_score" prefHeight="25.0" prefWidth="395.0" styleClass="form_button" text="Annuler" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
                            </children>
@@ -340,14 +343,17 @@
                   </AnchorPane>
                   <AnchorPane prefHeight="530.0" prefWidth="287.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="420.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <TableView fx:id="student_tableview1" layoutY="42.0" maxWidth="650.0" minWidth="600.0" prefHeight="483.0" prefWidth="600.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="42.0">
+                        <TableView fx:id="score_tableview" layoutY="42.0" maxWidth="650.0" minWidth="600.0" prefHeight="483.0" prefWidth="600.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="42.0">
                            <columns>
-                              <TableColumn fx:id="numEleveCol1" maxWidth="200.0" minWidth="100.0" prefWidth="150.0" text="N° Matricule" />
+                              <TableColumn fx:id="scoreNumEleveCol" maxWidth="200.0" minWidth="100.0" prefWidth="150.0" text="N° Matricule" />
+                              <TableColumn fx:id="scoreNomCol" maxWidth="300.0" minWidth="100.0" prefWidth="225.0" text="Nom" />
+                              <TableColumn fx:id="scorePrenomCol" maxWidth="300.0" minWidth="100.0" prefWidth="250.0" text="Prénom" />
+                              <TableColumn fx:id="scoreTotalCol" maxWidth="200.0" minWidth="100.0" prefWidth="150.0" text="Note Total" />
                            </columns>
                         </TableView>
                         <AnchorPane layoutX="5.0" prefHeight="43.0" prefWidth="284.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Pane layoutX="8.0" layoutY="2.0" prefHeight="40.0" prefWidth="200.0" styleClass="search_pane" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="2.0">
+                              <Pane layoutX="8.0" layoutY="2.0" prefHeight="40.0" prefWidth="200.0" styleClass="search_pane" AnchorPane.bottomAnchor="4.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="2.0">
                                  <children>
                                     <TextField prefHeight="37.0" prefWidth="176.0" promptText="Recherches..." styleClass="input_search">
                                        <padding>
@@ -368,6 +374,14 @@
                                        </cursor>
                                     </ImageView>
                                  </children>
+                              </Pane>
+                              <Pane prefHeight="35.0" prefWidth="200.0" styleClass="label_input" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="4.0">
+                                 <children>
+                                    <ComboBox layoutY="2.0" prefHeight="20.0" prefWidth="200.0" styleClass="combobox" />
+                                 </children>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Pane>
                            </children>
                         </AnchorPane>
@@ -453,10 +467,10 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Button fx:id="add_student_btn" mnemonicParsing="false" onMouseClicked="#add_student" prefHeight="25.0" prefWidth="346.0" styleClass="form_button" text="Ajouter" />
-                                    <Button fx:id="update_student_btn" mnemonicParsing="false" onMouseClicked="#update_student" prefHeight="25.0" prefWidth="348.0" styleClass="form_button" text="Modifier" GridPane.columnIndex="1" />
-                                    <Button fx:id="delete_student_btn" mnemonicParsing="false" onMouseClicked="#handleStudentDelete" prefHeight="25.0" prefWidth="395.0" styleClass="form_button" text="Supprimer" GridPane.rowIndex="1" />
-                                    <Button fx:id="cancel_student_btn" mnemonicParsing="false" onMouseClicked="#cancel_student" prefHeight="25.0" prefWidth="395.0" styleClass="form_button" text="Annuler" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Button fx:id="add_student_btn" mnemonicParsing="false" onAction="#add_student" prefHeight="25.0" prefWidth="346.0" styleClass="form_button" text="Ajouter" />
+                                    <Button fx:id="update_student_btn" mnemonicParsing="false" onAction="#update_student" prefHeight="25.0" prefWidth="348.0" styleClass="form_button" text="Modifier" GridPane.columnIndex="1" />
+                                    <Button fx:id="delete_student_btn" mnemonicParsing="false" onAction="#handleStudentDelete" prefHeight="25.0" prefWidth="395.0" styleClass="form_button" text="Supprimer" GridPane.rowIndex="1" />
+                                    <Button fx:id="cancel_student_btn" mnemonicParsing="false" onAction="#cancel_student" prefHeight="25.0" prefWidth="395.0" styleClass="form_button" text="Annuler" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
                            </children>
@@ -475,7 +489,7 @@
                         </TableView>
                         <AnchorPane layoutX="5.0" prefHeight="43.0" prefWidth="284.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Pane layoutX="8.0" layoutY="2.0" prefHeight="40.0" prefWidth="200.0" styleClass="search_pane" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="2.0">
+                              <Pane layoutX="8.0" layoutY="2.0" prefHeight="40.0" prefWidth="200.0" styleClass="search_pane" AnchorPane.bottomAnchor="4.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="2.0">
                                  <children>
                                     <TextField prefHeight="37.0" prefWidth="176.0" promptText="Recherches..." styleClass="input_search">
                                        <padding>
@@ -495,6 +509,14 @@
                                        </cursor>
                                     </ImageView>
                                  </children>
+                              </Pane>
+                              <Pane layoutX="385.0" layoutY="8.0" prefHeight="35.0" prefWidth="200.0" styleClass="label_input" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="4.0">
+                                 <children>
+                                    <ComboBox layoutY="2.0" prefHeight="20.0" prefWidth="200.0" styleClass="combobox" />
+                                 </children>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Pane>
                            </children>
                         </AnchorPane>
@@ -567,10 +589,10 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <Button fx:id="add_subject_btn" mnemonicParsing="false" onMouseClicked="#add_subject" prefHeight="25.0" prefWidth="346.0" styleClass="form_button" text="Ajouter" />
-                                    <Button fx:id="update_subject_btn" mnemonicParsing="false" onMouseClicked="#update_subject" prefHeight="25.0" prefWidth="348.0" styleClass="form_button" text="Modifier" GridPane.columnIndex="1" />
-                                    <Button fx:id="delete_subject_btn" mnemonicParsing="false" onMouseClicked="#handleSubjectDelete" prefHeight="25.0" prefWidth="395.0" styleClass="form_button" text="Supprimer" GridPane.rowIndex="1" />
-                                    <Button mnemonicParsing="false" onMouseClicked="#cancel_subject" prefHeight="25.0" prefWidth="395.0" styleClass="form_button" text="Annuler" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Button fx:id="add_subject_btn" mnemonicParsing="false" onAction="#add_subject" prefHeight="25.0" prefWidth="346.0" styleClass="form_button" text="Ajouter" />
+                                    <Button fx:id="update_subject_btn" mnemonicParsing="false" onAction="#update_subject" prefHeight="25.0" prefWidth="348.0" styleClass="form_button" text="Modifier" GridPane.columnIndex="1" />
+                                    <Button fx:id="delete_subject_btn" mnemonicParsing="false" onAction="#handleSubjectDelete" prefHeight="25.0" prefWidth="395.0" styleClass="form_button" text="Supprimer" GridPane.rowIndex="1" />
+                                    <Button fx:id="cancel_subject_btn" mnemonicParsing="false" onAction="#cancel_subject" prefHeight="25.0" prefWidth="395.0" styleClass="form_button" text="Annuler" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
                            </children>
@@ -645,10 +667,10 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <Button fx:id="add_school_btn" mnemonicParsing="false" onMouseClicked="#add_school" prefHeight="25.0" prefWidth="346.0" styleClass="form_button" text="Ajouter" />
-                                    <Button fx:id="update_school_btn" mnemonicParsing="false" onMouseClicked="#update_school" prefHeight="25.0" prefWidth="348.0" styleClass="form_button" text="Modifier" GridPane.columnIndex="1" />
-                                    <Button fx:id="delete_school_btn" mnemonicParsing="false" onMouseClicked="#handleSchoolDelete" prefHeight="25.0" prefWidth="395.0" styleClass="form_button" text="Supprimer" GridPane.rowIndex="1" />
-                                    <Button fx:id="cancel_school_btn" mnemonicParsing="false" onMouseClicked="#cancel_school" prefHeight="25.0" prefWidth="395.0" styleClass="form_button" text="Annuler" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Button fx:id="add_school_btn" mnemonicParsing="false" onAction="#add_school" prefHeight="25.0" prefWidth="346.0" styleClass="form_button" text="Ajouter" />
+                                    <Button fx:id="update_school_btn" mnemonicParsing="false" onAction="#update_school" prefHeight="25.0" prefWidth="348.0" styleClass="form_button" text="Modifier" GridPane.columnIndex="1" />
+                                    <Button fx:id="delete_school_btn" mnemonicParsing="false" onAction="#handleSchoolDelete" prefHeight="25.0" prefWidth="395.0" styleClass="form_button" text="Supprimer" GridPane.rowIndex="1" />
+                                    <Button fx:id="cancel_school_btn" mnemonicParsing="false" onAction="#cancel_school" prefHeight="25.0" prefWidth="395.0" styleClass="form_button" text="Annuler" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
                            </children>
@@ -664,12 +686,6 @@
                <font>
                   <Font name="Consolas" size="12.0" />
                </font></Label>
-            <AnchorPane fx:id="bar_school_container" layoutX="348.0" prefHeight="69.0" prefWidth="240.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <ComboBox fx:id="school_combobox" layoutX="51.0" layoutY="14.0" prefHeight="37.0" prefWidth="189.0" styleClass="bar_combobox" />
-                  <Label layoutX="-1.0" layoutY="1.0" minHeight="69.0" prefHeight="69.0" prefWidth="52.0" styleClass="bar_label_combobox" text="Ecole:" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" />
-               </children>
-            </AnchorPane>
             <Label minHeight="67.0" prefHeight="67.0" prefWidth="162.0" styleClass="logo_name" text="Logo" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>

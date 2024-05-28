@@ -1,6 +1,5 @@
 package com.yiarth.java_project;
 
-import com.yiarth.java_project.controllers.PdfController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

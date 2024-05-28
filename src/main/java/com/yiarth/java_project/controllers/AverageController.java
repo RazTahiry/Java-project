@@ -70,6 +70,18 @@ public class AverageController {
     }
 
     /**
+     * get the total score of a specific student
+     * @param numEleve Student number
+     * @param numEcole School number
+     * @return double (Score average value)
+     */
+    public double getTotalScore(String numEleve, String numEcole) {
+        Eleve student = new Eleve(numEleve, numEcole);
+
+        return  student.getTotalScore();
+    }
+
+    /**
      * Get all students with their average note value
      * @return List of students
      */

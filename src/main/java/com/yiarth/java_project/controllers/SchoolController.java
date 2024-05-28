@@ -28,7 +28,7 @@ public class SchoolController {
                 return "Veuillez remplir tous les champs requis.";
             }
         } else {
-            return "Cette école existe déjà dans la base de données.";
+            return "Le numéro école existe déjà dans la base de données.";
         }
     }
 

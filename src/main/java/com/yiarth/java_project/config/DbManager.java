@@ -9,6 +9,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import static java.lang.StringTemplate.STR;
+
 public class DbManager {
 
     private Connection db_con;
