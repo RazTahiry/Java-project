@@ -12,7 +12,7 @@ public class SchoolController {
      * @param numEcole School number
      * @param design School name
      * @param adresse School address
-     * @return String (Result message)
+     * @return result message
      */
     public String addSchool(String numEcole, String design, String adresse) {
         Ecole school = new Ecole(numEcole, design, adresse);
@@ -50,7 +50,7 @@ public class SchoolController {
      * @param numEcole School numbe
      * @param design School name
      * @param adresse School address
-     * @return String (Result message)
+     * @return result message
      */
     public String updateSchool(String numEcole, String design, String adresse) {
         Ecole school = new Ecole(numEcole);
@@ -75,7 +75,7 @@ public class SchoolController {
     /**
      * Delete a school
      * @param numEcole School number
-     * @return String (Result message)
+     * @return result message
      */
     public String deleteSchool(String numEcole) {
         Ecole school = new Ecole(numEcole);

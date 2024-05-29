@@ -22,6 +22,7 @@ public class Matiere {
     /**
      * Constructors
      */
+
     public Matiere() {}
     public Matiere(String numMat, String designMat, int coef) {
         _num_mat = numMat;
@@ -35,7 +36,7 @@ public class Matiere {
 
     /**
      * Getters
-     * @return String/int (private attributes value)
+     * @return the private attribute value
      */
     public String get_num_mat() {
         return _num_mat;
@@ -50,6 +51,7 @@ public class Matiere {
     /**
      * Setters
      */
+
     public void set_num_mat(String numMat) {
         _num_mat = numMat;
     }
@@ -62,7 +64,7 @@ public class Matiere {
 
     /**
      * Input validator
-     * @return true/false
+     * @return {@code true} if all attributes have value, otherwise {@code false}
      */
     public boolean isValidated() {
         if (_num_mat == null || _num_mat.isEmpty()) {
@@ -82,7 +84,8 @@ public class Matiere {
 
     /**
      * Verify if a record already exists in database
-     * @return true/false
+     * @return {@code true} if the primary key value exists in database,
+     * otherwise {@code false}
      */
     public boolean isExists() {
         DbManager db = new DbManager();
@@ -174,7 +177,8 @@ public class Matiere {
 
     /**
      * Verify the result of create operation
-     * @return true/false
+     * @return {@code true} if the record has been added to database,
+     * otherwise {@code false}
      */
     public boolean isCreated() {
         return isCreated;
@@ -230,7 +234,7 @@ public class Matiere {
     }
 
     /**
-     * Update a record in the database
+     * Update a record in database
      */
     public void update() {
         DbManager db = new DbManager();
@@ -273,14 +277,15 @@ public class Matiere {
 
     /**
      * Verify the result of update operation
-     * @return true/false
+     * @return {@code true} if the record has been updated,
+     * otherwise {@code false}
      */
     public boolean isUpdated() {
         return isUpdated;
     }
 
     /**
-     * Delete a record in the database
+     * Delete a record in database
      */
     public void delete() {
         DbManager db = new DbManager();
@@ -322,7 +327,8 @@ public class Matiere {
 
     /**
      * Verify the result of delete operation
-     * @return true/false
+     * @return {@code true} if the record has been deleted from database,
+     * otherwise {@code false}
      */
     public boolean isDeleted() {
         return isDeleted;

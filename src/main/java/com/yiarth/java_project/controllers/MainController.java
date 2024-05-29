@@ -42,6 +42,7 @@ public class MainController implements Initializable {
     /**
      * School TextFields
      */
+
     @FXML
     private TextField num_ecole_input;
     @FXML
@@ -54,6 +55,7 @@ public class MainController implements Initializable {
     /**
      * Student TextFields
      */
+
     @FXML
     private ComboBox<String> student_school_combobox;
     @FXML
@@ -70,6 +72,7 @@ public class MainController implements Initializable {
     /**
      * Subject TextFields
      */
+
     @FXML
     private TextField c_matiere_input;
     @FXML
@@ -82,6 +85,7 @@ public class MainController implements Initializable {
     /**
      * Score TextFields
      */
+
     @FXML
     private TextField school_year_input;
     @FXML
@@ -118,6 +122,7 @@ public class MainController implements Initializable {
     /**
      * Handle the action on sidebar button click
      */
+
     @FXML
     private Button home_button_sidebar;
     @FXML
@@ -205,6 +210,9 @@ public class MainController implements Initializable {
         handleSideBarButtonClick(6);
     }
 
+    /**
+     * Disabled button by default
+     */
     private void disabledButton() {
         update_school_btn.setDisable(true);
         update_student_btn.setDisable(true);
@@ -217,6 +225,9 @@ public class MainController implements Initializable {
         delete_score_btn.setDisable(true);
     }
 
+    /**
+     * Disabled input by default
+     */
     private void disabledInput() {
         school_year_input.setText("2022-2023");
         school_year_input.setDisable(true);
@@ -225,6 +236,7 @@ public class MainController implements Initializable {
     /**
      * School button methods
      */
+
     @FXML private Button add_school_btn;
     @FXML private Button update_school_btn;
     @FXML private Button delete_school_btn;
@@ -311,6 +323,7 @@ public class MainController implements Initializable {
     /**
      * Student button methods
      */
+
     @FXML private Button add_student_btn;
     @FXML private Button update_student_btn;
     @FXML private Button delete_student_btn;
@@ -415,6 +428,7 @@ public class MainController implements Initializable {
     /**
      * Subject button methods
      */
+
     @FXML private Button add_subject_btn;
     @FXML private Button update_subject_btn;
     @FXML private Button delete_subject_btn;
@@ -518,6 +532,7 @@ public class MainController implements Initializable {
     /**
      * Score button methods
      */
+
     @FXML private Button add_score_btn;
     @FXML private Button update_score_btn;
     @FXML private Button delete_score_btn;
@@ -651,7 +666,7 @@ public class MainController implements Initializable {
     }
 
     /**
-     * School combobox in student form
+     * Subject combobox in score form
      */
     private void scoreSubjectCombobox() {
         SubjectController subject = new SubjectController();
@@ -667,6 +682,7 @@ public class MainController implements Initializable {
     /**
      * School TableView manipulation
      */
+
     @FXML
     private TableView<School> school_tableview;
     @FXML
@@ -712,6 +728,7 @@ public class MainController implements Initializable {
     /**
      * Subject TableView manipulation
      */
+
     @FXML
     private TableView<Subject> subject_tableview;
     @FXML
@@ -758,6 +775,7 @@ public class MainController implements Initializable {
     /**
      * Student TableView manipulation
      */
+
     @FXML
     private TableView<Student> student_tableview;
     @FXML
@@ -810,6 +828,7 @@ public class MainController implements Initializable {
     /**
      * Score TableView manipulation
      */
+
     @FXML
     private TableView<Score> score_tableview;
     @FXML

@@ -3,12 +3,21 @@ package com.yiarth.java_project.tableview_models;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Student {
+    /**
+     * This class is a model of a TableView
+     * <p>
+     * Each private attribute of this class concerns a column of a TableView in the user interface
+     */
 
     private final SimpleStringProperty numEleve;
     private final SimpleStringProperty numEcole;
     private final SimpleStringProperty nom;
     private final SimpleStringProperty prenom;
     private final SimpleStringProperty dateNais;
+
+    /**
+     * Constructor
+     */
 
     public Student(String numEleve, String numEcole, String nom, String prenom, String dateNais) {
         this.numEleve = new SimpleStringProperty(numEleve);
@@ -18,10 +27,14 @@ public class Student {
         this.dateNais = new SimpleStringProperty(dateNais);
     }
 
+    /**
+     * Getters
+     * @return private attributes value
+     */
+
     public String getNumEleve() {
         return numEleve.get();
     }
-
     public SimpleStringProperty setNumEleve() {
         return numEleve;
     }
@@ -29,7 +42,6 @@ public class Student {
     public String getNumEcole() {
         return numEcole.get();
     }
-
     public SimpleStringProperty setNumEcole() {
         return numEcole;
     }
@@ -37,7 +49,6 @@ public class Student {
     public String getNom() {
         return nom.get();
     }
-
     public SimpleStringProperty setNom() {
         return nom;
     }
@@ -45,7 +56,6 @@ public class Student {
     public String getPrenom() {
         return prenom.get();
     }
-
     public SimpleStringProperty setPrenom() {
         return prenom;
     }
@@ -53,7 +63,6 @@ public class Student {
     public String getDateNais() {
         return dateNais.get();
     }
-
     public SimpleStringProperty setDateNais() {
         return dateNais;
     }

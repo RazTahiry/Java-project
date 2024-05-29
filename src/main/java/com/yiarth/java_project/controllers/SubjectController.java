@@ -12,7 +12,7 @@ public class SubjectController {
      * @param numMat Subject number
      * @param designMat Subject name
      * @param coef Subject coefficient
-     * @return String (Result message)
+     * @return result message
      */
     public String addSubject(String numMat, String designMat, int coef) {
         Matiere subject = new Matiere(numMat, designMat, coef);
@@ -50,7 +50,7 @@ public class SubjectController {
      * @param numMat Subject number
      * @param designMat Subject name
      * @param coef Subject coefficient
-     * @return String (Result message)
+     * @return result message
      */
     public String updateSubject(String numMat, String designMat, int coef) {
         Matiere subject = new Matiere(numMat, designMat);
@@ -75,7 +75,7 @@ public class SubjectController {
      * Delete a subject
      * @param numMat Subject number
      * @param designMat Subject name
-     * @return String (Result message)
+     * @return result message
      */
     public String deleteSubject(String numMat, String designMat) {
         Matiere subject = new Matiere(numMat, designMat);

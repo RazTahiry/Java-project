@@ -17,28 +17,30 @@ public class AverageController {
      * Constructor
      */
     public AverageController() {
+        // Function call for every instantiation of the class AverageController to get the coefficient total
         coefTotal();
-        _average_deliberation = 9.75;
+
+        _average_deliberation = 9.75; // Set the value of average deliberation manually
     }
 
     /**
      * Get the average deliberation value
-     * @return double (average deliberation)
+     * @return value of average deliberation
      */
     public double get_average_deliberation() {
         return _average_deliberation;
     }
 
     /**
-     * Get the total coefficient value
-     * @return int (coefficient total)
+     * Get the total value of coefficient of all subjects
+     * @return value of coefficient total
      */
     public int get_coef_total() {
         return _coef_total;
     }
 
     /**
-     * Total coefficient value
+     * Calculate then set the total value of coefficient of all subjects
      */
     private void coefTotal() {
         Matiere subject = new Matiere();
@@ -51,16 +53,19 @@ public class AverageController {
     }
 
     /**
-     * get the score average of a specific student
+     * Get the score average of a specific student
      * @param numEleve Student number
      * @param numEcole School number
-     * @return double (Score average value)
+     * @return value of score average
      */
     public double getStudentScoreAverage(String numEleve, String numEcole) {
         Eleve student = new Eleve(numEleve, numEcole);
         double scoreAverageValue;
 
         if (student.isExists()) {
+            // Divide the total score obtained by the student
+            // by the total value of coefficient of all subjects,
+            // to get the score average value
             scoreAverageValue = (double) student.getTotalScore() / _coef_total;
 
             return scoreAverageValue;
@@ -70,10 +75,10 @@ public class AverageController {
     }
 
     /**
-     * get the total score of a specific student
+     * Get the total score of a specific student
      * @param numEleve Student number
      * @param numEcole School number
-     * @return double (Score average value)
+     * @return value of total score
      */
     public double getTotalScore(String numEleve, String numEcole) {
         Eleve student = new Eleve(numEleve, numEcole);
@@ -82,7 +87,7 @@ public class AverageController {
     }
 
     /**
-     * Get all students with their average note value
+     * Get all students with their average score value
      * @return List of students
      */
     public List<String[]> getAllStudents(String numEcole) {

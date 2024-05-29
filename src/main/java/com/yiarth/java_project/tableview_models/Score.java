@@ -5,11 +5,20 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Score {
+    /**
+     * This class is a model of a TableView
+     * <p>
+     * Each private attribute of this class concerns a column of a TableView in the user interface
+     */
 
     private final SimpleStringProperty numEleve;
     private final SimpleStringProperty nom;
     private final SimpleStringProperty prenom;
     private final SimpleDoubleProperty noteTotale;
+
+    /**
+     * Constructor
+     */
 
     public Score(String numMat, String nom, String prenom, double noteTotale) {
         this.numEleve = new SimpleStringProperty(numMat);
@@ -18,11 +27,14 @@ public class Score {
         this.noteTotale = new SimpleDoubleProperty(noteTotale);
     }
 
+    /**
+     * Getters
+     * @return private attributes value
+     */
 
     public String getNumEleve() {
         return numEleve.get();
     }
-
     public SimpleStringProperty setNumEleve() {
         return numEleve;
     }
@@ -30,7 +42,6 @@ public class Score {
     public String getNom() {
         return nom.get();
     }
-
     public SimpleStringProperty setNom() {
         return nom;
     }
@@ -38,7 +49,6 @@ public class Score {
     public String getPrenom() {
         return prenom.get();
     }
-
     public SimpleStringProperty setPrenom() {
         return prenom;
     }
@@ -46,7 +56,6 @@ public class Score {
     public double getNoteTotale() {
         return noteTotale.get();
     }
-
     public SimpleDoubleProperty setNoteTotale() {
         return noteTotale;
     }

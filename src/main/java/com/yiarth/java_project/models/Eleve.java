@@ -21,6 +21,7 @@ public class Eleve {
     /**
      * Constructors
      */
+
     public Eleve() {}
     public Eleve(String numEleve, String numEcole, String nom, String prenom, Date dateNais) {
         _num_eleve = numEleve;
@@ -39,8 +40,9 @@ public class Eleve {
 
     /**
      * Getters
-     * @return String (private attributes value)
+     * @return the private attribute value
      */
+
     public String get_num_eleve() {
         return _num_eleve;
     }
@@ -60,6 +62,7 @@ public class Eleve {
     /**
      * Setters
      */
+
     public void set_num_eleve(String numEleve) {
         _num_eleve = numEleve;
     }
@@ -78,7 +81,7 @@ public class Eleve {
 
     /**
      * Input validator
-     * @return true/false
+     * @return {@code true} if all attributes have value, otherwise {@code false}
      */
     public boolean isValidated() {
         if (_num_eleve == null || _num_eleve.isEmpty()) {
@@ -106,7 +109,8 @@ public class Eleve {
 
     /**
      * Verify if a record already exists in database
-     * @return true/false
+     * @return {@code true} if the primary key value exists in database,
+     * otherwise {@code false}
      */
     public boolean isExists() {
         DbManager db = new DbManager();
@@ -200,14 +204,15 @@ public class Eleve {
 
     /**
      * Verify the result of create operation
-     * @return true/false
+     * @return {@code true} if the record has been added to database,
+     * otherwise {@code false}
      */
     public boolean isCreated() {
         return isCreated;
     }
 
     /**
-     * Fetch all records from database order alphabetical by name
+     * Fetch all records from database order by name
      * @return List of records
      */
     public List<String[]> getAllRecords() {
@@ -258,7 +263,7 @@ public class Eleve {
     }
 
     /**
-     * Fetch all records from database order alphabetical by name
+     * Fetch all records from database order by name
      * @return List of records
      */
     public List<String[]> getAllRecordsOrderByMerit() {
@@ -316,7 +321,7 @@ public class Eleve {
     }
 
     /**
-     * Update a record in the database
+     * Update a record in database
      */
     public void update() {
         DbManager db = new DbManager();
@@ -361,14 +366,15 @@ public class Eleve {
 
     /**
      * Verify the result of update operation
-     * @return true/false
+     * @return {@code true} if the record has been updated,
+     * otherwise {@code false}
      */
     public boolean isUpdated() {
         return isUpdated;
     }
 
     /**
-     * Delete a record in the database
+     * Delete a record in database
      */
     public void delete() {
         DbManager db = new DbManager();
@@ -410,7 +416,8 @@ public class Eleve {
 
     /**
      * Verify the result of delete operation
-     * @return true/false
+     * @return {@code true} if the record has been deleted from database,
+     * otherwise {@code false}
      */
     public boolean isDeleted() {
         return isDeleted;
@@ -470,7 +477,7 @@ public class Eleve {
 
     /**
      * Get the total score obtained by a student
-     * @return Int (student's total score value)
+     * @return student's total score value
      */
     public int getTotalScore() {
         int TotalScore = 0;
@@ -517,6 +524,11 @@ public class Eleve {
         return TotalScore;
     }
 
+    /**
+     * Get all students concerned by the {@code filterValue} parameter
+     * @param filterValue value to compare to the students name
+     * @return List of students
+     */
     public List<String[]> getFilteredStudent(String filterValue) {
         List<String[]> records = new ArrayList<>();
 
@@ -526,10 +538,10 @@ public class Eleve {
         try {
             if (db.isConnected()) {
                 db_con = db.getConnection();
-                String sql_select = "SELECT * FROM eleve WHERE nom like '%?%' OR prenom like '%?%' AND numEcole=?";
+                String sql_select = "SELECT * FROM eleve WHERE nom like ? OR prenom like ? AND numEcole=?";
                 try (PreparedStatement p_stmt = db_con.prepareStatement(sql_select)) {
-                    p_stmt.setString(1, filterValue);
-                    p_stmt.setString(2, filterValue);
+                    p_stmt.setString(1, '%' + filterValue + '%');
+                    p_stmt.setString(2, '%' + filterValue + '%');
                     p_stmt.setString(3, _num_ecole);
                     rs = p_stmt.executeQuery();
 

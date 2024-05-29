@@ -9,14 +9,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import static java.lang.StringTemplate.STR;
-
 public class DbManager {
 
     private Connection db_con;
 
     public DbManager() {
-        connect();
+        connect(); // Function call for every instantiation of the class DbManager
     }
 
     /**
@@ -28,6 +26,7 @@ public class DbManager {
 
         try (InputStream input = MainApplication.class.getResourceAsStream(DB_PROPERTIES)) {
             if (input != null) {
+                // Load the database properties then parse it
                 properties.load(input);
                 String url = properties.getProperty("DB_URL");
                 String user = properties.getProperty("DB_USER");
@@ -48,7 +47,7 @@ public class DbManager {
 
     /**
      * Connection for querying the database
-     * @return Connection
+     * @return connection
      */
     public Connection getConnection() {
         return db_con;
@@ -56,7 +55,8 @@ public class DbManager {
 
     /**
      * Verify the connection to database
-     * @return true/false
+     * @return {@code true} if the connection with database is established,
+     * otherwise {@code false}
      */
     public boolean isConnected() {
         return db_con != null;

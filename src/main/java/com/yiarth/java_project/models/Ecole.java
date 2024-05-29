@@ -22,6 +22,7 @@ public class Ecole {
     /**
      * Constructors
      */
+
     public Ecole() {}
     public Ecole(String numEcole, String design, String adresse) {
         _num_ecole = numEcole;
@@ -34,8 +35,9 @@ public class Ecole {
 
     /**
      * Getters
-     * @return String (private attributes value)
+     * @return the private attribute value
      */
+
     public String get_num_ecole() {
         return _num_ecole;
     }
@@ -49,6 +51,7 @@ public class Ecole {
     /**
      * Setters
      */
+
     public void set_num_ecole(String numEcole) {
         _num_ecole = numEcole;
     }
@@ -61,7 +64,7 @@ public class Ecole {
 
     /**
      * Input validator
-     * @return true/false
+     * @return {@code true} if all attributes have value, otherwise {@code false}
      */
     public boolean isValidated() {
         if (_num_ecole == null || _num_ecole.isEmpty()) {
@@ -81,7 +84,8 @@ public class Ecole {
 
     /**
      * Verify if a record already exists in database
-     * @return true/false
+     * @return {@code true} if the primary key value exists in database,
+     * otherwise {@code false}
      */
     public boolean isExists() {
         DbManager db = new DbManager();
@@ -172,7 +176,8 @@ public class Ecole {
 
     /**
      * Verify the result of create operation
-     * @return true/false
+     * @return {@code true} if the record has been added to database,
+     * otherwise {@code false}
      */
     public boolean isCreated() {
         return isCreated;
@@ -228,7 +233,7 @@ public class Ecole {
     }
 
     /**
-     * Update a record in the database
+     * Update a record in database
      */
     public void update() {
         DbManager db = new DbManager();
@@ -271,14 +276,15 @@ public class Ecole {
 
     /**
      * Verify the result of update operation
-     * @return true/false
+     * @return {@code true} if the record has been updated,
+     * otherwise {@code false}
      */
     public boolean isUpdated() {
         return isUpdated;
     }
 
     /**
-     * Delete a record in the database
+     * Delete a record in database
      */
     public void delete() {
         DbManager db = new DbManager();
@@ -319,7 +325,8 @@ public class Ecole {
 
     /**
      * Verify the result of delete operation
-     * @return true/false
+     * @return {@code true} if the record has been deleted from database,
+     * otherwise {@code false}
      */
     public boolean isDeleted() {
         return isDeleted;

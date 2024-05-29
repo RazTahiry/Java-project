@@ -23,6 +23,7 @@ public class Note {
     /**
      * Constructors
      */
+
     public Note() {}
     public Note(String anneeScolaire, String numEleve, String numMat, double note) {
         _annee_scolaire = anneeScolaire;
@@ -37,7 +38,7 @@ public class Note {
 
     /**
      * Getters
-     * @return String/int (private attributes value)
+     * @return the private attribute value
      */
     public String get_annee_scolaire() {
         return _annee_scolaire;
@@ -55,6 +56,7 @@ public class Note {
     /**
      * Setters
      */
+
     public void set_annee_scolaire(String anneeScolaire) {
         _annee_scolaire = anneeScolaire;
     }
@@ -70,7 +72,7 @@ public class Note {
 
     /**
      * Input validator
-     * @return true/false
+     * @return {@code true} if all attributes have value, otherwise {@code false}
      */
     public boolean isValidated() {
         if (_annee_scolaire == null || _annee_scolaire.isEmpty()) {
@@ -94,7 +96,8 @@ public class Note {
 
     /**
      * Verify if a record already exists in database
-     * @return true/false
+     * @return {@code true} if the primary key value exists in database,
+     * otherwise {@code false}
      */
     public boolean isExists() {
         DbManager db = new DbManager();
@@ -187,7 +190,8 @@ public class Note {
 
     /**
      * Verify the result of create operation
-     * @return true/false
+     * @return {@code true} if the record has been added to database,
+     * otherwise {@code false}
      */
     public boolean isCreated() {
         return isCreated;
@@ -244,7 +248,7 @@ public class Note {
     }
 
     /**
-     * Update a record in the database
+     * Update a record in database
      */
     public void update() {
         DbManager db = new DbManager();
@@ -288,14 +292,15 @@ public class Note {
 
     /**
      * Verify the result of update operation
-     * @return true/false
+     * @return {@code true} if the record has been updated,
+     * otherwise {@code false}
      */
     public boolean isUpdated() {
         return isUpdated;
     }
 
     /**
-     * Delete a record in the database
+     * Delete a record in database
      */
     public void delete() {
         DbManager db = new DbManager();
@@ -337,7 +342,8 @@ public class Note {
 
     /**
      * Verify the result of delete operation
-     * @return true/false
+     * @return {@code true} if the record has been deleted from database,
+     * otherwise {@code false}
      */
     public boolean isDeleted() {
         return isDeleted;

@@ -14,7 +14,7 @@ public class StudentController {
      * @param numEcole School number
      * @param nom Student firstname
      * @param prenom Student lastname
-     * @return String (Result message)
+     * @return result message
      */
     public String addStudent(String numEleve, String numEcole, String nom, String prenom, Date dateNais) {
         Eleve student = new Eleve(numEleve, numEcole, nom, prenom, dateNais);
@@ -60,7 +60,7 @@ public class StudentController {
      * @param numEcole School number
      * @param nom Student firstname
      * @param prenom Student lastname
-     * @return String (Result message)
+     * @return result message
      */
     public String updateStudent(String numEleve, String numEcole, String nom, String prenom, Date dateNais) {
         Eleve student = new Eleve(numEleve, numEcole);
@@ -87,7 +87,7 @@ public class StudentController {
      * Delete a student
      * @param numEleve Student number
      * @param numEcole School number
-     * @return String (Result message)
+     * @return result message
      */
     public String deleteStudent(String numEleve, String numEcole) {
         Eleve student = new Eleve(numEleve, numEcole);

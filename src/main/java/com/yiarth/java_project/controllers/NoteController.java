@@ -13,7 +13,7 @@ public class NoteController {
      * @param numEleve Student number
      * @param numMat Subject number
      * @param score Weighted rating
-     * @return String (Result message)
+     * @return result message
      */
     public String addNote(String anneeScolaire, String numEleve, String numMat, double score) {
         Note note = new Note(anneeScolaire, numEleve, numMat, score);
@@ -52,7 +52,7 @@ public class NoteController {
      * @param numEleve Student number
      * @param numMat Subject number
      * @param score Weighted rating
-     * @return String (Result message)
+     * @return result message
      */
     public String updateNote(String anneeScolaire, String numEleve, String numMat, double score) {
         Note note = new Note(numEleve, numMat);
@@ -78,7 +78,7 @@ public class NoteController {
      * Delete a score
      * @param numEleve Student number
      * @param numMat Subject number
-     * @return String (Result message)
+     * @return result message
      */
     public String deleteNote(String numEleve, String numMat) {
         Note note = new Note(numEleve, numMat);
