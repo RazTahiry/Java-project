@@ -248,6 +248,61 @@ public class Note {
     }
 
     /**
+     * Get a specific score by student number and subject number
+     * @return Array of the score information
+     */
+    public String[] getScore() {
+        String[] record = new String[4];
+
+        DbManager db = new DbManager();
+        Connection db_con = null;
+        ResultSet rs = null;
+        try {
+            if (db.isConnected()) {
+                db_con = db.getConnection();
+                String sql_select = "SELECT * FROM note WHERE numEleve=? AND numMat=?";
+                try (PreparedStatement p_stmt = db_con.prepareStatement(sql_select)) {
+                    p_stmt.setString(1, _num_eleve);
+                    p_stmt.setString(2, _num_mat);
+                    rs = p_stmt.executeQuery();
+
+                    while (rs.next()) {
+                        String anneScolaire = rs.getString("anneeScolaire");
+                        String numEleve = rs.getString("numEleve");
+                        String numMat = rs.getString("numMat");
+                        int note = rs.getInt("note");
+
+                        record[0] = anneScolaire;
+                        record[1] = numEleve;
+                        record[2] = numMat;
+                        record[3] = String.valueOf(note);
+                    }
+                }
+            } else {
+                throw new SQLException("Database connection error.");
+            }
+        } catch (SQLException e) {
+            System.out.println(STR."Error fetching records: \{e.getMessage()}");
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    System.out.println(STR."Error closing result set: \{e.getMessage()}");
+                }
+            }
+            if (db_con != null) {
+                try {
+                    db_con.close();
+                } catch (SQLException e) {
+                    System.out.println(STR."Error closing connection: \{e.getMessage()}");
+                }
+            }
+        }
+        return record;
+    }
+
+    /**
      * Update a record in database
      */
     public void update() {

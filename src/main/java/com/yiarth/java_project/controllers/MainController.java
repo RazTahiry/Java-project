@@ -3,6 +3,8 @@ package com.yiarth.java_project.controllers;
 import com.yiarth.java_project.tableview_models.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,6 +18,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -38,6 +41,11 @@ public class MainController implements Initializable {
 
     @FXML
     private Label bar_title;
+
+    @FXML
+    private ComboBox<String> school_cbox_student;
+    @FXML
+    private ComboBox<String> school_score_cbx;
 
     /**
      * School TextFields
@@ -101,22 +109,34 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         handleSideBarButtonClick(1);
 
+        // Show data in a TableView (school and subject TableView)
         dataToSchoolTb();
         dataToSubjectTb();
-        dataToStudentTb();
-        dataToScoreTb();
 
-        studentFormCombobox();
-        scoreStudentCombobox();
-        scoreSubjectCombobox();
+        // Add data to a combobox
+        studentFormCombobox(); // School combobox in student form
+        scoreSubjectCombobox(); // Subject combobox in score form
 
+        // The selection method on a different TableView
         selectTableStudent();
         selectTableSubject();
         selectTableSchool();
         selectTableScore();
 
+        // Button and Input disabled by default
         disabledButton();
         disabledInput();
+
+        // The score input value depends on subject combobox value (In score form)
+        subjectToScore();
+
+        // Add data to school combobox filter
+        dataToSchoolCbx(); // School combobox filter in student section
+        dataToSchoolScoreCbx(); // School combobox filter in score section
+
+        // Action handling on combobox change
+        schoolCombobox(); // School combobox filter in student section
+        schoolComboboxScore(); // School combobox filter in score section
     }
 
     /**
@@ -158,27 +178,27 @@ public class MainController implements Initializable {
                 break;
             case 2:
                 result_anchor_pane.setVisible(true);
-                bar_title.setText("Résultat");
+                bar_title.setText("Résultats");
                 result_button_sidebar.getStyleClass().add("sidebar_button_active");
                 break;
             case 3:
                 score_anchor_pane.setVisible(true);
-                bar_title.setText("Note");
+                bar_title.setText("Notes");
                 score_button_sidebar.getStyleClass().add("sidebar_button_active");
                 break;
             case 4:
                 student_anchor_pane.setVisible(true);
-                bar_title.setText("Elève");
+                bar_title.setText("Elèves");
                 student_button_sidebar.getStyleClass().add("sidebar_button_active");
                 break;
             case 5:
                 subject_anchor_pane.setVisible(true);
-                bar_title.setText("Matière");
+                bar_title.setText("Matières");
                 subject_button_sidebar.getStyleClass().add("sidebar_button_active");
                 break;
             case 6:
                 school_anchor_pane.setVisible(true);
-                bar_title.setText("Ecole");
+                bar_title.setText("Ecoles");
                 school_button_sidebar.getStyleClass().add("sidebar_button_active");
                 break;
             default:
@@ -251,6 +271,9 @@ public class MainController implements Initializable {
         if(resultMessage.contains("ajoutée")) {
             cancel_school();
             studentFormCombobox();
+            dataToSchoolCbx();
+            dataToSchoolCbx();
+            dataToSchoolScoreCbx();
         }
         school_result_message.setText(resultMessage);
         timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> school_result_message.setText("")));
@@ -267,6 +290,9 @@ public class MainController implements Initializable {
         if (resultMessage.contains("mise à jour")) {
             cancel_school();
             studentFormCombobox();
+            dataToSchoolCbx();
+            dataToSchoolCbx();
+            dataToSchoolScoreCbx();
         }
         school_result_message.setText(resultMessage);
         timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> school_result_message.setText("")));
@@ -280,11 +306,15 @@ public class MainController implements Initializable {
         if (resultMessage.contains("supprimée")) {
             cancel_school();
             studentFormCombobox();
+            dataToSchoolCbx();
+            dataToSchoolCbx();
+            dataToSchoolScoreCbx();
         }
         school_result_message.setText(resultMessage);
         timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> school_result_message.setText("")));
         timing.play();
     }
+    // Clear all inputs value in school form
     @FXML
     public void cancel_school() {
         dataToSchoolTb();
@@ -298,6 +328,7 @@ public class MainController implements Initializable {
         update_school_btn.setDisable(true);
         delete_school_btn.setDisable(true);
     }
+    // Show confirmation message on school delete button click
     @FXML
     public void handleSchoolDelete() {
         String numEcole = num_ecole_input.getText();
@@ -341,6 +372,11 @@ public class MainController implements Initializable {
             String resultMessage = student.addStudent(numEleve,numEcole,nom,prenom,dateNais);
             if (resultMessage.contains("ajouté")) {
                 cancel_student();
+                if (Objects.equals(school_score_cbx.getValue(), "Toutes les écoles")) {
+                    scoreStudentComboboxAll();
+                } else {
+                    scoreStudentCombobox(school_score_cbx.getValue());
+                }
             }
             student_result_message.setText(resultMessage);
         } else {
@@ -363,6 +399,11 @@ public class MainController implements Initializable {
             String resultMessage = student.updateStudent(numEleve,numEcole,nom,prenom,dateNais);
             if (resultMessage.contains("mis à jour")) {
                 cancel_student();
+                if (Objects.equals(school_score_cbx.getValue(), "Toutes les écoles")) {
+                    scoreStudentComboboxAll();
+                } else {
+                    scoreStudentCombobox(school_score_cbx.getValue());
+                }
             }
             student_result_message.setText(resultMessage);
         } else {
@@ -378,14 +419,24 @@ public class MainController implements Initializable {
         String resultMessage = student.deleteStudent(numEleve,numEcole);
         if (resultMessage.contains("supprimé")) {
             cancel_student();
+            if (Objects.equals(school_score_cbx.getValue(), "Toutes les écoles")) {
+                scoreStudentComboboxAll();
+            } else {
+                scoreStudentCombobox(school_score_cbx.getValue());
+            }
         }
         student_result_message.setText(resultMessage);
         timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> student_result_message.setText("")));
         timing.play();
     }
+    // Clear all inputs value in student form
     @FXML
     public void cancel_student() {
-        dataToStudentTb();
+        if (Objects.equals(school_cbox_student.getValue(), "Toutes les écoles")) {
+            dataToStudentTbAll();
+        } else {
+            dataToStudentTb(school_cbox_student.getValue());
+        }
         student_school_combobox.getSelectionModel().clearSelection();
         student_school_combobox.setValue(null);
         student_num_input.clear();
@@ -400,6 +451,7 @@ public class MainController implements Initializable {
         update_student_btn.setDisable(true);
         delete_student_btn.setDisable(true);
     }
+    // Show confirmation message on student delete button click
     @FXML
     public void handleStudentDelete() {
         String numEcole = student_school_combobox.getValue();
@@ -444,6 +496,7 @@ public class MainController implements Initializable {
                 String resultMessage = subject.addSubject(numMat, designMat, Integer.parseInt(coef));
                 if (resultMessage.contains("ajoutée")) {
                     cancel_subject();
+                    scoreSubjectCombobox();
                 }
                 subject_result_message.setText(resultMessage);
                 timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> subject_result_message.setText("")));
@@ -470,6 +523,7 @@ public class MainController implements Initializable {
             String resultMessage = subject.updateSubject(numMat, designMat, Integer.parseInt(coef));
             if (resultMessage.contains("mise à jour")) {
                 cancel_subject();
+                scoreSubjectCombobox();
             }
             subject_result_message.setText(resultMessage);
             timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> subject_result_message.setText("")));
@@ -487,11 +541,13 @@ public class MainController implements Initializable {
         String resultMessage = subject.deleteSubject(numMat, designMat);
         if (resultMessage.contains("supprimée")) {
             cancel_subject();
+            scoreSubjectCombobox();
         }
         subject_result_message.setText(resultMessage);
         timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> subject_result_message.setText("")));
         timing.play();
     }
+    // Clear all inputs value in subject form
     @FXML
     public void cancel_subject() {
         dataToSubjectTb();
@@ -506,6 +562,7 @@ public class MainController implements Initializable {
         update_subject_btn.setDisable(true);
         delete_subject_btn.setDisable(true);
     }
+    // Show confirmation message on subject delete button click
     @FXML
     public void handleSubjectDelete() {
         String numMat = c_matiere_input.getText();
@@ -598,9 +655,14 @@ public class MainController implements Initializable {
         timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> score_result_message.setText("")));
         timing.play();
     }
+    // Clear all inputs value in score form
     @FXML
     public void cancel_score() {
-        dataToScoreTb();
+        if (Objects.equals(school_score_cbx.getValue(), "Toutes les écoles")) {
+            dataToScoreTbAll();
+        } else {
+            dataToScoreTb(school_score_cbx.getValue());
+        }
         score_student_input.getSelectionModel().clearSelection();
         score_student_input.setValue(null);
         score_subject_input.getSelectionModel().clearSelection();
@@ -613,6 +675,7 @@ public class MainController implements Initializable {
         update_score_btn.setDisable(true);
         delete_score_btn.setDisable(true);
     }
+    // Show confirmation message on score delete button click
     @FXML
     public void handleScoreDelete() {
         String numEleve = score_student_input.getValue();
@@ -637,7 +700,7 @@ public class MainController implements Initializable {
     }
 
     /**
-     * School combobox in student form
+     * Add all schools to the school combobox (In student form at student section)
      */
     private void studentFormCombobox() {
         SchoolController school = new SchoolController();
@@ -652,9 +715,9 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Student combobox in score form
+     * Add all students to the student combobox (In score form at score section)
      */
-    private void scoreStudentCombobox() {
+    private void scoreStudentComboboxAll() {
         StudentController student = new StudentController();
         List<String[]> studentList = student.getAllStudents();
         ObservableList<String> options = FXCollections.observableArrayList();
@@ -666,7 +729,21 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Subject combobox in score form
+     * Add all students in a specific school to the student combobox (In score form at score section)
+     */
+    private void scoreStudentCombobox(String numEcole) {
+        StudentController student = new StudentController();
+        List<String[]> studentList = student.getAllStudentsInSchool(numEcole);
+        ObservableList<String> options = FXCollections.observableArrayList();
+
+        for (String[] studentArray : studentList) {
+            options.add(studentArray[0]);
+        }
+        score_student_input.setItems(options);
+    }
+
+    /**
+     * Add all subjects to the subject combobox (In score form at score section)
      */
     private void scoreSubjectCombobox() {
         SubjectController subject = new SubjectController();
@@ -693,7 +770,7 @@ public class MainController implements Initializable {
     private TableColumn<School, String> adresseEcoleCol;
 
     ObservableList<School> schoolsList = FXCollections.observableArrayList();
-
+    // Show all schools in school TableView
     private void dataToSchoolTb() {
         SchoolController school = new SchoolController();
         List<String[]> listSchools = school.getAllSchools();
@@ -709,6 +786,7 @@ public class MainController implements Initializable {
             school_tableview.setItems(schoolsList);
         }
     }
+    // Handle selection on school TableView
     private void selectTableSchool() {
         school_tableview.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -739,7 +817,7 @@ public class MainController implements Initializable {
     private TableColumn<Subject, Integer> coefCol;
 
     ObservableList<Subject> subjectsList = FXCollections.observableArrayList();
-
+    // Show all subjects in subject TableView
     private void dataToSubjectTb() {
         SubjectController subject = new SubjectController();
         List<String[]> listSubjects = subject.getAllSubjects();
@@ -755,6 +833,7 @@ public class MainController implements Initializable {
             subject_tableview.setItems(subjectsList);
         }
     }
+    // Handle selection on subject TableView
     private void selectTableSubject() {
         subject_tableview.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -788,8 +867,26 @@ public class MainController implements Initializable {
     private TableColumn<Student, String> dateNaisCol;
 
     ObservableList<Student> studentsList = FXCollections.observableArrayList();
+    // Show all students at a specific school in student TableView
+    private void dataToStudentTb(String numEcole) {
+        StudentController student = new StudentController();
+        List<String[]> listStudents = student.getAllStudentsInSchool(numEcole);
 
-    private void dataToStudentTb() {
+        numEleveCol.setCellValueFactory(new PropertyValueFactory<>("numEleve"));
+        nomCol.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        prenomCol.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+        dateNaisCol.setCellValueFactory(new PropertyValueFactory<>("dateNais"));
+
+        student_tableview.getItems().clear();
+
+        for (String[] studentArray : listStudents) {
+            LocalDate date = LocalDate.parse(studentArray[4]);
+            studentsList.add(new Student(studentArray[0], studentArray[1], studentArray[2], studentArray[3], String.valueOf(date)));
+            student_tableview.setItems(studentsList);
+        }
+    }
+    // Show all students in student TableView
+    private void dataToStudentTbAll() {
         StudentController student = new StudentController();
         List<String[]> listStudents = student.getAllStudents();
 
@@ -806,6 +903,7 @@ public class MainController implements Initializable {
             student_tableview.setItems(studentsList);
         }
     }
+    // Handle the selection on student TableView
     private void selectTableStudent() {
         student_tableview.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -841,8 +939,8 @@ public class MainController implements Initializable {
     private TableColumn<Score, Double> scoreTotalCol;
 
     ObservableList<Score> studentsScoreList = FXCollections.observableArrayList();
-
-    private void dataToScoreTb() {
+    // Show all students in score TableView
+    private void dataToScoreTbAll() {
         StudentController student = new StudentController();
         List<String[]> listStudents = student.getAllStudents();
 
@@ -860,6 +958,26 @@ public class MainController implements Initializable {
             score_tableview.setItems(studentsScoreList);
         }
     }
+    // Show all students at a specific school in score TableView
+    private void dataToScoreTb(String numEcole) {
+        StudentController student = new StudentController();
+        List<String[]> listStudents = student.getAllStudentsInSchool(numEcole);
+
+        scoreNumEleveCol.setCellValueFactory(new PropertyValueFactory<>("numEleve"));
+        scoreNomCol.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        scorePrenomCol.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+        scoreTotalCol.setCellValueFactory(new PropertyValueFactory<>("noteTotale"));
+
+        score_tableview.getItems().clear();
+
+        for (String[] studenArray : listStudents) {
+            AverageController a = new AverageController();
+            double totalScore = a.getTotalScore(studenArray[0], studenArray[1]);
+            studentsScoreList.add(new Score(studenArray[0], studenArray[2], studenArray[3], totalScore));
+            score_tableview.setItems(studentsScoreList);
+        }
+    }
+    // Handle the selection on score TableView
     private void selectTableScore() {
         score_tableview.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -872,5 +990,89 @@ public class MainController implements Initializable {
                 delete_score_btn.setDisable(false);
             }
         });
+    }
+
+    /**
+     * Handle change on school combobox to score input in score section
+     */
+    private void subjectToScore() {
+        score_subject_input.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+                String numEleve = score_student_input.getValue();
+                NoteController score = new NoteController();
+                String[] scoreInfo = score.getScore(numEleve, newValue);
+                score_input.setText(scoreInfo[3]);
+            }
+        });
+    }
+
+    /**
+     * Handle change on school combobox in student section
+     */
+    private void schoolCombobox() {
+        school_cbox_student.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+                if (Objects.equals(newValue, "Toutes les écoles")) {
+                    dataToStudentTbAll();
+                } else {
+                    dataToStudentTb(newValue);
+                }
+            }
+        });
+    }
+
+    /**
+     * Handle change on school combobox in score section
+     */
+    private void schoolComboboxScore() {
+        school_score_cbx.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+                if (Objects.equals(newValue, "Toutes les écoles")) {
+                    scoreStudentComboboxAll();
+                    dataToScoreTbAll();
+                } else {
+                    scoreStudentCombobox(newValue);
+                    dataToScoreTb(newValue);
+                }
+            }
+        });
+    }
+
+    /**
+     * School combobox in student section
+     */
+    private void dataToSchoolCbx() {
+        SchoolController school = new SchoolController();
+        List<String[]> schoolList = school.getAllSchools();
+        ObservableList<String> options = FXCollections.observableArrayList();
+
+        options.add("Toutes les écoles");
+        for (String[] schoolArray : schoolList) {
+            options.add(schoolArray[0]);
+        }
+        school_cbox_student.setItems(options);
+        school_cbox_student.setValue(options.getFirst());
+        dataToStudentTbAll();
+    }
+
+    /**
+     * School combobox in score section
+     */
+    private void dataToSchoolScoreCbx() {
+        SchoolController school = new SchoolController();
+        List<String[]> schoolList = school.getAllSchools();
+        ObservableList<String> options = FXCollections.observableArrayList();
+
+        options.add("Toutes les écoles");
+        for (String[] schoolArray : schoolList) {
+            options.add(schoolArray[0]);
+        }
+        school_score_cbx.setItems(options);
+        school_score_cbx.setValue(options.getFirst());
+        scoreStudentComboboxAll();
+        dataToScoreTbAll();
     }
 }

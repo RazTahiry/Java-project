@@ -40,10 +40,17 @@ public class NoteController {
     public List<String[]> getAllScores() {
         Note note = new Note();
 
-        List<String[]> scores_list = new ArrayList<>();
-        scores_list = note.getAllRecords();
+        return note.getAllRecords();
+    }
 
-        return scores_list;
+    /**
+     * Get a specific scores
+     * @return Array of the score information
+     */
+    public String[] getScore(String numEleve, String numMat) {
+        Note note = new Note(numEleve, numMat);
+
+        return note.getScore();
     }
 
     /**

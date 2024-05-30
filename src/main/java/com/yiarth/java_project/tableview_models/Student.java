@@ -4,7 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class Student {
     /**
-     * This class is a model of a TableView
+     * This class is a model for a TableView
      * <p>
      * Each private attribute of this class concerns a column of a TableView in the user interface
      */

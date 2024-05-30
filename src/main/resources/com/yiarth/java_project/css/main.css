@@ -1,6 +1,6 @@
 .body {
     -fx-background-color: white;
-    -fx-font-family: "Poppins", "Arial", "System";
+    -fx-font-family: "Metropolis", "Poppins", "Arial", "System";
 }
 
 .icons {
@@ -10,11 +10,11 @@
 
 /* ============================= Top Bar Styles ============================= */
 .bar {
-    -fx-background-color: rgb(66, 125, 157, .8);
+    -fx-background-color: rgba(66, 125, 157, .8);
 }
 
 .logo_name {
-    -fx-background-color: rgb(66, 125, 157, .5);
+    -fx-background-color: rgba(66, 125, 157, .5);
     -fx-text-fill: rgb(221, 242, 253);
     -fx-alignment: center;
     -fx-font-size: 25px;
@@ -26,7 +26,6 @@
     -fx-text-fill: rgb(221, 242, 253);
     -fx-font-size: 22px;
     -fx-font-weight: bolder;
-    -fx-font-family: "Consolas" !important;
 }
 
 .bar_label_combobox {
@@ -60,7 +59,6 @@
     -fx-alignment: center-left;
     -fx-border-radius: none;
     -fx-font-size: 16px;
-    -fx-font-weight: bold;
     -fx-padding: 12px 0 12px 25px;
     -fx-cursor: hand;
 }
@@ -68,12 +66,11 @@
 .sidebar_button_active {
     -fx-border-width: 0 0 0 4px;
     -fx-border-color: rgb(221, 242, 253);
-    -fx-background-color: rgb(46, 105, 137, .5);
+    -fx-background-color: rgba(46, 105, 137, .5);
 }
 
 .sidebar_button:hover {
-    -fx-background-color: rgb(66, 125, 157, .5);
-    /* -fx-background-color: rgb(155, 190, 200, .5); */
+    -fx-background-color: rgba(66, 125, 157, .5);
 }
 /* ======================================================================== */
 
@@ -92,7 +89,7 @@
 .input, .combobox, .input_search, .date_input {
     -fx-border: none;
     -fx-background-color: transparent;
-    -fx-text-fill: rgb(0, 0, 0, .8);
+    -fx-text-fill: rgba(0, 0, 0, .8);
     -fx-font-size: 15px;
 }
 
@@ -154,21 +151,19 @@
     -fx-background-color: none;
     -fx-border-width: 1px;
     -fx-border-color: #dcdce0;
-    /*-fx-border-radius: 10px;
-    -fx-padding: 5px;*/
 }
 
 .table-view .column-header {
     -fx-font-size: 14px;
     -fx-background-color: #dcdce0;
-    -fx-font-family: georgia !important;
     -fx-border-width: .5px;
     -fx-border-color: rgba(1, 1, 1, .2);
 }
-
+/*
 .table-view .column-header-background {
+    -fx-text-fill: rgba(0, 0, 0, .5);
 }
-
+*/
 .table-view .table-row-cell {
     -fx-background-color: #ffffff;
     -fx-border-width: 0 0 1px 0;
@@ -186,7 +181,6 @@
     -fx-padding: 10px;
     -fx-font-size: 15px;
     -fx-border-width: 0;
-    -fx-font-family: georgia !important;
 }
 
 .table-view .table-cell:selected {
@@ -204,12 +198,12 @@
 /* ========================== Home Stats Styles ======================= */
 .stats_container {
    -fx-alignment: center;
-   -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, .1), 10, 0.1, 0, 0);
+   -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, .2), 10, 0.2, 0, 0);
 }
 
 .stat {
     -fx-background-radius: 20px;
-    -fx-background-color: white;
+    -fx-background-color: rgba(66, 125, 157, .5);
 }
 /* ==================================================================== */
 
@@ -224,7 +218,7 @@
 }
 
 .tab-pane .tab-header-area {
-     -fx-font-size: 14px;
+     -fx-font-size: 15px;
      -fx-background-color: #2a2a2a;
      -fx-cursor: hand;
      -fx-padding: 0;
@@ -238,7 +232,7 @@
 }
 
 .tab-pane .tab:selected {
-    -fx-background-color: rgb(66, 125, 157, .3);
+    -fx-background-color: rgba(66, 125, 157, .3);
     -fx-border-color: rgb(22, 72, 99);
     -fx-border-width: 0 0 3px 0;
     -fx-focus-color: transparent;
