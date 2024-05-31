@@ -2,7 +2,6 @@ package com.yiarth.java_project.controllers;
 
 import com.yiarth.java_project.models.Matiere;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SubjectController {
@@ -39,10 +38,7 @@ public class SubjectController {
     public List<String[]> getAllSubjects() {
         Matiere subject = new Matiere();
 
-        List<String[]> subjects_list = new ArrayList<>();
-        subjects_list = subject.getAllRecords();
-
-        return subjects_list;
+        return subject.getAllRecords();
     }
 
     /**

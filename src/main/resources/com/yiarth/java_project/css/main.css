@@ -226,14 +226,14 @@
 
 .tab-pane .tab {
     -fx-background-color: transparent;
-    -fx-text-base-color: rgb(22, 72, 99);
+    -fx-text-base-color: rgba(0, 0, 0, .8);
     -fx-padding: 5px;
     -fx-border-radius: none;
 }
 
 .tab-pane .tab:selected {
-    -fx-background-color: rgba(66, 125, 157, .3);
     -fx-border-color: rgb(22, 72, 99);
+    -fx-text-base-color: rgb(22, 72, 99);
     -fx-border-width: 0 0 3px 0;
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;

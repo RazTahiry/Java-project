@@ -87,10 +87,6 @@ public class Note {
             System.out.println("VALIDATOR ERROR: Subject's number should not be empty or null.");
             return false;
         }
-        if (_note < 0 || _note > 20) {
-            System.out.println("VALIDATOR ERROR: Score should be between 0 and 20.");
-            return false;
-        }
         return true;
     }
 

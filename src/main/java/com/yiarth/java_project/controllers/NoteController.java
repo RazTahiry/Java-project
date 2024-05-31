@@ -2,7 +2,6 @@ package com.yiarth.java_project.controllers;
 
 import com.yiarth.java_project.models.Note;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class NoteController {

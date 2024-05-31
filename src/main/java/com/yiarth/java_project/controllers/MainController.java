@@ -137,6 +137,9 @@ public class MainController implements Initializable {
         // Action handling on combobox change
         schoolCombobox(); // School combobox filter in student section
         schoolComboboxScore(); // School combobox filter in score section
+
+        // Search methods
+        searchStudent();
     }
 
     /**
@@ -276,7 +279,7 @@ public class MainController implements Initializable {
             dataToSchoolScoreCbx();
         }
         school_result_message.setText(resultMessage);
-        timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> school_result_message.setText("")));
+        timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> school_result_message.setText("")));
         timing.play();
     }
     @FXML
@@ -295,7 +298,7 @@ public class MainController implements Initializable {
             dataToSchoolScoreCbx();
         }
         school_result_message.setText(resultMessage);
-        timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> school_result_message.setText("")));
+        timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> school_result_message.setText("")));
         timing.play();
     }
     @FXML
@@ -311,7 +314,7 @@ public class MainController implements Initializable {
             dataToSchoolScoreCbx();
         }
         school_result_message.setText(resultMessage);
-        timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> school_result_message.setText("")));
+        timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> school_result_message.setText("")));
         timing.play();
     }
     // Clear all inputs value in school form
@@ -346,7 +349,7 @@ public class MainController implements Initializable {
             }
         } else {
             school_result_message.setText("Aucune école sélectionnée.");
-            timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> school_result_message.setText("")));
+            timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> school_result_message.setText("")));
             timing.play();
         }
     }
@@ -367,22 +370,28 @@ public class MainController implements Initializable {
         String prenom = student_lastname_input.getText();
 
         if (student_datenais_input.getValue() != null) {
-            Date dateNais = Date.valueOf(student_datenais_input.getValue());
+            LocalDate dateNais = student_datenais_input.getValue();
+            LocalDate currentDate = LocalDate.now();
 
-            String resultMessage = student.addStudent(numEleve,numEcole,nom,prenom,dateNais);
-            if (resultMessage.contains("ajouté")) {
-                cancel_student();
-                if (Objects.equals(school_score_cbx.getValue(), "Toutes les écoles")) {
-                    scoreStudentComboboxAll();
-                } else {
-                    scoreStudentCombobox(school_score_cbx.getValue());
+            if (!dateNais.isAfter(currentDate)) {
+                Date sqlDate = Date.valueOf(dateNais);
+                String resultMessage = student.addStudent(numEleve,numEcole,nom,prenom,sqlDate);
+                if (resultMessage.contains("ajouté")) {
+                    cancel_student();
+                    if (Objects.equals(school_score_cbx.getValue(), "Toutes les écoles")) {
+                        scoreStudentComboboxAll();
+                    } else {
+                        scoreStudentCombobox(school_score_cbx.getValue());
+                    }
                 }
+                student_result_message.setText(resultMessage);
+            } else {
+                student_result_message.setText("La date de naissance ne peut pas être dans le futur.");
             }
-            student_result_message.setText(resultMessage);
         } else {
             student_result_message.setText("Veuillez remplir tous les champs récquis.");
         }
-        timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> student_result_message.setText("")));
+        timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> student_result_message.setText("")));
         timing.play();
     }
     @FXML
@@ -394,22 +403,29 @@ public class MainController implements Initializable {
         String prenom = student_lastname_input.getText();
 
         if (student_datenais_input.getValue() != null) {
-            Date dateNais = Date.valueOf(student_datenais_input.getValue());
+            LocalDate dateNais = student_datenais_input.getValue();
+            LocalDate currentDate = LocalDate.now();
 
-            String resultMessage = student.updateStudent(numEleve,numEcole,nom,prenom,dateNais);
-            if (resultMessage.contains("mis à jour")) {
-                cancel_student();
-                if (Objects.equals(school_score_cbx.getValue(), "Toutes les écoles")) {
-                    scoreStudentComboboxAll();
-                } else {
-                    scoreStudentCombobox(school_score_cbx.getValue());
+            if (!dateNais.isAfter(currentDate)) {
+                Date sqlDate = Date.valueOf(dateNais);
+                String resultMessage = student.updateStudent(numEleve,numEcole,nom,prenom,sqlDate);
+                if (resultMessage.contains("mis à jour")) {
+                    cancel_student();
+                    if (Objects.equals(school_score_cbx.getValue(), "Toutes les écoles")) {
+                        scoreStudentComboboxAll();
+                    } else {
+                        scoreStudentCombobox(school_score_cbx.getValue());
+                    }
                 }
+                student_result_message.setText(resultMessage);
+            } else {
+                student_result_message.setText("La date de naissance ne peut pas être dans le futur.");
             }
-            student_result_message.setText(resultMessage);
+
         } else {
             student_result_message.setText("Veuillez remplir tous les champs récquis.");
         }
-        timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> student_result_message.setText("")));
+        timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> student_result_message.setText("")));
         timing.play();
     }
     @FXML
@@ -426,7 +442,7 @@ public class MainController implements Initializable {
             }
         }
         student_result_message.setText(resultMessage);
-        timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> student_result_message.setText("")));
+        timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> student_result_message.setText("")));
         timing.play();
     }
     // Clear all inputs value in student form
@@ -437,8 +453,6 @@ public class MainController implements Initializable {
         } else {
             dataToStudentTb(school_cbox_student.getValue());
         }
-        student_school_combobox.getSelectionModel().clearSelection();
-        student_school_combobox.setValue(null);
         student_num_input.clear();
         student_firstname_input.clear();
         student_lastname_input.clear();
@@ -472,7 +486,7 @@ public class MainController implements Initializable {
             System.out.println(numEcole);
             System.out.println(numEleve);
             student_result_message.setText("Aucun élève sélectionné.");
-            timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> student_result_message.setText("")));
+            timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> student_result_message.setText("")));
             timing.play();
         }
     }
@@ -499,16 +513,16 @@ public class MainController implements Initializable {
                     scoreSubjectCombobox();
                 }
                 subject_result_message.setText(resultMessage);
-                timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> subject_result_message.setText("")));
+                timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> subject_result_message.setText("")));
                 timing.play();
             } catch (NumberFormatException e) {
                 subject_result_message.setText("Coefficient Invalide.");
-                timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> subject_result_message.setText("")));
+                timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> subject_result_message.setText("")));
                 timing.play();
             }
         } else {
             subject_result_message.setText("Veuillez remplir tous les champs requis.");
-            timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> subject_result_message.setText("")));
+            timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> subject_result_message.setText("")));
             timing.play();
         }
     }
@@ -526,11 +540,11 @@ public class MainController implements Initializable {
                 scoreSubjectCombobox();
             }
             subject_result_message.setText(resultMessage);
-            timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> subject_result_message.setText("")));
+            timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> subject_result_message.setText("")));
             timing.play();
         } catch (NumberFormatException e) {
             subject_result_message.setText("Coefficient Invalide.");
-            timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> subject_result_message.setText("")));
+            timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> subject_result_message.setText("")));
             timing.play();
         }
     }
@@ -544,7 +558,7 @@ public class MainController implements Initializable {
             scoreSubjectCombobox();
         }
         subject_result_message.setText(resultMessage);
-        timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> subject_result_message.setText("")));
+        timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> subject_result_message.setText("")));
         timing.play();
     }
     // Clear all inputs value in subject form
@@ -581,7 +595,7 @@ public class MainController implements Initializable {
             }
         } else {
             subject_result_message.setText("Aucune matière sélectionnée.");
-            timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> subject_result_message.setText("")));
+            timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> subject_result_message.setText("")));
             timing.play();
         }
     }
@@ -602,22 +616,29 @@ public class MainController implements Initializable {
         String scoreValue = score_input.getText();
 
         if (!schoolYear.isEmpty() && student != null && subject != null && !scoreValue.isEmpty()) {
-            try {
-                String resultMessage = score.addNote(schoolYear, student, subject, Double.parseDouble(scoreValue));
-                if (resultMessage.contains("ajoutée")) {
-                    cancel_score();
+            if (Double.parseDouble(scoreValue) >= 0 && Double.parseDouble(scoreValue) <= 20) {
+                try {
+                    String resultMessage = score.addNote(schoolYear, student, subject, Double.parseDouble(scoreValue));
+                    if (resultMessage.contains("ajoutée")) {
+                        AverageController a = new AverageController();
+                        cancel_score();
+                    }
+                    score_result_message.setText(resultMessage);
+                    timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> score_result_message.setText("")));
+                    timing.play();
+                } catch (NumberFormatException e) {
+                    score_result_message.setText("Note Invalide.");
+                    timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> score_result_message.setText("")));
+                    timing.play();
                 }
-                score_result_message.setText(resultMessage);
-                timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> score_result_message.setText("")));
-                timing.play();
-            } catch (NumberFormatException e) {
-                score_result_message.setText("Note Invalide.");
-                timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> score_result_message.setText("")));
+            } else {
+                score_result_message.setText("Note d'une élève doit être compris entre 0 et 20.");
+                timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> score_result_message.setText("")));
                 timing.play();
             }
         } else {
             score_result_message.setText("Veuillez remplir tous les champs requis.");
-            timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> score_result_message.setText("")));
+            timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> score_result_message.setText("")));
             timing.play();
         }
     }
@@ -629,17 +650,29 @@ public class MainController implements Initializable {
         String subject = score_subject_input.getValue();
         String scoreValue = score_input.getText();
 
-        try {
-            String resultMessage = score.updateNote(schoolYear, student, subject, Double.parseDouble(scoreValue));
-            if (resultMessage.contains("mise à jour")) {
-                cancel_score();
+        if (!schoolYear.isEmpty() && student != null && subject != null && !scoreValue.isEmpty()) {
+            if (Double.parseDouble(scoreValue) >= 0 && Double.parseDouble(scoreValue) <= 20) {
+                try {
+                    String resultMessage = score.updateNote(schoolYear, student, subject, Double.parseDouble(scoreValue));
+                    if (resultMessage.contains("mise à jour")) {
+                        cancel_score();
+                    }
+                    score_result_message.setText(resultMessage);
+                    timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> score_result_message.setText("")));
+                    timing.play();
+                } catch (NumberFormatException e) {
+                    score_result_message.setText("Note Invalide.");
+                    timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> score_result_message.setText("")));
+                    timing.play();
+                }
+            } else {
+                score_result_message.setText("Note d'une élève doit être compris entre 0 et 20.");
+                timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> score_result_message.setText("")));
+                timing.play();
             }
-            score_result_message.setText(resultMessage);
-            timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> score_result_message.setText("")));
-            timing.play();
-        } catch (NumberFormatException e) {
-            score_result_message.setText("Note Invalide.");
-            timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> score_result_message.setText("")));
+        } else {
+            score_result_message.setText("Veuillez remplir tous les champs requis.");
+            timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> score_result_message.setText("")));
             timing.play();
         }
     }
@@ -652,7 +685,7 @@ public class MainController implements Initializable {
             cancel_score();
         }
         score_result_message.setText(resultMessage);
-        timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> score_result_message.setText("")));
+        timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> score_result_message.setText("")));
         timing.play();
     }
     // Clear all inputs value in score form
@@ -694,7 +727,7 @@ public class MainController implements Initializable {
             }
         } else {
             score_result_message.setText("Aucune note sélectionnée.");
-            timing = new Timeline(new KeyFrame(Duration.seconds(3), events -> score_result_message.setText("")));
+            timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> score_result_message.setText("")));
             timing.play();
         }
     }
@@ -788,7 +821,7 @@ public class MainController implements Initializable {
     }
     // Handle selection on school TableView
     private void selectTableSchool() {
-        school_tableview.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        school_tableview.getSelectionModel().selectedItemProperty().addListener((_, _, newSelection) -> {
             if (newSelection != null) {
                 num_ecole_input.setText(newSelection.getNumEcole());
                 design_ecole_input.setText(newSelection.getDesign());
@@ -835,7 +868,7 @@ public class MainController implements Initializable {
     }
     // Handle selection on subject TableView
     private void selectTableSubject() {
-        subject_tableview.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        subject_tableview.getSelectionModel().selectedItemProperty().addListener((_, _, newSelection) -> {
             if (newSelection != null) {
                 c_matiere_input.setText(newSelection.getNumMat());
                 design_matiere_input.setText(newSelection.getDesign());
@@ -905,7 +938,7 @@ public class MainController implements Initializable {
     }
     // Handle the selection on student TableView
     private void selectTableStudent() {
-        student_tableview.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        student_tableview.getSelectionModel().selectedItemProperty().addListener((_, _, newSelection) -> {
             if (newSelection != null) {
                 student_school_combobox.setValue(newSelection.getNumEcole());
                 student_num_input.setText(newSelection.getNumEleve());
@@ -952,9 +985,7 @@ public class MainController implements Initializable {
         score_tableview.getItems().clear();
 
         for (String[] studenArray : listStudents) {
-            AverageController a = new AverageController();
-            double totalScore = a.getTotalScore(studenArray[0], studenArray[1]);
-            studentsScoreList.add(new Score(studenArray[0], studenArray[2], studenArray[3], totalScore));
+            studentsScoreList.add(new Score(studenArray[0], studenArray[2], studenArray[3], Double.parseDouble(studenArray[5])));
             score_tableview.setItems(studentsScoreList);
         }
     }
@@ -971,15 +1002,13 @@ public class MainController implements Initializable {
         score_tableview.getItems().clear();
 
         for (String[] studenArray : listStudents) {
-            AverageController a = new AverageController();
-            double totalScore = a.getTotalScore(studenArray[0], studenArray[1]);
-            studentsScoreList.add(new Score(studenArray[0], studenArray[2], studenArray[3], totalScore));
+            studentsScoreList.add(new Score(studenArray[0], studenArray[2], studenArray[3], Double.parseDouble(studenArray[5])));
             score_tableview.setItems(studentsScoreList);
         }
     }
     // Handle the selection on score TableView
     private void selectTableScore() {
-        score_tableview.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        score_tableview.getSelectionModel().selectedItemProperty().addListener((_, _, newSelection) -> {
             if (newSelection != null) {
                 score_student_input.setValue(newSelection.getNumEleve());
 
@@ -996,14 +1025,11 @@ public class MainController implements Initializable {
      * Handle change on school combobox to score input in score section
      */
     private void subjectToScore() {
-        score_subject_input.valueProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                String numEleve = score_student_input.getValue();
-                NoteController score = new NoteController();
-                String[] scoreInfo = score.getScore(numEleve, newValue);
-                score_input.setText(scoreInfo[3]);
-            }
+        score_subject_input.valueProperty().addListener((_, _, newValue) -> {
+            String numEleve = score_student_input.getValue();
+            NoteController score = new NoteController();
+            String[] scoreInfo = score.getScore(numEleve, newValue);
+            score_input.setText(scoreInfo[3]);
         });
     }
 
@@ -1011,14 +1037,11 @@ public class MainController implements Initializable {
      * Handle change on school combobox in student section
      */
     private void schoolCombobox() {
-        school_cbox_student.valueProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                if (Objects.equals(newValue, "Toutes les écoles")) {
-                    dataToStudentTbAll();
-                } else {
-                    dataToStudentTb(newValue);
-                }
+        school_cbox_student.valueProperty().addListener((_, _, newValue) -> {
+            if (Objects.equals(newValue, "Toutes les écoles")) {
+                dataToStudentTbAll();
+            } else {
+                dataToStudentTb(newValue);
             }
         });
     }
@@ -1027,16 +1050,13 @@ public class MainController implements Initializable {
      * Handle change on school combobox in score section
      */
     private void schoolComboboxScore() {
-        school_score_cbx.valueProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                if (Objects.equals(newValue, "Toutes les écoles")) {
-                    scoreStudentComboboxAll();
-                    dataToScoreTbAll();
-                } else {
-                    scoreStudentCombobox(newValue);
-                    dataToScoreTb(newValue);
-                }
+        school_score_cbx.valueProperty().addListener((_, _, newValue) -> {
+            if (Objects.equals(newValue, "Toutes les écoles")) {
+                scoreStudentComboboxAll();
+                dataToScoreTbAll();
+            } else {
+                scoreStudentCombobox(newValue);
+                dataToScoreTb(newValue);
             }
         });
     }
@@ -1074,5 +1094,42 @@ public class MainController implements Initializable {
         school_score_cbx.setValue(options.getFirst());
         scoreStudentComboboxAll();
         dataToScoreTbAll();
+    }
+
+    @FXML
+    private TextField student_search;
+    @FXML
+    public void searchStudent() {
+        student_search.textProperty().addListener(new ChangeListener<>() {
+            final StudentController student = new StudentController();
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                numEleveCol.setCellValueFactory(new PropertyValueFactory<>("numEleve"));
+                nomCol.setCellValueFactory(new PropertyValueFactory<>("nom"));
+                prenomCol.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+                dateNaisCol.setCellValueFactory(new PropertyValueFactory<>("dateNais"));
+
+                student_tableview.getItems().clear();
+
+                if (Objects.equals(school_cbox_student.getValue(), "Toutes les écoles")) {
+
+                    List<String[]> listStudents = student.searchSudent(newValue);
+
+                    for (String[] studentArray : listStudents) {
+                        LocalDate date = LocalDate.parse(studentArray[4]);
+                        studentsList.add(new Student(studentArray[0], studentArray[1], studentArray[2], studentArray[3], String.valueOf(date)));
+                        student_tableview.setItems(studentsList);
+                    }
+                } else {
+                    List<String[]> listStudents = student.searchSudentInSchool(newValue, school_cbox_student.getValue());
+
+                    for (String[] studentArray : listStudents) {
+                        LocalDate date = LocalDate.parse(studentArray[4]);
+                        studentsList.add(new Student(studentArray[0], studentArray[1], studentArray[2], studentArray[3], String.valueOf(date)));
+                        student_tableview.setItems(studentsList);
+                    }
+                }
+            }
+        });
     }
 }

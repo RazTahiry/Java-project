@@ -3,7 +3,6 @@ package com.yiarth.java_project.controllers;
 import com.yiarth.java_project.models.Eleve;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 public class StudentController {
@@ -104,11 +103,21 @@ public class StudentController {
     }
 
     /**
+     * Search a students in a specific school
+     * @return List of filtered students
+     */
+    public List<String[]> searchSudentInSchool(String filterValue, String numEcole) {
+        Eleve student = new Eleve(numEcole);
+
+        return student.getFilteredStudentInSchool(filterValue);
+    }
+
+    /**
      * Search a students
      * @return List of filtered students
      */
-    public List<String[]> searchSudent(String filterValue, String numEcole) {
-        Eleve student = new Eleve(numEcole);
+    public List<String[]> searchSudent(String filterValue) {
+        Eleve student = new Eleve();
 
         return student.getFilteredStudent(filterValue);
     }

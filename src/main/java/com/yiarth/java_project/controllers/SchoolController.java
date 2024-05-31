@@ -2,7 +2,6 @@ package com.yiarth.java_project.controllers;
 
 import com.yiarth.java_project.models.Ecole;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SchoolController {
@@ -39,10 +38,7 @@ public class SchoolController {
     public List<String[]> getAllSchools() {
         Ecole school = new Ecole();
 
-        List<String[]> schools_list = new ArrayList<>();
-        schools_list = school.getAllRecords();
-
-        return schools_list;
+        return school.getAllRecords();
     }
 
     /**

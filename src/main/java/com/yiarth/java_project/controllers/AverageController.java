@@ -1,8 +1,8 @@
 package com.yiarth.java_project.controllers;
 
+import com.yiarth.java_project.models.Ecole;
 import com.yiarth.java_project.models.Eleve;
 import com.yiarth.java_project.models.Matiere;
-import com.yiarth.java_project.models.*;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -53,25 +53,31 @@ public class AverageController {
     }
 
     /**
-     * Get the score average of a specific student
+     * Set the score average obtained by a student
      * @param numEleve Student number
      * @param numEcole School number
-     * @return value of score average
+     * @param noteTotale Total score
      */
-    public double getStudentScoreAverage(String numEleve, String numEcole) {
+    public void addAverage(String numEleve, String numEcole, double noteTotale) {
         Eleve student = new Eleve(numEleve, numEcole);
-        double scoreAverageValue;
 
-        if (student.isExists()) {
-            // Divide the total score obtained by the student
-            // by the total value of coefficient of all subjects,
-            // to get the score average value
-            scoreAverageValue = (double) student.getTotalScore() / _coef_total;
+        // Divide the total score obtained by the student
+        // by the total value of coefficient of all subjects,
+        // to get the score average value
+        double average = noteTotale / _coef_total;
 
-            return scoreAverageValue;
-        } else {
-            return 0;
-        }
+        student.updateAverageScore(average);
+    }
+
+    /**
+     * Set the total score obtained by a student
+     * @param numEleve Student number
+     * @param numEcole School number
+     */
+    public void addTotalScore(String numEleve, String numEcole) {
+        Eleve student = new Eleve(numEleve, numEcole);
+        double totalScore = student.getTotalScore();
+        student.updateTotalScore(totalScore);
     }
 
     /**
@@ -83,7 +89,18 @@ public class AverageController {
     public double getTotalScore(String numEleve, String numEcole) {
         Eleve student = new Eleve(numEleve, numEcole);
 
-        return  student.getTotalScore();
+        return Double.parseDouble(student.getStudent()[5]);
+    }
+
+    /**
+     * Get the information of a specific student
+     * @param numEleve Student number
+     * @param numEcole School number
+     * @return array of student information
+     */
+    public String[] getStudent(String numEleve, String numEcole) {
+        Eleve student = new Eleve(numEleve, numEcole);
+        return student.getStudent();
     }
 
     /**
@@ -93,16 +110,21 @@ public class AverageController {
     public List<String[]> getAllStudents(String numEcole) {
         Eleve student = new Eleve(numEcole);
         List<String[]> studentList = new ArrayList<>();
-        double average;
+
         List<String[]> studentsList = student.getStudentsInSchool();
         for (String[] studentArray : studentsList) {
-            Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3], Date.valueOf(studentArray[4]));
+            Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3],
+                    Date.valueOf(studentArray[4]), Double.parseDouble(studentArray[5]), Double.parseDouble(studentArray[6]));
             if (candidate.isExists()) {
-                average = ((double) candidate.getTotalScore() / _coef_total);
+                Ecole school = new Ecole(candidate.get_num_ecole());
+                String ecole = school.get_design();
+
                 String numEleve = candidate.get_num_eleve();
                 String nom = candidate.get_nom();
                 String prenom = candidate.get_prenom();
-                studentList.add(new String[]{numEleve, nom, prenom, String.valueOf(average)});
+                double moyenne = candidate.get_moyenne();
+
+                studentList.add(new String[]{numEleve, nom, prenom, ecole, String.valueOf(moyenne)});
             }
         }
         return studentList;
@@ -115,17 +137,22 @@ public class AverageController {
     public List<String[]> getStudentsCepeAdmitted(String numEcole) {
         Eleve student = new Eleve(numEcole);
         List<String[]> studentCepeAdmitted = new ArrayList<>();
-        double average;
 
         List<String[]> studentsList = student.getStudentsInSchool();
         for (String[] studentArray : studentsList) {
-            Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3], Date.valueOf(studentArray[4]));
+            Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3],
+                    Date.valueOf(studentArray[4]), Double.parseDouble(studentArray[5]), Double.parseDouble(studentArray[6]));
             if (candidate.isExists()) {
-                if ((average = ((double) candidate.getTotalScore() / _coef_total)) >= _average_deliberation) {
+                double moyenne = candidate.get_moyenne();
+                if (moyenne >= _average_deliberation) {
+                    Ecole school = new Ecole(candidate.get_num_ecole());
+                    String ecole = school.get_design();
+
                     String numEleve = candidate.get_num_eleve();
                     String nom = candidate.get_nom();
                     String prenom = candidate.get_prenom();
-                    studentCepeAdmitted.add(new String[]{numEleve, nom, prenom, String.valueOf(average)});
+
+                    studentCepeAdmitted.add(new String[]{numEleve, nom, prenom, ecole, String.valueOf(moyenne)});
                 }
             }
         }
@@ -139,17 +166,22 @@ public class AverageController {
     public List<String[]> getStudentsSixthAdmitted(String numEcole) {
         Eleve student = new Eleve(numEcole);
         List<String[]> studentSixthAdmitted = new ArrayList<>();
-        double average;
 
         List<String[]> studentsList = student.getStudentsInSchool();
         for (String[] studentArray : studentsList) {
-            Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3], Date.valueOf(studentArray[4]));
+            Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3],
+                    Date.valueOf(studentArray[4]), Double.parseDouble(studentArray[5]), Double.parseDouble(studentArray[6]));
             if (candidate.isExists()) {
-                if ((average = ((double) candidate.getTotalScore() / _coef_total)) >= 12.00) {
+                double moyenne = candidate.get_moyenne();
+                if (moyenne >= 12.00) {
+                    Ecole school = new Ecole(candidate.get_num_ecole());
+                    String ecole = school.get_design();
+
                     String numEleve = candidate.get_num_eleve();
                     String nom = candidate.get_nom();
                     String prenom = candidate.get_prenom();
-                    studentSixthAdmitted.add(new String[]{numEleve, nom, prenom, String.valueOf(average)});
+
+                    studentSixthAdmitted.add(new String[]{numEleve, nom, prenom, ecole, String.valueOf(moyenne)});
                 }
             }
         }
@@ -163,17 +195,22 @@ public class AverageController {
     public List<String[]> getFailedStudents(String numEcole) {
         Eleve student = new Eleve(numEcole);
         List<String[]> failedStudents = new ArrayList<>();
-        double average;
 
         List<String[]> studentsList = student.getStudentsInSchool();
         for (String[] studentArray : studentsList) {
-            Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3], Date.valueOf(studentArray[4]));
+            Eleve candidate = new Eleve(studentArray[0], studentArray[1], studentArray[2], studentArray[3],
+                    Date.valueOf(studentArray[4]), Double.parseDouble(studentArray[5]), Double.parseDouble(studentArray[6]));
             if (candidate.isExists()) {
-                if ((average = ((double) candidate.getTotalScore() / _coef_total)) < _average_deliberation) {
+                double moyenne = candidate.get_moyenne();
+                if (moyenne < _average_deliberation) {
+                    Ecole school = new Ecole(candidate.get_num_ecole());
+                    String ecole = school.get_design();
+
                     String numEleve = candidate.get_num_eleve();
                     String nom = candidate.get_nom();
                     String prenom = candidate.get_prenom();
-                    failedStudents.add(new String[]{numEleve, nom, prenom, String.valueOf(average)});
+
+                    failedStudents.add(new String[]{numEleve, nom, prenom, ecole, String.valueOf(moyenne)});
                 }
             }
         }
