@@ -4,9 +4,9 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class School {
     /**
-     * This class is a model for a TableView
+     * This class is a model of the school TableView
      * <p>
-     * Each private attribute of this class concerns a column of a TableView in the user interface
+     * Each private attribute of this class corresponds to a column in the TableView user interface.
      */
 
     private final SimpleStringProperty numEcole;

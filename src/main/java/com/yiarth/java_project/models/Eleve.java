@@ -203,7 +203,7 @@ public class Eleve {
 
                     int rowsAffected = p_stmt.executeUpdate();
                     if (rowsAffected > 0) {
-                        System.out.println("Data inserted successfully.");
+                        // System.out.println("Data inserted successfully.");
                         isCreated = true;
                     } else {
                         System.out.println("No data inserted.");
@@ -292,7 +292,7 @@ public class Eleve {
     }
 
     /**
-     * Fetch all records from database order by name
+     * Fetch all records from database order by score average
      * @return List of records
      */
     public List<String[]> getAllRecordsOrderByMerit() {
@@ -304,16 +304,10 @@ public class Eleve {
         try {
             if (db.isConnected()) {
                 db_con = db.getConnection();
-                String sql_select = "SELECT eleve.*, SUM(matiere.coef * note.note) AS totalScore FROM eleve " +
-                                    "JOIN note ON eleve.numEleve = note.numEleve " +
-                                    "JOIN matiere ON note.numMat = matiere.numMat " +
-                                    "GROUP BY eleve.numEleve, eleve.nom, eleve.prenom" +
-                                    "ORDER BY totalScore DESC";
+                String sql_select = "SELECT * FROM eleve ORDER BY moyenne DESC";
 
                 try (PreparedStatement p_stmt = db_con.prepareStatement(sql_select)) {
                     rs = p_stmt.executeQuery();
-
-                    System.out.println("numEleve\t\tnumEcole\t\tnom\t\tprenom");
 
                     while (rs.next()) {
                         String numEleve = rs.getString("numEleve");
@@ -374,7 +368,7 @@ public class Eleve {
 
                     int rowsAffected = p_stmt.executeUpdate();
                     if (rowsAffected > 0) {
-                        System.out.println("Data updated successfully.");
+                        // System.out.println("Data updated successfully.");
                         isUpdated = true;
                     } else {
                         System.out.println("No data updated.");
@@ -424,7 +418,7 @@ public class Eleve {
 
                     int rowsAffected = p_stmt.executeUpdate();
                     if (rowsAffected > 0) {
-                        System.out.println("Data deleted successfully.");
+                        // System.out.println("Data deleted successfully.");
                         isDeleted = true;
                     } else {
                         System.out.println("No data deleted.");
@@ -747,7 +741,7 @@ public class Eleve {
 
                     int rowsAffected = p_stmt.executeUpdate();
                     if (rowsAffected > 0) {
-                        System.out.println("Score updated successfully.");
+                        // System.out.println("Score total updated successfully.");
                         isUpdated = true;
                     } else {
                         System.out.println("No data updated.");
@@ -790,7 +784,7 @@ public class Eleve {
 
                     int rowsAffected = p_stmt.executeUpdate();
                     if (rowsAffected > 0) {
-                        System.out.println("Score updated successfully.");
+                        // System.out.println("Score average updated successfully.");
                         isUpdated = true;
                     } else {
                         System.out.println("No data updated.");

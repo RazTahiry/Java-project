@@ -159,7 +159,7 @@ public class Note {
 
                     int rowsAffected = p_stmt.executeUpdate();
                     if (rowsAffected > 0) {
-                        System.out.println("Data inserted successfully.");
+                        // System.out.println("Data inserted successfully.");
                         isCreated = true;
                     } else {
                         System.out.println("No data inserted.");
@@ -316,7 +316,7 @@ public class Note {
 
                     int rowsAffected = p_stmt.executeUpdate();
                     if (rowsAffected > 0) {
-                        System.out.println("Data updated successfully.");
+                        // System.out.println("Data updated successfully.");
                         isUpdated = true;
                     } else {
                         System.out.println("No data updated.");
@@ -366,7 +366,7 @@ public class Note {
 
                     int rowsAffected = p_stmt.executeUpdate();
                     if (rowsAffected > 0) {
-                        System.out.println("Data deleted successfully.");
+                        // System.out.println("Data deleted successfully.");
                         isDeleted = true;
                     } else {
                         System.out.println("No data deleted.");

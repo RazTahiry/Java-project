@@ -17,6 +17,7 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -26,84 +27,56 @@ public class MainController implements Initializable {
 
     private Timeline timing;
 
-    @FXML
-    private AnchorPane home_anchor_pane;
-    @FXML
-    private AnchorPane result_anchor_pane;
-    @FXML
-    private AnchorPane score_anchor_pane;
-    @FXML
-    private AnchorPane student_anchor_pane;
-    @FXML
-    private AnchorPane subject_anchor_pane;
-    @FXML
-    private AnchorPane school_anchor_pane;
+    @FXML private AnchorPane home_anchor_pane;
+    @FXML private AnchorPane result_anchor_pane;
+    @FXML private AnchorPane score_anchor_pane;
+    @FXML private AnchorPane student_anchor_pane;
+    @FXML private AnchorPane subject_anchor_pane;
+    @FXML private AnchorPane school_anchor_pane;
 
-    @FXML
-    private Label bar_title;
+    @FXML private Label bar_title;
 
-    @FXML
-    private ComboBox<String> school_cbox_student;
-    @FXML
-    private ComboBox<String> school_score_cbx;
+    @FXML private ComboBox<String> school_cbox_student;
+    @FXML private ComboBox<String> school_score_cbx;
 
     /**
      * School TextFields
      */
 
-    @FXML
-    private TextField num_ecole_input;
-    @FXML
-    private TextField design_ecole_input;
-    @FXML
-    private TextField adresse_ecole_input;
-    @FXML
-    private Label school_result_message;
+    @FXML private TextField num_ecole_input;
+    @FXML private TextField design_ecole_input;
+    @FXML private TextField adresse_ecole_input;
+    @FXML private Label school_result_message;
 
     /**
      * Student TextFields
      */
 
-    @FXML
-    private ComboBox<String> student_school_combobox;
-    @FXML
-    private TextField student_num_input;
-    @FXML
-    private TextField student_firstname_input;
-    @FXML
-    private TextField student_lastname_input;
-    @FXML
-    private Label student_result_message;
-    @FXML
-    private DatePicker student_datenais_input;
+    @FXML private ComboBox<String> student_school_combobox;
+    @FXML private TextField student_num_input;
+    @FXML private TextField student_firstname_input;
+    @FXML private TextField student_lastname_input;
+    @FXML private Label student_result_message;
+    @FXML private DatePicker student_datenais_input;
 
     /**
      * Subject TextFields
      */
 
-    @FXML
-    private TextField c_matiere_input;
-    @FXML
-    private TextField design_matiere_input;
-    @FXML
-    private TextField coef_input;
-    @FXML
-    private Label subject_result_message;
+    @FXML private TextField c_matiere_input;
+    @FXML private TextField design_matiere_input;
+    @FXML private TextField coef_input;
+    @FXML private Label subject_result_message;
 
     /**
      * Score TextFields
      */
 
-    @FXML
-    private TextField school_year_input;
-    @FXML
-    private ComboBox<String> score_student_input;
-    @FXML
-    private ComboBox<String> score_subject_input;
-    @FXML
-    private TextField score_input;
-    @FXML
-    private Label score_result_message;
+    @FXML private TextField school_year_input;
+    @FXML private ComboBox<String> score_student_input;
+    @FXML private ComboBox<String> score_subject_input;
+    @FXML private TextField score_input;
+    @FXML private Label score_result_message;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -116,6 +89,11 @@ public class MainController implements Initializable {
         // Add data to a combobox
         studentFormCombobox(); // School combobox in student form
         scoreSubjectCombobox(); // Subject combobox in score form
+
+        // Show data on result TableView
+        showCepeAdmittedStudents();
+        showSixthAdmittedStudents();
+        showFailedStudents();
 
         // The selection method on a different TableView
         selectTableStudent();
@@ -146,18 +124,13 @@ public class MainController implements Initializable {
      * Handle the action on sidebar button click
      */
 
-    @FXML
-    private Button home_button_sidebar;
-    @FXML
-    private Button result_button_sidebar;
-    @FXML
-    private Button score_button_sidebar;
-    @FXML
-    private Button student_button_sidebar;
-    @FXML
-    private Button subject_button_sidebar;
-    @FXML
-    private Button school_button_sidebar;
+    @FXML private Button home_button_sidebar;
+    @FXML private Button result_button_sidebar;
+    @FXML private Button score_button_sidebar;
+    @FXML private Button student_button_sidebar;
+    @FXML private Button subject_button_sidebar;
+    @FXML private Button school_button_sidebar;
+
     private void handleSideBarButtonClick(int anchorPaneNumber) {
         home_anchor_pane.setVisible(false);
         result_anchor_pane.setVisible(false);
@@ -253,7 +226,7 @@ public class MainController implements Initializable {
      */
     private void disabledInput() {
         school_year_input.setText("2022-2023");
-        school_year_input.setDisable(true);
+        school_year_input.setEditable(false);
     }
 
     /**
@@ -325,7 +298,7 @@ public class MainController implements Initializable {
         design_ecole_input.clear();
         adresse_ecole_input.clear();
 
-        num_ecole_input.setDisable(false);
+        num_ecole_input.setEditable(true);
 
         add_school_btn.setDisable(false);
         update_school_btn.setDisable(true);
@@ -378,11 +351,7 @@ public class MainController implements Initializable {
                 String resultMessage = student.addStudent(numEleve,numEcole,nom,prenom,sqlDate);
                 if (resultMessage.contains("ajouté")) {
                     cancel_student();
-                    if (Objects.equals(school_score_cbx.getValue(), "Toutes les écoles")) {
-                        scoreStudentComboboxAll();
-                    } else {
-                        scoreStudentCombobox(school_score_cbx.getValue());
-                    }
+                    scoreStudentCombobox(school_score_cbx.getValue());
                 }
                 student_result_message.setText(resultMessage);
             } else {
@@ -411,11 +380,7 @@ public class MainController implements Initializable {
                 String resultMessage = student.updateStudent(numEleve,numEcole,nom,prenom,sqlDate);
                 if (resultMessage.contains("mis à jour")) {
                     cancel_student();
-                    if (Objects.equals(school_score_cbx.getValue(), "Toutes les écoles")) {
-                        scoreStudentComboboxAll();
-                    } else {
-                        scoreStudentCombobox(school_score_cbx.getValue());
-                    }
+                    scoreStudentCombobox(school_score_cbx.getValue());
                 }
                 student_result_message.setText(resultMessage);
             } else {
@@ -435,11 +400,7 @@ public class MainController implements Initializable {
         String resultMessage = student.deleteStudent(numEleve,numEcole);
         if (resultMessage.contains("supprimé")) {
             cancel_student();
-            if (Objects.equals(school_score_cbx.getValue(), "Toutes les écoles")) {
-                scoreStudentComboboxAll();
-            } else {
-                scoreStudentCombobox(school_score_cbx.getValue());
-            }
+            scoreStudentCombobox(school_score_cbx.getValue());
         }
         student_result_message.setText(resultMessage);
         timing = new Timeline(new KeyFrame(Duration.seconds(3), _ -> student_result_message.setText("")));
@@ -453,13 +414,14 @@ public class MainController implements Initializable {
         } else {
             dataToStudentTb(school_cbox_student.getValue());
         }
+        student_search.clear();
         student_num_input.clear();
         student_firstname_input.clear();
         student_lastname_input.clear();
         student_datenais_input.setValue(null);
 
         student_school_combobox.setDisable(false);
-        student_num_input.setDisable(false);
+        student_num_input.setEditable(true);
 
         add_student_btn.setDisable(false);
         update_student_btn.setDisable(true);
@@ -569,8 +531,8 @@ public class MainController implements Initializable {
         design_matiere_input.clear();
         coef_input.clear();
 
-        c_matiere_input.setDisable(false);
-        design_matiere_input.setDisable(false);
+        c_matiere_input.setEditable(true);
+        design_matiere_input.setEditable(true);
 
         add_subject_btn.setDisable(false);
         update_subject_btn.setDisable(true);
@@ -621,6 +583,8 @@ public class MainController implements Initializable {
                     String resultMessage = score.addNote(schoolYear, student, subject, Double.parseDouble(scoreValue));
                     if (resultMessage.contains("ajoutée")) {
                         AverageController a = new AverageController();
+                        a.updateTotalScore(student, school_score_cbx.getValue());
+                        a.updateAverage(student, school_score_cbx.getValue());
                         cancel_score();
                     }
                     score_result_message.setText(resultMessage);
@@ -655,6 +619,9 @@ public class MainController implements Initializable {
                 try {
                     String resultMessage = score.updateNote(schoolYear, student, subject, Double.parseDouble(scoreValue));
                     if (resultMessage.contains("mise à jour")) {
+                        AverageController a = new AverageController();
+                        a.updateTotalScore(student, school_score_cbx.getValue());
+                        a.updateAverage(student, school_score_cbx.getValue());
                         cancel_score();
                     }
                     score_result_message.setText(resultMessage);
@@ -682,6 +649,9 @@ public class MainController implements Initializable {
 
         String resultMessage = score.deleteNote(numEleve, numMat);
         if (resultMessage.contains("supprimée")) {
+            AverageController a = new AverageController();
+            a.updateTotalScore(numEleve, school_score_cbx.getValue());
+            a.updateAverage(numEleve, school_score_cbx.getValue());
             cancel_score();
         }
         score_result_message.setText(resultMessage);
@@ -691,11 +661,7 @@ public class MainController implements Initializable {
     // Clear all inputs value in score form
     @FXML
     public void cancel_score() {
-        if (Objects.equals(school_score_cbx.getValue(), "Toutes les écoles")) {
-            dataToScoreTbAll();
-        } else {
-            dataToScoreTb(school_score_cbx.getValue());
-        }
+        dataToScoreTb(school_score_cbx.getValue());
         score_student_input.getSelectionModel().clearSelection();
         score_student_input.setValue(null);
         score_subject_input.getSelectionModel().clearSelection();
@@ -748,20 +714,6 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Add all students to the student combobox (In score form at score section)
-     */
-    private void scoreStudentComboboxAll() {
-        StudentController student = new StudentController();
-        List<String[]> studentList = student.getAllStudents();
-        ObservableList<String> options = FXCollections.observableArrayList();
-
-        for (String[] studentArray : studentList) {
-            options.add(studentArray[0]);
-        }
-        score_student_input.setItems(options);
-    }
-
-    /**
      * Add all students in a specific school to the student combobox (In score form at score section)
      */
     private void scoreStudentCombobox(String numEcole) {
@@ -793,14 +745,10 @@ public class MainController implements Initializable {
      * School TableView manipulation
      */
 
-    @FXML
-    private TableView<School> school_tableview;
-    @FXML
-    private TableColumn<School, String> numEcoleCol;
-    @FXML
-    private TableColumn<School, String> designEcoleCol;
-    @FXML
-    private TableColumn<School, String> adresseEcoleCol;
+    @FXML private TableView<School> school_tableview;
+    @FXML private TableColumn<School, String> numEcoleCol;
+    @FXML private TableColumn<School, String> designEcoleCol;
+    @FXML private TableColumn<School, String> adresseEcoleCol;
 
     ObservableList<School> schoolsList = FXCollections.observableArrayList();
     // Show all schools in school TableView
@@ -827,7 +775,7 @@ public class MainController implements Initializable {
                 design_ecole_input.setText(newSelection.getDesign());
                 adresse_ecole_input.setText(newSelection.getAdresse());
 
-                num_ecole_input.setDisable(true);
+                num_ecole_input.setEditable(false);
 
                 add_school_btn.setDisable(true);
                 update_school_btn.setDisable(false);
@@ -840,14 +788,10 @@ public class MainController implements Initializable {
      * Subject TableView manipulation
      */
 
-    @FXML
-    private TableView<Subject> subject_tableview;
-    @FXML
-    private TableColumn<Subject, String> numMatCol;
-    @FXML
-    private TableColumn<Subject, String> designMatCol;
-    @FXML
-    private TableColumn<Subject, Integer> coefCol;
+    @FXML private TableView<Subject> subject_tableview;
+    @FXML private TableColumn<Subject, String> numMatCol;
+    @FXML private TableColumn<Subject, String> designMatCol;
+    @FXML private TableColumn<Subject, Integer> coefCol;
 
     ObservableList<Subject> subjectsList = FXCollections.observableArrayList();
     // Show all subjects in subject TableView
@@ -874,8 +818,8 @@ public class MainController implements Initializable {
                 design_matiere_input.setText(newSelection.getDesign());
                 coef_input.setText(String.valueOf(newSelection.getCoef()));
 
-                c_matiere_input.setDisable(true);
-                design_matiere_input.setDisable(true);
+                c_matiere_input.setEditable(false);
+                design_matiere_input.setEditable(false);
 
                 add_subject_btn.setDisable(true);
                 update_subject_btn.setDisable(false);
@@ -913,8 +857,11 @@ public class MainController implements Initializable {
         student_tableview.getItems().clear();
 
         for (String[] studentArray : listStudents) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             LocalDate date = LocalDate.parse(studentArray[4]);
-            studentsList.add(new Student(studentArray[0], studentArray[1], studentArray[2], studentArray[3], String.valueOf(date)));
+
+            studentsList.add(new Student(studentArray[0], studentArray[1], studentArray[2],
+                    studentArray[3], date.format(formatter)));
             student_tableview.setItems(studentsList);
         }
     }
@@ -931,8 +878,11 @@ public class MainController implements Initializable {
         student_tableview.getItems().clear();
 
         for (String[] studentArray : listStudents) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             LocalDate date = LocalDate.parse(studentArray[4]);
-            studentsList.add(new Student(studentArray[0], studentArray[1], studentArray[2], studentArray[3], String.valueOf(date)));
+
+            studentsList.add(new Student(studentArray[0], studentArray[1], studentArray[2],
+                    studentArray[3], date.format(formatter)));
             student_tableview.setItems(studentsList);
         }
     }
@@ -944,10 +894,12 @@ public class MainController implements Initializable {
                 student_num_input.setText(newSelection.getNumEleve());
                 student_firstname_input.setText(newSelection.getNom());
                 student_lastname_input.setText(newSelection.getPrenom());
-                student_datenais_input.setValue(Date.valueOf(newSelection.getDateNais()).toLocalDate());
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                student_datenais_input.setValue(LocalDate.parse(newSelection.getDateNais(), formatter));
 
                 student_school_combobox.setDisable(true);
-                student_num_input.setDisable(true);
+                student_num_input.setEditable(false);
 
                 add_student_btn.setDisable(true);
                 update_student_btn.setDisable(false);
@@ -960,40 +912,17 @@ public class MainController implements Initializable {
      * Score TableView manipulation
      */
 
-    @FXML
-    private TableView<Score> score_tableview;
-    @FXML
-    private TableColumn<Score, String> scoreNumEleveCol;
-    @FXML
-    private TableColumn<Score, String> scoreNomCol;
-    @FXML
-    private TableColumn<Score, String> scorePrenomCol;
-    @FXML
-    private TableColumn<Score, Double> scoreTotalCol;
+    @FXML private TableView<Score> score_tableview;
+    @FXML private TableColumn<Score, String> scoreNumEleveCol;
+    @FXML private TableColumn<Score, String> scoreNomCol;
+    @FXML private TableColumn<Score, String> scorePrenomCol;
+    @FXML private TableColumn<Score, Double> scoreTotalCol;
 
     ObservableList<Score> studentsScoreList = FXCollections.observableArrayList();
-    // Show all students in score TableView
-    private void dataToScoreTbAll() {
-        StudentController student = new StudentController();
-        List<String[]> listStudents = student.getAllStudents();
-
-        scoreNumEleveCol.setCellValueFactory(new PropertyValueFactory<>("numEleve"));
-        scoreNomCol.setCellValueFactory(new PropertyValueFactory<>("nom"));
-        scorePrenomCol.setCellValueFactory(new PropertyValueFactory<>("prenom"));
-        scoreTotalCol.setCellValueFactory(new PropertyValueFactory<>("noteTotale"));
-
-        score_tableview.getItems().clear();
-
-        for (String[] studenArray : listStudents) {
-            studentsScoreList.add(new Score(studenArray[0], studenArray[2], studenArray[3], Double.parseDouble(studenArray[5])));
-            score_tableview.setItems(studentsScoreList);
-        }
-    }
     // Show all students at a specific school in score TableView
     private void dataToScoreTb(String numEcole) {
         StudentController student = new StudentController();
         List<String[]> listStudents = student.getAllStudentsInSchool(numEcole);
-
         scoreNumEleveCol.setCellValueFactory(new PropertyValueFactory<>("numEleve"));
         scoreNomCol.setCellValueFactory(new PropertyValueFactory<>("nom"));
         scorePrenomCol.setCellValueFactory(new PropertyValueFactory<>("prenom"));
@@ -1002,7 +931,30 @@ public class MainController implements Initializable {
         score_tableview.getItems().clear();
 
         for (String[] studenArray : listStudents) {
-            studentsScoreList.add(new Score(studenArray[0], studenArray[2], studenArray[3], Double.parseDouble(studenArray[5])));
+            studentsScoreList.add(new Score(studenArray[0], studenArray[2], studenArray[3],
+                    Double.parseDouble(studenArray[5])));
+            score_tableview.setItems(studentsScoreList);
+        }
+    }
+    // Refresh table score to get the latest update of all data in it
+    @FXML
+    public void refreshTableScore() {
+        StudentController student = new StudentController();
+        List<String[]> listStudents = student.getAllStudentsInSchool(school_score_cbx.getValue());
+        scoreNumEleveCol.setCellValueFactory(new PropertyValueFactory<>("numEleve"));
+        scoreNomCol.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        scorePrenomCol.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+        scoreTotalCol.setCellValueFactory(new PropertyValueFactory<>("noteTotale"));
+
+        score_tableview.getItems().clear();
+
+        for (String[] studenArray : listStudents) {
+            AverageController a = new AverageController();
+            a.updateTotalScore(studenArray[0], school_score_cbx.getValue());
+            a.updateAverage(studenArray[0], school_score_cbx.getValue());
+
+            studentsScoreList.add(new Score(studenArray[0], studenArray[2], studenArray[3],
+                    Double.parseDouble(studenArray[5])));
             score_tableview.setItems(studentsScoreList);
         }
     }
@@ -1022,6 +974,102 @@ public class MainController implements Initializable {
     }
 
     /**
+     * Result TableView (students who were admitted to their CEPE)
+     */
+
+    @FXML private TableView<StudentCepeAdmitted> result_admitted_cepe;
+    @FXML private TableColumn<StudentCepeAdmitted, String> resNumEleveCol1;
+    @FXML private TableColumn<StudentCepeAdmitted, String> resNomCol1;
+    @FXML private TableColumn<StudentCepeAdmitted, String> resPrenomCol1;
+    @FXML private TableColumn<StudentCepeAdmitted, String> resEcoleCol1;
+    @FXML private TableColumn<StudentCepeAdmitted, Double> resMoyenneCol1;
+
+    ObservableList<StudentCepeAdmitted> studentsCepeAdmittedList = FXCollections.observableArrayList();
+    // Show all students who were admitted to their CEPE
+    private void showCepeAdmittedStudents() {
+        AverageController a = new AverageController();
+        List<String[]> listStudents = a.getStudentsCepeAdmitted();
+
+        resNumEleveCol1.setCellValueFactory(new PropertyValueFactory<>("numEleve"));
+        resNomCol1.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        resPrenomCol1.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+        resEcoleCol1.setCellValueFactory(new PropertyValueFactory<>("ecole"));
+        resMoyenneCol1.setCellValueFactory(new PropertyValueFactory<>("moyenne"));
+
+        result_admitted_cepe.getItems().clear();
+
+        for (String[] studenArray : listStudents) {
+            studentsCepeAdmittedList.add(new StudentCepeAdmitted(studenArray[0], studenArray[1], studenArray[2],
+                    studenArray[3], Double.parseDouble(studenArray[4])));
+            result_admitted_cepe.setItems(studentsCepeAdmittedList);
+        }
+    }
+
+    /**
+     * Result TableView (students who were admitted to sixth class)
+     */
+
+    @FXML private TableView<StudentSixthAdmitted> result_admitted_sixth;
+    @FXML private TableColumn<StudentSixthAdmitted, String> resNumEleveCol2;
+    @FXML private TableColumn<StudentSixthAdmitted, String> resNomCol2;
+    @FXML private TableColumn<StudentSixthAdmitted, String> resPrenomCol2;
+    @FXML private TableColumn<StudentSixthAdmitted, String> resEcoleCol2;
+    @FXML private TableColumn<StudentSixthAdmitted, Double> resMoyenneCol2;
+
+    ObservableList<StudentSixthAdmitted> studentsSixthAdmittedList = FXCollections.observableArrayList();
+    // Show all students who were admitted to their CEPE
+    private void showSixthAdmittedStudents() {
+        AverageController a = new AverageController();
+        List<String[]> listStudents = a.getStudentsSixthAdmitted();
+
+        resNumEleveCol2.setCellValueFactory(new PropertyValueFactory<>("numEleve"));
+        resNomCol2.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        resPrenomCol2.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+        resEcoleCol2.setCellValueFactory(new PropertyValueFactory<>("ecole"));
+        resMoyenneCol2.setCellValueFactory(new PropertyValueFactory<>("moyenne"));
+
+        result_admitted_sixth.getItems().clear();
+
+        for (String[] studenArray : listStudents) {
+            studentsSixthAdmittedList.add(new StudentSixthAdmitted(studenArray[0], studenArray[1], studenArray[2],
+                    studenArray[3], Double.parseDouble(studenArray[4])));
+            result_admitted_sixth.setItems(studentsSixthAdmittedList);
+        }
+    }
+
+    /**
+     * Result TableView (students who failed to their CEPE)
+     */
+
+    @FXML private TableView<StudentFailed> result_failed;
+    @FXML private TableColumn<StudentFailed, String> resNumEleveCol3;
+    @FXML private TableColumn<StudentFailed, String> resNomCol3;
+    @FXML private TableColumn<StudentFailed, String> resPrenomCol3;
+    @FXML private TableColumn<StudentFailed, String> resEcoleCol3;
+    @FXML private TableColumn<StudentFailed, Double> resMoyenneCol3;
+
+    ObservableList<StudentFailed> studentsFailedList = FXCollections.observableArrayList();
+    // Show all students who were admitted to their CEPE
+    private void showFailedStudents() {
+        AverageController a = new AverageController();
+        List<String[]> listStudents = a.getFailedStudents();
+
+        resNumEleveCol3.setCellValueFactory(new PropertyValueFactory<>("numEleve"));
+        resNomCol3.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        resPrenomCol3.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+        resEcoleCol3.setCellValueFactory(new PropertyValueFactory<>("ecole"));
+        resMoyenneCol3.setCellValueFactory(new PropertyValueFactory<>("moyenne"));
+
+        result_failed.getItems().clear();
+
+        for (String[] studenArray : listStudents) {
+            studentsFailedList.add(new StudentFailed(studenArray[0], studenArray[1], studenArray[2],
+                    studenArray[3], Double.parseDouble(studenArray[4])));
+            result_failed.setItems(studentsFailedList);
+        }
+    }
+
+    /**
      * Handle change on school combobox to score input in score section
      */
     private void subjectToScore() {
@@ -1029,7 +1077,10 @@ public class MainController implements Initializable {
             String numEleve = score_student_input.getValue();
             NoteController score = new NoteController();
             String[] scoreInfo = score.getScore(numEleve, newValue);
-            score_input.setText(scoreInfo[3]);
+            score_input.clear();
+            if (scoreInfo[3] != null) {
+                score_input.setText(scoreInfo[3]);
+            }
         });
     }
 
@@ -1051,13 +1102,8 @@ public class MainController implements Initializable {
      */
     private void schoolComboboxScore() {
         school_score_cbx.valueProperty().addListener((_, _, newValue) -> {
-            if (Objects.equals(newValue, "Toutes les écoles")) {
-                scoreStudentComboboxAll();
-                dataToScoreTbAll();
-            } else {
-                scoreStudentCombobox(newValue);
-                dataToScoreTb(newValue);
-            }
+            scoreStudentCombobox(newValue);
+            dataToScoreTb(newValue);
         });
     }
 
@@ -1086,20 +1132,17 @@ public class MainController implements Initializable {
         List<String[]> schoolList = school.getAllSchools();
         ObservableList<String> options = FXCollections.observableArrayList();
 
-        options.add("Toutes les écoles");
         for (String[] schoolArray : schoolList) {
             options.add(schoolArray[0]);
         }
         school_score_cbx.setItems(options);
         school_score_cbx.setValue(options.getFirst());
-        scoreStudentComboboxAll();
-        dataToScoreTbAll();
+        scoreStudentCombobox(school_score_cbx.getValue());
+        dataToScoreTb(school_score_cbx.getValue());
     }
 
-    @FXML
-    private TextField student_search;
-    @FXML
-    public void searchStudent() {
+    @FXML private TextField student_search;
+    private void searchStudent() {
         student_search.textProperty().addListener(new ChangeListener<>() {
             final StudentController student = new StudentController();
             @Override
@@ -1116,20 +1159,36 @@ public class MainController implements Initializable {
                     List<String[]> listStudents = student.searchSudent(newValue);
 
                     for (String[] studentArray : listStudents) {
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                         LocalDate date = LocalDate.parse(studentArray[4]);
-                        studentsList.add(new Student(studentArray[0], studentArray[1], studentArray[2], studentArray[3], String.valueOf(date)));
+
+                        studentsList.add(new Student(studentArray[0], studentArray[1], studentArray[2],
+                                studentArray[3], date.format(formatter)));
                         student_tableview.setItems(studentsList);
                     }
                 } else {
                     List<String[]> listStudents = student.searchSudentInSchool(newValue, school_cbox_student.getValue());
 
                     for (String[] studentArray : listStudents) {
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                         LocalDate date = LocalDate.parse(studentArray[4]);
-                        studentsList.add(new Student(studentArray[0], studentArray[1], studentArray[2], studentArray[3], String.valueOf(date)));
+
+                        studentsList.add(new Student(studentArray[0], studentArray[1], studentArray[2],
+                                studentArray[3], date.format(formatter)));
                         student_tableview.setItems(studentsList);
                     }
                 }
             }
         });
+    }
+
+    /**
+     * Refresh the results TableView
+     */
+    @FXML
+    public void refreshResultsTable() {
+        showCepeAdmittedStudents();
+        showSixthAdmittedStudents();
+        showFailedStudents();
     }
 }

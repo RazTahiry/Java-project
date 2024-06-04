@@ -125,7 +125,7 @@
                            </children></AnchorPane>
                      </children></AnchorPane>
                </children></AnchorPane>
-            <AnchorPane fx:id="result_anchor_pane" prefHeight="200.0" prefWidth="200.0" visible="false">
+            <AnchorPane fx:id="result_anchor_pane" prefHeight="200.0" prefWidth="200.0">
                <children>
                   <TabPane layoutX="138.0" layoutY="94.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                     <tabs>
@@ -135,7 +135,7 @@
                                  <children>
                                     <AnchorPane layoutX="10.0" layoutY="24.0" prefHeight="530.0" prefWidth="287.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <TableView fx:id="result_admited_cepe" layoutY="42.0" maxWidth="650.0" prefHeight="483.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="42.0">
+                                          <TableView fx:id="result_admitted_cepe" layoutY="42.0" maxWidth="650.0" prefHeight="483.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="42.0">
                                              <columns>
                                                 <TableColumn fx:id="resNumEleveCol1" maxWidth="150.0" minWidth="100.0" prefWidth="-1.0" text="N° Matricule" />
                                                 <TableColumn fx:id="resNomCol1" minWidth="100.0" prefWidth="-1.0" text="Nom" />
@@ -172,6 +172,11 @@
                                                       </ImageView>
                                                    </children>
                                                 </Pane>
+                                                <Pane prefHeight="43.0" prefWidth="114.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <Button layoutY="6.0" mnemonicParsing="false" onAction="#refreshResultsTable" styleClass="form_button" text="Actualiser" />
+                                                   </children>
+                                                </Pane>
                                              </children>
                                           </AnchorPane>
                                        </children>
@@ -185,7 +190,7 @@
                                  <children>
                                     <AnchorPane prefHeight="530.0" prefWidth="287.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <TableView fx:id="result_admited_sixth" layoutY="42.0" maxWidth="650.0" prefHeight="483.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="42.0">
+                                          <TableView fx:id="result_admitted_sixth" layoutY="42.0" maxWidth="650.0" prefHeight="483.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="42.0">
                                              <columns>
                                                 <TableColumn fx:id="resNumEleveCol2" maxWidth="150.0" minWidth="100.0" prefWidth="-1.0" text="N° Matricule" />
                                                 <TableColumn fx:id="resNomCol2" minWidth="100.0" prefWidth="-1.0" text="Nom" />
@@ -222,6 +227,11 @@
                                                       </ImageView>
                                                    </children>
                                                 </Pane>
+                                                <Pane prefHeight="43.0" prefWidth="114.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <Button layoutY="6.0" mnemonicParsing="false" onAction="#refreshResultsTable" styleClass="form_button" text="Actualiser" />
+                                                   </children>
+                                                </Pane>
                                              </children>
                                           </AnchorPane>
                                        </children>
@@ -248,7 +258,7 @@
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                              </columnResizePolicy>
                                           </TableView>
-                                          <AnchorPane layoutX="5.0" prefHeight="43.0" prefWidth="284.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <AnchorPane layoutX="5.0" maxHeight="43.0" prefHeight="43.0" prefWidth="284.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <children>
                                                 <Pane layoutX="8.0" layoutY="2.0" prefHeight="40.0" prefWidth="200.0" styleClass="search_pane" AnchorPane.bottomAnchor="4.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="2.0">
                                                    <children>
@@ -272,6 +282,11 @@
                                                       </ImageView>
                                                    </children>
                                                 </Pane>
+                                                <Pane layoutX="14.0" layoutY="-79.0" prefHeight="43.0" prefWidth="114.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <Button layoutY="6.0" mnemonicParsing="false" onAction="#refreshResultsTable" styleClass="form_button" text="Actualiser" />
+                                                   </children>
+                                                </Pane>
                                              </children>
                                           </AnchorPane>
                                        </children>
@@ -283,7 +298,7 @@
                   </TabPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="score_anchor_pane" prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane fx:id="score_anchor_pane" prefHeight="200.0" prefWidth="200.0" visible="false">
                <children>
                   <AnchorPane minWidth="400.0" prefHeight="422.0" prefWidth="400.0" styleClass="form_container" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <children>
@@ -305,7 +320,7 @@
                               <Pane prefHeight="56.0" prefWidth="360.0" styleClass="label_input">
                                  <children>
                                     <Label layoutX="8.0" layoutY="5.0" prefHeight="17.0" prefWidth="59.0" styleClass="label_for_input" text="Eleve" />
-                                    <ComboBox fx:id="score_student_input" layoutY="22.0" prefHeight="31.0" prefWidth="360.0" styleClass="combobox">
+                                    <ComboBox fx:id="score_student_input" layoutY="22.0" prefHeight="33.0" prefWidth="360.0" styleClass="combobox">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
@@ -318,7 +333,7 @@
                               <Pane layoutX="30.0" layoutY="97.0" prefHeight="56.0" prefWidth="360.0" styleClass="label_input">
                                  <children>
                                     <Label layoutX="8.0" layoutY="5.0" prefHeight="17.0" prefWidth="59.0" styleClass="label_for_input" text="Matière" />
-                                    <ComboBox fx:id="score_subject_input" layoutY="22.0" prefHeight="31.0" prefWidth="360.0" styleClass="combobox">
+                                    <ComboBox fx:id="score_subject_input" layoutY="22.0" prefHeight="33.0" prefWidth="360.0" styleClass="combobox">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
@@ -393,14 +408,26 @@
                                     </ImageView>
                                  </children>
                               </Pane>
-                              <Pane prefHeight="35.0" prefWidth="200.0" styleClass="label_input" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="4.0">
+                              <HBox layoutX="5.0" layoutY="4.0" prefWidth="325.0" spacing="7.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="4.0">
                                  <children>
-                                    <ComboBox fx:id="school_score_cbx" layoutY="2.0" prefHeight="20.0" prefWidth="200.0" styleClass="combobox" />
+                                    <Pane prefHeight="35.0" prefWidth="200.0" styleClass="label_input">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <children>
+                                          <ComboBox fx:id="school_score_cbx" layoutY="1.0" prefHeight="33.0" prefWidth="200.0" styleClass="combobox" />
+                                       </children>
+                                    </Pane>
+                                    <Button mnemonicParsing="false" onAction="#refreshTableScore" styleClass="form_button" text="Actualiser" translateY="1.5">
+                                       <graphic>
+                                          <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../images/icons8-users-64.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></Button>
                                  </children>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </Pane>
+                              </HBox>
                            </children>
                         </AnchorPane>
                      </children>
@@ -416,7 +443,7 @@
                               <Pane prefHeight="56.0" prefWidth="360.0" styleClass="label_input">
                                  <children>
                                     <Label layoutX="8.0" layoutY="5.0" prefHeight="17.0" prefWidth="59.0" styleClass="label_for_input" text="Ecole" />
-                                    <ComboBox fx:id="student_school_combobox" layoutY="22.0" prefHeight="31.0" prefWidth="360.0" styleClass="combobox">
+                                    <ComboBox fx:id="student_school_combobox" layoutY="22.0" prefHeight="33.0" prefWidth="360.0" styleClass="combobox">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor></ComboBox>
@@ -441,7 +468,7 @@
                               <Pane prefHeight="57.0" prefWidth="360.0" styleClass="label_input">
                                  <children>
                                     <Label layoutX="8.0" layoutY="6.0" prefHeight="17.0" prefWidth="59.0" styleClass="label_for_input" text="Nom" />
-                                    <TextField fx:id="student_firstname_input" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" promptText="Nom de l'élève..." styleClass="input">
+                                    <TextField fx:id="student_firstname_input" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" styleClass="input">
                                        <cursor>
                                           <Cursor fx:constant="TEXT" />
                                        </cursor>
@@ -454,7 +481,7 @@
                               <Pane prefHeight="57.0" prefWidth="270.0" styleClass="label_input">
                                  <children>
                                     <Label layoutX="8.0" layoutY="6.0" prefHeight="17.0" prefWidth="59.0" styleClass="label_for_input" text="Prénom" />
-                                    <TextField fx:id="student_lastname_input" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" promptText="Prénom de l'élève..." styleClass="input">
+                                    <TextField fx:id="student_lastname_input" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" styleClass="input">
                                        <cursor>
                                           <Cursor fx:constant="TEXT" />
                                        </cursor>
@@ -467,7 +494,7 @@
                               <Pane layoutX="30.0" layoutY="230.0" prefHeight="57.0" prefWidth="270.0" styleClass="label_input">
                                  <children>
                                     <Label layoutX="8.0" layoutY="6.0" prefHeight="19.0" prefWidth="137.0" styleClass="label_for_input" text="Date de naissance" />
-                                    <DatePicker fx:id="student_datenais_input" layoutX="3.0" layoutY="23.0" prefHeight="33.0" prefWidth="354.0" promptText="Date de naissance de l'élève..." styleClass="date_input">
+                                    <DatePicker fx:id="student_datenais_input" cacheShape="false" centerShape="false" editable="false" focusTraversable="false" layoutX="3.0" layoutY="23.0" prefHeight="33.0" prefWidth="356.0" scaleShape="false" styleClass="date_input">
                                        <padding>
                                           <Insets left="-2.0" />
                                        </padding>
@@ -566,7 +593,7 @@
                               <Pane prefHeight="57.0" prefWidth="270.0" styleClass="label_input">
                                  <children>
                                     <Label layoutX="8.0" layoutY="6.0" prefHeight="19.0" prefWidth="114.0" styleClass="label_for_input" text="Code" />
-                                    <TextField fx:id="c_matiere_input" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" promptText="Code matière..." styleClass="input">
+                                    <TextField fx:id="c_matiere_input" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" promptText="Entrer ici le code matière (eg: M01)" styleClass="input">
                                        <cursor>
                                           <Cursor fx:constant="TEXT" />
                                        </cursor>
@@ -579,7 +606,7 @@
                               <Pane prefHeight="57.0" prefWidth="270.0" styleClass="label_input">
                                  <children>
                                     <Label layoutX="8.0" layoutY="6.0" prefHeight="19.0" prefWidth="82.0" styleClass="label_for_input" text="Désignation" />
-                                    <TextField fx:id="design_matiere_input" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" promptText="Désignation de la matère..." styleClass="input">
+                                    <TextField fx:id="design_matiere_input" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" promptText="Entrer ici le nom de la matière" styleClass="input">
                                        <cursor>
                                           <Cursor fx:constant="TEXT" />
                                        </cursor>
@@ -592,7 +619,7 @@
                               <Pane prefHeight="57.0" prefWidth="270.0" styleClass="label_input">
                                  <children>
                                     <Label layoutX="8.0" layoutY="6.0" prefHeight="19.0" prefWidth="82.0" styleClass="label_for_input" text="Coefficient" />
-                                    <TextField fx:id="coef_input" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" promptText="ex: 1" styleClass="input">
+                                    <TextField fx:id="coef_input" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" promptText="eg: 1" styleClass="input">
                                        <cursor>
                                           <Cursor fx:constant="TEXT" />
                                        </cursor>
@@ -647,7 +674,7 @@
                               <Pane prefHeight="57.0" prefWidth="270.0" styleClass="label_input">
                                  <children>
                                     <Label layoutX="8.0" layoutY="6.0" prefHeight="19.0" prefWidth="114.0" styleClass="label_for_input" text="Numéro" />
-                                    <TextField fx:id="num_ecole_input" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" promptText="Numéro de l'école..." styleClass="input">
+                                    <TextField fx:id="num_ecole_input" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" promptText="Entrer ici le numéro de l'école (eg: 892 1892T)" styleClass="input">
                                        <cursor>
                                           <Cursor fx:constant="TEXT" />
                                        </cursor>
@@ -660,7 +687,7 @@
                               <Pane prefHeight="57.0" prefWidth="270.0" styleClass="label_input">
                                  <children>
                                     <Label layoutX="8.0" layoutY="6.0" prefHeight="19.0" prefWidth="82.0" styleClass="label_for_input" text="Désignation" />
-                                    <TextField fx:id="design_ecole_input" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" promptText="Désignation de l'école..." styleClass="input">
+                                    <TextField fx:id="design_ecole_input" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" promptText="Entrer ici le nom de l'école" styleClass="input">
                                        <cursor>
                                           <Cursor fx:constant="TEXT" />
                                        </cursor>
@@ -673,7 +700,7 @@
                               <Pane prefHeight="57.0" prefWidth="270.0" styleClass="label_input">
                                  <children>
                                     <Label layoutX="8.0" layoutY="6.0" prefHeight="19.0" prefWidth="82.0" styleClass="label_for_input" text="Adresse" />
-                                    <TextField fx:id="adresse_ecole_input" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" promptText="Adresse de l'école..." styleClass="input">
+                                    <TextField fx:id="adresse_ecole_input" layoutY="24.0" prefHeight="31.0" prefWidth="360.0" styleClass="input">
                                        <cursor>
                                           <Cursor fx:constant="TEXT" />
                                        </cursor>

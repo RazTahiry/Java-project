@@ -149,7 +149,7 @@ public class Ecole {
 
                     int rowsAffected = p_stmt.executeUpdate();
                     if (rowsAffected > 0) {
-                        System.out.println("Data inserted successfully.");
+                        // System.out.println("Data inserted successfully.");
                         isCreated = true;
                     } else {
                         System.out.println("No data inserted.");
@@ -233,6 +233,52 @@ public class Ecole {
     }
 
     /**
+     * Get the designation of a specific school
+     * @return List of records
+     */
+    public String getDesignation() {
+        String design = "";
+
+        DbManager db = new DbManager();
+        Connection db_con = null;
+        ResultSet rs = null;
+        try {
+            if (db.isConnected()) {
+                db_con = db.getConnection();
+                String sql_select = "SELECT design FROM ecole WHERE numEcole=?";
+                try (PreparedStatement p_stmt = db_con.prepareStatement(sql_select)) {
+                    p_stmt.setString(1, _num_ecole);
+                    rs = p_stmt.executeQuery();
+
+                    while (rs.next()) {
+                        design = rs.getString("design");
+                    }
+                }
+            } else {
+                throw new SQLException("Database connection error.");
+            }
+        } catch (SQLException e) {
+            System.out.println(STR."Error fetching records: \{e.getMessage()}");
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    System.out.println(STR."Error closing result set: \{e.getMessage()}");
+                }
+            }
+            if (db_con != null) {
+                try {
+                    db_con.close();
+                } catch (SQLException e) {
+                    System.out.println(STR."Error closing connection: \{e.getMessage()}");
+                }
+            }
+        }
+        return design;
+    }
+
+    /**
      * Update a record in database
      */
     public void update() {
@@ -249,7 +295,7 @@ public class Ecole {
 
                     int rowsAffected = p_stmt.executeUpdate();
                     if (rowsAffected > 0) {
-                        System.out.println("Data updated successfully.");
+                        // System.out.println("Data updated successfully.");
                         isUpdated = true;
                     } else {
                         System.out.println("No data updated.");
@@ -298,7 +344,7 @@ public class Ecole {
 
                     int rowsAffected = p_stmt.executeUpdate();
                     if (rowsAffected > 0) {
-                        System.out.println("Data deleted successfully.");
+                        // System.out.println("Data deleted successfully.");
                         isDeleted = true;
                     } else {
                         System.out.println("No data deleted.");

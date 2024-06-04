@@ -1,12 +1,11 @@
 package com.yiarth.java_project.tableview_models;
 
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class Score {
+public class StudentCepeAdmitted {
     /**
-     * This class is a model of the score TableView
+     * This class is a model of the TableView for students who were admitted to their CEPE.
      * <p>
      * Each private attribute of this class corresponds to a column in the TableView user interface.
      */
@@ -14,17 +13,19 @@ public class Score {
     private final SimpleStringProperty numEleve;
     private final SimpleStringProperty nom;
     private final SimpleStringProperty prenom;
-    private final SimpleDoubleProperty noteTotale;
+    private final SimpleStringProperty ecole;
+    private final SimpleDoubleProperty moyenne;
 
     /**
      * Constructor
      */
 
-    public Score(String numMat, String nom, String prenom, double noteTotale) {
-        this.numEleve = new SimpleStringProperty(numMat);
+    public StudentCepeAdmitted(String numEleve, String nom, String prenom, String ecole, double moyenne) {
+        this.numEleve = new SimpleStringProperty(numEleve);
         this.nom = new SimpleStringProperty(nom);
         this.prenom = new SimpleStringProperty(prenom);
-        this.noteTotale = new SimpleDoubleProperty(noteTotale);
+        this.ecole = new SimpleStringProperty(ecole);
+        this.moyenne = new SimpleDoubleProperty(moyenne);
     }
 
     /**
@@ -53,10 +54,17 @@ public class Score {
         return prenom;
     }
 
-    public double getNoteTotale() {
-        return noteTotale.get();
+    public String getEcole() {
+        return ecole.get();
     }
-    public SimpleDoubleProperty setNoteTotale() {
-        return noteTotale;
+    public SimpleStringProperty setEcole() {
+        return ecole;
+    }
+
+    public double getMoyenne() {
+        return moyenne.get();
+    }
+    public SimpleDoubleProperty setMoyenne() {
+        return moyenne;
     }
 }
