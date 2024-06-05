@@ -37,7 +37,6 @@ public class PdfController {
      * @param tableData data's array for the table
      */
     public void generatePdf(String[][] tableData) {
-        System.out.println("Pdf loading...");
         try {
             String outputPath = STR."\{System.getProperty("user.home")}\\releve.pdf";
             Document doc = new Document();

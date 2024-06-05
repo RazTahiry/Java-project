@@ -377,4 +377,51 @@ public class Ecole {
     public boolean isDeleted() {
         return isDeleted;
     }
+
+    /**
+     * Get the number of a specific school
+     * @param design Schools designation
+     * @return school number
+     */
+    public String getNumEcole(String design) {
+        String numEcole = "";
+
+        DbManager db = new DbManager();
+        Connection db_con = null;
+        ResultSet rs = null;
+        try {
+            if (db.isConnected()) {
+                db_con = db.getConnection();
+                String sql_select = "SELECT numEcole FROM ecole WHERE design=?";
+                try (PreparedStatement p_stmt = db_con.prepareStatement(sql_select)) {
+                    p_stmt.setString(1, design);
+                    rs = p_stmt.executeQuery();
+
+                    while (rs.next()) {
+                        numEcole = rs.getString("numEcole");
+                    }
+                }
+            } else {
+                throw new SQLException("Database connection error.");
+            }
+        } catch (SQLException e) {
+            System.out.println(STR."Error fetching records: \{e.getMessage()}");
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    System.out.println(STR."Error closing result set: \{e.getMessage()}");
+                }
+            }
+            if (db_con != null) {
+                try {
+                    db_con.close();
+                } catch (SQLException e) {
+                    System.out.println(STR."Error closing connection: \{e.getMessage()}");
+                }
+            }
+        }
+        return numEcole;
+    }
 }

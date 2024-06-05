@@ -1,5 +1,6 @@
 package com.yiarth.java_project.controllers;
 
+import com.yiarth.java_project.models.Ecole;
 import com.yiarth.java_project.tableview_models.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -7,11 +8,13 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Callback;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -983,6 +986,7 @@ public class MainController implements Initializable {
     @FXML private TableColumn<StudentCepeAdmitted, String> resPrenomCol1;
     @FXML private TableColumn<StudentCepeAdmitted, String> resEcoleCol1;
     @FXML private TableColumn<StudentCepeAdmitted, Double> resMoyenneCol1;
+    @FXML private TableColumn<StudentCepeAdmitted, Void> resReleveCol1;
 
     ObservableList<StudentCepeAdmitted> studentsCepeAdmittedList = FXCollections.observableArrayList();
     // Show all students who were admitted to their CEPE
@@ -996,6 +1000,36 @@ public class MainController implements Initializable {
         resEcoleCol1.setCellValueFactory(new PropertyValueFactory<>("ecole"));
         resMoyenneCol1.setCellValueFactory(new PropertyValueFactory<>("moyenne"));
 
+        Callback<TableColumn<StudentCepeAdmitted, Void>, TableCell<StudentCepeAdmitted, Void>> cellFactory = new Callback<>() {
+            @Override
+            public TableCell<StudentCepeAdmitted, Void> call(final TableColumn<StudentCepeAdmitted, Void> param) {
+                return new TableCell<>() {
+
+                    private final Button btn = new Button("Générer son relevé");
+
+                    {
+                        btn.getStyleClass().add("tableview_button");
+                        btn.setOnAction((ActionEvent _) -> {
+                            StudentCepeAdmitted student = getTableView().getItems().get(getIndex());
+                            releveNotesCepe(student);
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+            }
+        };
+
+        resReleveCol1.setCellFactory(cellFactory);
+
         result_admitted_cepe.getItems().clear();
 
         for (String[] studenArray : listStudents) {
@@ -1003,6 +1037,69 @@ public class MainController implements Initializable {
                     studenArray[3], Double.parseDouble(studenArray[4])));
             result_admitted_cepe.setItems(studentsCepeAdmittedList);
         }
+    }
+
+    /**
+     * Generate pdf for student who were admitted to their cepe
+     * @param student property of the student
+     */
+    private void releveNotesCepe(StudentCepeAdmitted student) {
+        String numEleve = student.getNumEleve();
+        String nom = student.getNom();
+        String prenom = student.getPrenom();
+        String ecole = student.getEcole();
+        double moyenne = student.getMoyenne();
+
+        Ecole school = new Ecole();
+        AverageController a = new AverageController();
+        StudentController stud = new StudentController();
+        SubjectController subj = new SubjectController();
+        NoteController score = new NoteController();
+
+        String numEcole = school.getNumEcole(ecole);
+        double noteTotale = a.getTotalScore(numEleve, numEcole);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String dateNais = stud.getStudent(numEcole, numEleve)[4];
+        LocalDate date = LocalDate.parse(dateNais);
+
+        List<String[]> subjects = subj.getAllSubjects();
+        String[][] tableData = new String[subjects.size()][4];
+        // String anneeSco = null;
+        int i = 0;
+        for (String[] subject : subjects) {
+            String matiere = subject[1];
+            int coef = Integer.parseInt(subject[2]);
+            String numMat = subject[0];
+
+            try {
+                String[] scoreData = score.getScore(numEleve, numMat);
+                if (scoreData != null && scoreData.length > 0) {
+                    double note = Double.parseDouble(scoreData[3]);
+                    double notePondere = coef * note;
+
+                    tableData[i][0] = matiere;
+                    tableData[i][1] = String.valueOf(coef);
+                    tableData[i][2] = String.valueOf(note);
+                    tableData[i][3] = String.valueOf(notePondere);
+                } else {
+                    tableData[i][0] = matiere;
+                    tableData[i][1] = String.valueOf(coef);
+                    tableData[i][2] = "0.0";
+                    tableData[i][3] = "0.0";
+                }
+            } catch (Exception e) {
+                tableData[i][0] = matiere;
+                tableData[i][1] = String.valueOf(coef);
+                tableData[i][2] = "0.0";
+                tableData[i][3] = "0.0";
+            }
+
+            i++;
+        }
+
+        PdfController pdf = new PdfController("2022-2023", nom, prenom, date.format(formatter), ecole, noteTotale, moyenne);
+        pdf.generatePdf(tableData);
     }
 
     /**
@@ -1015,6 +1112,7 @@ public class MainController implements Initializable {
     @FXML private TableColumn<StudentSixthAdmitted, String> resPrenomCol2;
     @FXML private TableColumn<StudentSixthAdmitted, String> resEcoleCol2;
     @FXML private TableColumn<StudentSixthAdmitted, Double> resMoyenneCol2;
+    @FXML private TableColumn<StudentSixthAdmitted, Void> resReleveCol2;
 
     ObservableList<StudentSixthAdmitted> studentsSixthAdmittedList = FXCollections.observableArrayList();
     // Show all students who were admitted to their CEPE
@@ -1028,6 +1126,36 @@ public class MainController implements Initializable {
         resEcoleCol2.setCellValueFactory(new PropertyValueFactory<>("ecole"));
         resMoyenneCol2.setCellValueFactory(new PropertyValueFactory<>("moyenne"));
 
+        Callback<TableColumn<StudentSixthAdmitted, Void>, TableCell<StudentSixthAdmitted, Void>> cellFactory = new Callback<>() {
+            @Override
+            public TableCell<StudentSixthAdmitted, Void> call(final TableColumn<StudentSixthAdmitted, Void> param) {
+                return new TableCell<>() {
+
+                    private final Button btn = new Button("Générer son relevé");
+
+                    {
+                        btn.getStyleClass().add("tableview_button");
+                        btn.setOnAction((ActionEvent _) -> {
+                            StudentSixthAdmitted student = getTableView().getItems().get(getIndex());
+                            releveNotesSixieme(student);
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+            }
+        };
+
+        resReleveCol2.setCellFactory(cellFactory);
+
         result_admitted_sixth.getItems().clear();
 
         for (String[] studenArray : listStudents) {
@@ -1035,6 +1163,69 @@ public class MainController implements Initializable {
                     studenArray[3], Double.parseDouble(studenArray[4])));
             result_admitted_sixth.setItems(studentsSixthAdmittedList);
         }
+    }
+
+    /**
+     * Generate pdf for student who were admitted to sixth class
+     * @param student property of the student
+     */
+    private void releveNotesSixieme(StudentSixthAdmitted student) {
+        String numEleve = student.getNumEleve();
+        String nom = student.getNom();
+        String prenom = student.getPrenom();
+        String ecole = student.getEcole();
+        double moyenne = student.getMoyenne();
+
+        Ecole school = new Ecole();
+        AverageController a = new AverageController();
+        StudentController stud = new StudentController();
+        SubjectController subj = new SubjectController();
+        NoteController score = new NoteController();
+
+        String numEcole = school.getNumEcole(ecole);
+        double noteTotale = a.getTotalScore(numEleve, numEcole);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String dateNais = stud.getStudent(numEcole, numEleve)[4];
+        LocalDate date = LocalDate.parse(dateNais);
+
+        List<String[]> subjects = subj.getAllSubjects();
+        String[][] tableData = new String[subjects.size()][4];
+        // String anneeSco = null;
+        int i = 0;
+        for (String[] subject : subjects) {
+            String matiere = subject[1];
+            int coef = Integer.parseInt(subject[2]);
+            String numMat = subject[0];
+
+            try {
+                String[] scoreData = score.getScore(numEleve, numMat);
+                if (scoreData != null && scoreData.length > 0) {
+                    double note = Double.parseDouble(scoreData[3]);
+                    double notePondere = coef * note;
+
+                    tableData[i][0] = matiere;
+                    tableData[i][1] = String.valueOf(coef);
+                    tableData[i][2] = String.valueOf(note);
+                    tableData[i][3] = String.valueOf(notePondere);
+                } else {
+                    tableData[i][0] = matiere;
+                    tableData[i][1] = String.valueOf(coef);
+                    tableData[i][2] = "0.0";
+                    tableData[i][3] = "0.0";
+                }
+            } catch (Exception e) {
+                tableData[i][0] = matiere;
+                tableData[i][1] = String.valueOf(coef);
+                tableData[i][2] = "0.0";
+                tableData[i][3] = "0.0";
+            }
+
+            i++;
+        }
+
+        PdfController pdf = new PdfController("2022-2023", nom, prenom, date.format(formatter), ecole, noteTotale, moyenne);
+        pdf.generatePdf(tableData);
     }
 
     /**
@@ -1047,6 +1238,7 @@ public class MainController implements Initializable {
     @FXML private TableColumn<StudentFailed, String> resPrenomCol3;
     @FXML private TableColumn<StudentFailed, String> resEcoleCol3;
     @FXML private TableColumn<StudentFailed, Double> resMoyenneCol3;
+    @FXML private TableColumn<StudentFailed, Void> resReleveCol3;
 
     ObservableList<StudentFailed> studentsFailedList = FXCollections.observableArrayList();
     // Show all students who were admitted to their CEPE
@@ -1060,6 +1252,36 @@ public class MainController implements Initializable {
         resEcoleCol3.setCellValueFactory(new PropertyValueFactory<>("ecole"));
         resMoyenneCol3.setCellValueFactory(new PropertyValueFactory<>("moyenne"));
 
+        Callback<TableColumn<StudentFailed, Void>, TableCell<StudentFailed, Void>> cellFactory = new Callback<>() {
+            @Override
+            public TableCell<StudentFailed, Void> call(final TableColumn<StudentFailed, Void> param) {
+                return new TableCell<>() {
+
+                    private final Button btn = new Button("Générer son relevé");
+
+                    {
+                        btn.getStyleClass().add("tableview_button");
+                        btn.setOnAction((ActionEvent _) -> {
+                            StudentFailed student = getTableView().getItems().get(getIndex());
+                            releveNotesRedouble(student);
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+            }
+        };
+
+        resReleveCol3.setCellFactory(cellFactory);
+
         result_failed.getItems().clear();
 
         for (String[] studenArray : listStudents) {
@@ -1067,6 +1289,69 @@ public class MainController implements Initializable {
                     studenArray[3], Double.parseDouble(studenArray[4])));
             result_failed.setItems(studentsFailedList);
         }
+    }
+
+    /**
+     * Generate pdf for student who failed to their exam
+     * @param student property of the student
+     */
+    private void releveNotesRedouble(StudentFailed student) {
+        String numEleve = student.getNumEleve();
+        String nom = student.getNom();
+        String prenom = student.getPrenom();
+        String ecole = student.getEcole();
+        double moyenne = student.getMoyenne();
+
+        Ecole school = new Ecole();
+        AverageController a = new AverageController();
+        StudentController stud = new StudentController();
+        SubjectController subj = new SubjectController();
+        NoteController score = new NoteController();
+
+        String numEcole = school.getNumEcole(ecole);
+        double noteTotale = a.getTotalScore(numEleve, numEcole);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String dateNais = stud.getStudent(numEcole, numEleve)[4];
+        LocalDate date = LocalDate.parse(dateNais);
+
+        List<String[]> subjects = subj.getAllSubjects();
+        String[][] tableData = new String[subjects.size()][4];
+        // String anneeSco = null;
+        int i = 0;
+        for (String[] subject : subjects) {
+            String matiere = subject[1];
+            int coef = Integer.parseInt(subject[2]);
+            String numMat = subject[0];
+
+            try {
+                String[] scoreData = score.getScore(numEleve, numMat);
+                if (scoreData != null && scoreData.length > 0) {
+                    double note = Double.parseDouble(scoreData[3]);
+                    double notePondere = coef * note;
+
+                    tableData[i][0] = matiere;
+                    tableData[i][1] = String.valueOf(coef);
+                    tableData[i][2] = String.valueOf(note);
+                    tableData[i][3] = String.valueOf(notePondere);
+                } else {
+                    tableData[i][0] = matiere;
+                    tableData[i][1] = String.valueOf(coef);
+                    tableData[i][2] = "0.0";
+                    tableData[i][3] = "0.0";
+                }
+            } catch (Exception e) {
+                tableData[i][0] = matiere;
+                tableData[i][1] = String.valueOf(coef);
+                tableData[i][2] = "0.0";
+                tableData[i][3] = "0.0";
+            }
+
+            i++;
+        }
+
+        PdfController pdf = new PdfController("2022-2023", nom, prenom, date.format(formatter), ecole, noteTotale, moyenne);
+        pdf.generatePdf(tableData);
     }
 
     /**

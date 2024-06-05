@@ -54,6 +54,16 @@ public class StudentController {
     }
 
     /**
+     * Get a specific student
+     * @return Information of student
+     */
+    public String[] getStudent(String numEcole, String numEleve) {
+        Eleve student = new Eleve(numEleve, numEcole);
+
+        return student.getStudent();
+    }
+
+    /**
      * Update a student
      * @param numEleve Student number
      * @param numEcole School number

@@ -1,4 +1,4 @@
-package com.yiarth.java_project;
+    package com.yiarth.java_project;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
