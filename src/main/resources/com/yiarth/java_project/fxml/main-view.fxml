@@ -93,12 +93,36 @@
                      <children>
                         <HBox layoutX="137.0" layoutY="36.0" prefHeight="100.0" prefWidth="200.0" spacing="50.0" styleClass="stats_container" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
                            <children>
-                              <AnchorPane prefHeight="200.0" prefWidth="300.0" styleClass="stat" />
-                              <AnchorPane prefHeight="200.0" prefWidth="300.0" styleClass="stat" />
+                              <AnchorPane prefHeight="200.0" prefWidth="300.0" styleClass="stat">
+                                 <children>
+                                    <Pane layoutX="24.0" layoutY="62.0" prefHeight="94.0" prefWidth="144.0">
+                                       <children>
+                                          <Label fx:id="tauxParticip" layoutY="11.0" prefHeight="73.0" prefWidth="144.0" style="-fx-font-size: 50;" text="100%" />
+                                       </children>
+                                    </Pane>
+                                    <Label layoutX="24.0" layoutY="32.0" style="-fx-font-size: 17;" text="Taux de participation" />
+                                 </children></AnchorPane>
+                              <AnchorPane prefHeight="200.0" prefWidth="300.0" styleClass="stat">
+                                 <children>
+                                    <Pane layoutX="24.0" layoutY="62.0" prefHeight="94.0" prefWidth="144.0">
+                                       <children>
+                                          <Label fx:id="tauxReussite" layoutY="11.0" prefHeight="73.0" prefWidth="144.0" style="-fx-font-size: 50;" text="100%" />
+                                       </children>
+                                    </Pane>
+                                    <Label layoutX="24.0" layoutY="32.0" style="-fx-font-size: 17;" text="Taux de réussite" />
+                                 </children></AnchorPane>
                               <AnchorPane prefHeight="200.0" prefWidth="300.0" styleClass="stat">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
+                                 <children>
+                                    <Pane layoutX="24.0" layoutY="62.0" prefHeight="94.0" prefWidth="171.0">
+                                       <children>
+                                          <Label fx:id="nbParticip" layoutY="11.0" prefHeight="73.0" prefWidth="171.0" style="-fx-font-size: 50;" text="12000" />
+                                       </children>
+                                    </Pane>
+                                    <Label layoutX="24.0" layoutY="32.0" style="-fx-font-size: 17;" text="Nombre des participants" />
+                                 </children>
                               </AnchorPane>
                            </children>
                         </HBox>
@@ -109,10 +133,10 @@
                            <children>
                               <TableView layoutX="44.0" layoutY="79.0" prefHeight="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                                 <columns>
-                                  <TableColumn minWidth="50.0" prefWidth="-1.0" text="N° Matricule" />
+                                  <TableColumn maxWidth="150.0" minWidth="50.0" prefWidth="-1.0" text="N° Matricule" />
                                   <TableColumn minWidth="50.0" prefWidth="-1.0" text="Nom" />
                                     <TableColumn minWidth="50.0" prefWidth="-1.0" text="Prénom" />
-                                    <TableColumn minWidth="50.0" prefWidth="-1.0" text="Moyenne" />
+                                    <TableColumn maxWidth="100.0" minWidth="50.0" prefWidth="-1.0" text="Moyenne" />
                                 </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -125,7 +149,7 @@
                            </children></AnchorPane>
                      </children></AnchorPane>
                </children></AnchorPane>
-            <AnchorPane fx:id="result_anchor_pane" prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane fx:id="result_anchor_pane" prefHeight="200.0" prefWidth="200.0" visible="false">
                <children>
                   <TabPane layoutX="138.0" layoutY="94.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                     <tabs>
@@ -399,7 +423,7 @@
                               <TableColumn fx:id="scoreNumEleveCol" maxWidth="150.0" minWidth="100.0" prefWidth="-1.0" text="N° Matricule" />
                               <TableColumn fx:id="scoreNomCol" minWidth="100.0" prefWidth="-1.0" text="Nom" />
                               <TableColumn fx:id="scorePrenomCol" minWidth="100.0" prefWidth="-1.0" text="Prénom" />
-                              <TableColumn fx:id="scoreTotalCol" maxWidth="150.0" minWidth="100.0" prefWidth="-1.0" text="Note Total" />
+                              <TableColumn fx:id="scoreTotalCol" maxWidth="150.0" minWidth="100.0" prefWidth="-1.0" text="Note total" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -591,15 +615,15 @@
                         </AnchorPane>
                      </children></AnchorPane>
                </children></AnchorPane>
-            <AnchorPane fx:id="subject_anchor_pane" prefHeight="200.0" prefWidth="200.0" visible="false">
+            <AnchorPane fx:id="subject_anchor_pane" prefHeight="200.0" prefWidth="200.0">
                <children>
                   <AnchorPane prefHeight="530.0" prefWidth="287.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="417.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <TableView fx:id="subject_tableview" layoutY="42.0" maxWidth="800.0" prefHeight="483.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                            <columns>
                               <TableColumn fx:id="numMatCol" minWidth="150.0" prefWidth="-1.0" text="Code matière" />
-                              <TableColumn fx:id="designMatCol" minWidth="300.0" prefWidth="-1.0" text="Désignation" />
-                              <TableColumn fx:id="coefCol" minWidth="200.0" prefWidth="-1.0" text="Coefficient" />
+                              <TableColumn fx:id="designMatCol" minWidth="200.0" prefWidth="-1.0" text="Désignation" />
+                              <TableColumn fx:id="coefCol" maxWidth="150.0" minWidth="100.0" prefWidth="-1.0" text="Coefficient" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -762,6 +786,11 @@
                   <Font name="Consolas" size="12.0" />
                </font></Label>
             <Label minHeight="67.0" prefHeight="67.0" prefWidth="162.0" styleClass="logo_name" text="CEPE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <Pane layoutX="666.0" layoutY="4.0" prefHeight="57.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label layoutX="68.0" layoutY="16.0" style="-fx-font-size: 25;" text="2022-2023" />
+               </children>
+            </Pane>
          </children>
       </AnchorPane>
    </children>

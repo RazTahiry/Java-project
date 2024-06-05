@@ -65,16 +65,6 @@ public class PdfController {
             addTableHeader(table, "Note");
             addTableHeader(table, "Note pondéré");
 
-//            String[][] data = {
-//                    {"Malagasy", "3", "12", "36"},
-//                    {"Calcul", "1", "18", "18"},
-//                    {"Problème", "2", "19", "38"},
-//                    {"Tantara", "1", "11", "11"},
-//                    {"Géographie", "1", "14", "14"},
-//                    {"Français", "1", "15", "15"},
-//                    {"SVT", "2", "09", "18"}
-//            };
-
             Arrays.stream(tableData).forEach(row -> {
                 for (String cell : row) {
                     PdfPCell pdfCell = new PdfPCell(new Phrase(cell, normalFont));
